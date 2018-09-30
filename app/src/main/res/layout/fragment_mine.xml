@@ -1,41 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/beijing" />
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_parent"
+    android:background="@color/comment_bg">
     <RelativeLayout
-        android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/iv_base_right"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/er_code" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/beijing" />
+
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <ImageView
+                android:id="@+id/iv_mine_er_code"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/er_code" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/rl_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:background="@drawable/mine_panel">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/ic_head_01"
+                android:layout_centerHorizontal="true"
+                />
+            <TextView
+                android:id="@+id/tv_mine_name"
+                android:layout_below="@id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="赵冲"
+                android:layout_marginTop="@dimen/dp_10"
+                />
+            <TextView
+                android:id="@+id/tv_mine_family_name"
+                android:layout_below="@id/tv_mine_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="家庭名称：---"
+                android:layout_marginTop="@dimen/dp_10"
+                />
+        </RelativeLayout>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_below="@+id/rl_head"
+    <LinearLayout
+        android:id="@+id/ll_mine_sys"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/white"
         android:padding="@dimen/dp_10"
-        android:background="@drawable/panel">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/ic_head_01"
-            android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sys"
             />
-    </RelativeLayout>
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_right"
+            android:text="扫一扫"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_mine_family_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:layout_marginTop="1dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/jtcy"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_right"
+            android:text="家庭成员"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_mine_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/gywm"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_right"
+            android:text="关于我们"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_mine_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/sz"
+            android:scaleType="fitXY"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_right"
+            android:text="设置"/>
+    </LinearLayout>
+</LinearLayout>

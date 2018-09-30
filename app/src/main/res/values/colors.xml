@@ -17,5 +17,6 @@
     <color name="color_blue">#3F51B5</color>
     <color name="color_red">#3F51B5</color>
     <color name="color_green">#0f0</color>
+    <color name="comment_bg">#F4F4F4</color>
     <!-- QRCode scanner color end -->
 </resources>
