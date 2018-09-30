@@ -28,14 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
         android:background="@drawable/panel">
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/ic_code"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"/>
+            android:src="@drawable/ic_head_01"
+            android:layout_centerHorizontal="true"
+            />
     </RelativeLayout>
 </RelativeLayout>
