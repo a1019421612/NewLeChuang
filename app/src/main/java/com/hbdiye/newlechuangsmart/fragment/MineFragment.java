@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
+import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
 
 import butterknife.BindView;
@@ -40,6 +44,10 @@ public class MineFragment extends Fragment {
     LinearLayout llMineSetting;
     @BindView(R.id.ll_parent)
     LinearLayout llParent;
+    @BindView(R.id.ll_mine_devices)
+    LinearLayout llMineDevices;
+    @BindView(R.id.rl_mine_info)
+    RelativeLayout rlMineInfo;
     private Unbinder bind;
 
     private GetPhotoPopwindow getPhotoPopwindow;
@@ -58,7 +66,7 @@ public class MineFragment extends Fragment {
         bind.unbind();
     }
 
-    @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us, R.id.ll_mine_setting})
+    @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us, R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
@@ -69,13 +77,19 @@ public class MineFragment extends Fragment {
                 getPhotoPopwindow = new GetPhotoPopwindow(getActivity(), imageClick);
                 getPhotoPopwindow.showPopupWindowBottom(llParent);
                 break;
+            case R.id.rl_mine_info:
+                startActivity(new Intent(getActivity(),PersonInfoActivity.class));
+                break;
             case R.id.ll_mine_sys:
                 break;
             case R.id.ll_mine_family_member:
                 break;
             case R.id.ll_mine_about_us:
                 break;
+            case R.id.ll_mine_devices:
+                break;
             case R.id.ll_mine_setting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             default:
                 break;

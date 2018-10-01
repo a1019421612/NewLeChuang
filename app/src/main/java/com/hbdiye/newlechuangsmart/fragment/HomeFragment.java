@@ -9,20 +9,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.coder.zzq.smartshow.toast.SmartToast;
+import com.bumptech.glide.Glide;
 import com.hbdiye.newlechuangsmart.MyWebSocketHandler;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
 import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
+import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.hbdiye.newlechuangsmart.util.StringUtil;
+import com.hbdiye.newlechuangsmart.view.CustomViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -30,20 +38,35 @@ import de.tavendo.autobahn.WebSocketException;
 import static com.hbdiye.newlechuangsmart.MyApp.finishAllActivity;
 
 public class HomeFragment extends Fragment {
-    @BindView(R.id.tv_home)
-    TextView tvHome;
+    @BindView(R.id.gv_fragment_home)
+    GridView gvFragmentHome;
+    @BindView(R.id.viewpager)
+    CustomViewPager viewpager;
 
     private Unbinder bind;
     private WebSocketConnection mConnection;
     private String mobilephone;
     private String password;
     public MyWebSocketHandler instance;
+
+    private List<Integer> mList = new ArrayList<>();
+    private Myadapter mMyadapter;
+    private ArrayList<String> imageUrl = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         bind = ButterKnife.bind(this, view);
         initWebSocket();
+        for (int i = 0; i < 5; i++) {
+            mList.add(R.drawable.tab_chat_hover);
+        }
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
+        mMyadapter = new Myadapter();
+        gvFragmentHome.setAdapter(mMyadapter);
+        viewpager.setImageResources(imageUrl, mAdCycleViewListener);
         return view;
     }
 
@@ -280,6 +303,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void websocketSendBroadcase(String message, String param) {
         Intent intent = new Intent();
         intent.setAction(param);
@@ -290,21 +314,70 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
     }
+    private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
+        @Override
+        public void onImageClick(int position, View imageView) {
+            // TODO 单击图片处理事件
+            int curPos = viewpager.getCurPos();
+            String url = imageUrl.get(curPos);
+            Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
+            if (StringUtil.isBlank(url)) {
+                return;
+            }
+        }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            PicUtils.showImgRoundedNoDiskCache(getActivity(), imageView, imageURL);
+        }
+    };
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         bind.unbind();
     }
 
-    @OnClick(R.id.tv_home)
-    public void onViewClicked() {
-        SmartToast.show("home");
-    }
     @Override
     public void onDestroy() {
         super.onDestroy();
         //这是一条错误指令目的是为了立刻断开连接 如果用mConnection.disconnect()会等很长时间才会断开连接
 //        mConnection.sendTextMessage("{\"pn\":\"DLLL\", \"classify\":\"protype\", \"id\":\"PROTYPE07\"}");
         mConnection.disconnect();
+    }
+
+    class Myadapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mList.size() + 1 == 8 ? 8 : mList.size() + 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.add_scene, null);
+            ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
+            if (mList.size() == i) {
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
+                if (i == 9) {
+                    imageView.setVisibility(View.GONE);
+                }
+            } else {
+                Glide.with(getActivity()).load(mList.get(i)).into(imageView);
+            }
+
+            return view;
+        }
     }
 }

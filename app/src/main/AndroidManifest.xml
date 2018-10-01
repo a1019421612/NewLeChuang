@@ -17,15 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.ForgetPasswordActivityActivity" />
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.ForgetPasswordActivityActivity"></activity>
+        <activity android:name=".activity.LinkageAddActivity" />
+        <activity android:name=".activity.LinkageAddConditionActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.ResetPswActivity" />
+        <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.RoomActivity"></activity>
     </application>
 
 </manifest>

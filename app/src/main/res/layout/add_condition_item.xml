@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="丨"
+            android:textColor="#60AED2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_condition_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="场景"
+            android:textSize="@dimen/size_16" />
+    </LinearLayout>
+
+    <com.hbdiye.newlechuangsmart.view.MyGridView
+        android:id="@+id/mlv_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3">
+
+    </com.hbdiye.newlechuangsmart.view.MyGridView>
+</LinearLayout>
