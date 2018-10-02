@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ItemCommentView">
+        <attr name="comment_name" format="string" />
+        <attr name="comment_attr" format="string" />
+        <attr name="comment_value" format="string" />
+    </declare-styleable>
+</resources>

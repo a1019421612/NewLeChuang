@@ -15,6 +15,7 @@
     android:drawableRight="@drawable/down"
     />
     <TextView
+        android:id="@+id/tv_condition_attr"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:drawableRight="@drawable/down"
         />
     <TextView
+        android:id="@+id/tv_condition_value"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"

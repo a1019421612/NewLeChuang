@@ -103,6 +103,7 @@
                 <ListView
                     android:id="@+id/lv_add_condition"
                     android:layout_width="match_parent"
+                    android:descendantFocusability="beforeDescendants"
                     android:layout_height="0dp"
                     android:layout_weight="1">
 

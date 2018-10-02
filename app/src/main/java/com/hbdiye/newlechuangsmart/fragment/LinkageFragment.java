@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.LinkageAddActivity;
+import com.hbdiye.newlechuangsmart.activity.LinkageDetailActivity;
 import com.hbdiye.newlechuangsmart.adapter.LinkageAdapter;
 import com.hbdiye.newlechuangsmart.bean.LinkageBean;
 
@@ -62,6 +63,12 @@ public class LinkageFragment extends Fragment {
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
                 SmartToast.show("删除");
                 return false;
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(getActivity(), LinkageDetailActivity.class));
             }
         });
     }

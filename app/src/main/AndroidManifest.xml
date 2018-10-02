@@ -27,12 +27,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LinkageAddActivity" />
+        <activity
+            android:name=".activity.LinkageAddActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.LinkageAddConditionActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.ResetPswActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
-        <activity android:name=".activity.RoomActivity"></activity>
+        <activity android:name=".activity.RoomActivity" />
+        <activity android:name=".activity.LinkageDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.hbdiye.newlechuangsmart.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.adapter.RoomAdapter;
+import com.hbdiye.newlechuangsmart.bean.RoomDeviceBean;
 import com.hbdiye.newlechuangsmart.view.LinkageAddIconPopwindow;
 
 import java.util.ArrayList;
@@ -39,6 +42,10 @@ public class RoomActivity extends AppCompatActivity {
     RecyclerView rvRoomDevice;
     @BindView(R.id.ll_root)
     LinearLayout llRoot;
+
+    private RoomAdapter adapter;
+    private List<RoomDeviceBean> mList=new ArrayList<>();
+
     private LinkageAddIconPopwindow popwindow;
     private List<Integer> mList_icon = new ArrayList<>();
     @Override
@@ -51,29 +58,30 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        for (int i = 0; i < 10; i++) {
+            RoomDeviceBean roomDeviceBean=new RoomDeviceBean();
+            roomDeviceBean.setName(i+"");
+            mList.add(roomDeviceBean);
+        }
+        GridLayoutManager manager=new GridLayoutManager(this,3);
+        rvRoomDevice.setLayoutManager(manager);
+        adapter=new RoomAdapter(mList);
+        rvRoomDevice.setAdapter(adapter);
     }
 
     private void initData() {
-        mList_icon.add(R.drawable.huijia);
-        mList_icon.add(R.drawable.lijia);
-        mList_icon.add(R.drawable.yeqi);
-        mList_icon.add(R.drawable.xican);
-        mList_icon.add(R.drawable.xiuxi);
-        mList_icon.add(R.drawable.xiawucha);
-        mList_icon.add(R.drawable.zuofan);
-        mList_icon.add(R.drawable.xizao);
-        mList_icon.add(R.drawable.shuijiao);
-        mList_icon.add(R.drawable.kandianshi);
-        mList_icon.add(R.drawable.diannao);
-        mList_icon.add(R.drawable.yinyue);
-        mList_icon.add(R.drawable.wucan);
-        mList_icon.add(R.drawable.youxi);
-        mList_icon.add(R.drawable.huike);
-        mList_icon.add(R.drawable.xiyifu);
-        mList_icon.add(R.drawable.kaihui);
-        mList_icon.add(R.drawable.huazhuang);
-        mList_icon.add(R.drawable.dushu);
-        mList_icon.add(R.drawable.qichuang);
+        mList_icon.add(R.drawable.keting3);
+        mList_icon.add(R.drawable.shufang2);
+        mList_icon.add(R.drawable.shufang);
+        mList_icon.add(R.drawable.weisehngjian);
+        mList_icon.add(R.drawable.weishengjian2);
+        mList_icon.add(R.drawable.danrenfang);
+        mList_icon.add(R.drawable.ertongfang);
+        mList_icon.add(R.drawable.keting);
+        mList_icon.add(R.drawable.keting2);
+        mList_icon.add(R.drawable.zhuwo);
+        mList_icon.add(R.drawable.chufang);
+        mList_icon.add(R.drawable.yangtai);
 //        for (int i = 0; i < 5; i++) {
 //            mList.add(i + "");
 //        }
