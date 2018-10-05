@@ -35,7 +35,18 @@
         <activity android:name=".activity.ResetPswActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
         <activity android:name=".activity.RoomActivity" />
-        <activity android:name=".activity.LinkageDetailActivity"></activity>
+        <activity android:name=".activity.LinkageDetailActivity" />
+        <activity android:name=".activity.FamilyMemberActivity" />
+        <activity android:name=".activity.AddRoomActivity" />
+        <activity android:name=".activity.DeviceClassyActivity" />
+        <activity android:name=".fragment.DeviceListFragment" />
+        <activity android:name=".activity.DeviceModelActivity" />
+        <activity android:name=".activity.YaoKongCenterActivity" />
+        <activity android:name=".activity.InfraredActivity" />
+        <activity android:name=".activity.MessageActivity" />
+        <activity android:name=".activity.ChoiceDeviceActivity" />
+        <activity android:name=".activity.MyDeviceActivity" />
+        <activity android:name=".activity.TimeConditionActivity"></activity>
     </application>
 
 </manifest>

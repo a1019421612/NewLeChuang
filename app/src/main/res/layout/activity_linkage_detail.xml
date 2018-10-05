@@ -105,7 +105,7 @@
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/liandong_bg"
                         android:orientation="vertical">
 
@@ -119,7 +119,9 @@
                             android:id="@+id/lv_add_condition"
                             android:layout_width="match_parent"
                             android:descendantFocusability="beforeDescendants"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:divider="@null"
+                            android:listSelector="@android:color/transparent"
                             >
 
                         </com.hbdiye.newlechuangsmart.view.MyListView>
@@ -132,7 +134,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/liandong_bg"
                         android:orientation="vertical">
 
@@ -146,7 +148,9 @@
                             android:id="@+id/lv_add_result"
                             android:layout_width="match_parent"
                             android:descendantFocusability="beforeDescendants"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:listSelector="@android:color/transparent"
+                            android:divider="@null"
                            >
 
                         </com.hbdiye.newlechuangsmart.view.MyListView>

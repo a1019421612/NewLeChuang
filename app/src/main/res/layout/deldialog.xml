@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/lh_shape_cp_white"
+    android:layout_width="wrap_content"
+    android:paddingBottom="@dimen/dp_10"
+    android:layout_height="250dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/del_bg"
+        />
+
+    <TextView
+        android:id="@+id/tv_del_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:layout_gravity="center_horizontal"
+        android:text="确定"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/tv_del_content"
+        android:layout_above="@id/tv_del_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:text="是否删除两键开关？"
+        />
+</RelativeLayout>

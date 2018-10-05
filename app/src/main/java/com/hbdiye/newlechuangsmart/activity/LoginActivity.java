@@ -124,8 +124,12 @@ public class LoginActivity extends BaseActivity {
 //                                JSONObject jsonObject1=jsonObject.getJSONObject("data");
 //                                String mobilephone = jsonObject1.getString("mobilephone");
 //                                String password = jsonObject1.getString("password");
+                                String token = jsonObject.getString("token");
+                                String url = jsonObject.getString("url");
                                 SPUtils.put(LoginActivity.this, "mobilephone", mPhone);
                                 SPUtils.put(LoginActivity.this, "password", mPassword);
+                                SPUtils.put(LoginActivity.this,"token",token);
+                                SPUtils.put(LoginActivity.this,"url",url+token);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {

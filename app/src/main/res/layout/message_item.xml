@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_10">
+    <ImageView
+        android:id="@+id/iv_points"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/af"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="2018-3-15"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/lh_shape_storeseach_zlbt_bg"
+            android:padding="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="客厅PM2.5超高"
+                android:textColor="@color/black"
+                android:textSize="@dimen/size_16"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="自带的TabLayout总是会平分item的宽度，比如2个字跟4个字的宽度，默认是一样的。"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -83,7 +83,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="设备分类"
+                            android:text="房间分类"
                             android:textSize="@dimen/size_16"
                             />
                         <TextView

@@ -14,8 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.AddRoomActivity;
+import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
+import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomActivity;
+import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
+import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
+import com.hbdiye.newlechuangsmart.view.DelDialog;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
 
 import java.util.ArrayList;
@@ -34,7 +41,7 @@ public class DeviceFragment extends Fragment {
     MyGridView gvDeviceClassify;
     @BindView(R.id.tv_device_edit)
     TextView tvDeviceEdit;
-    private List<Integer> mList = new ArrayList<>();
+    private List<CommentClassyBean> mList = new ArrayList<>();
     private
     List<Integer> mList_device = new ArrayList<>();
     private Myadapter mMyadapter;
@@ -47,9 +54,15 @@ public class DeviceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device, container, false);
         unbinder = ButterKnife.bind(this, view);
-        for (int i = 0; i < 8; i++) {
-            mList.add(R.drawable.af);
-        }
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.af);setTitle("安防设备");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.dengpao);setTitle("照明开关");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.znzj);setTitle("智能主机");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.hjjc);setTitle("环境监测");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.ylyl);setTitle("医疗养老");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.zngj);setTitle("智能管家");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.jd);setTitle("家电控制");}});
+        mList.add(new CommentClassyBean(){{setIcon(R.drawable.cl);setTitle("窗帘开关");}});
+
         for (int i = 0; i < 5; i++) {
             mList_device.add(R.drawable.zhuwo);
         }
@@ -65,9 +78,29 @@ public class DeviceFragment extends Fragment {
         gvDeviceClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(getActivity(),RoomActivity.class));
+                if (i == mList_device.size()) {
+                    startActivity(new Intent(getActivity(), AddRoomActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), RoomActivity.class));
+                }
             }
         });
+        gvCommonClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i==8){
+
+                }else if (i==6){
+                    //跳转遥控中心
+                    startActivity(new Intent(getActivity(),YaoKongCenterActivity.class));
+                }else {
+                    String title = mList.get(i).getTitle();
+                    startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class).putExtra("title",title));
+
+                }
+            }
+        });
+
     }
 
     @Override
@@ -78,11 +111,11 @@ public class DeviceFragment extends Fragment {
 
     @OnClick(R.id.tv_device_edit)
     public void onViewClicked() {
-        if (flag){
+        if (flag) {
             tvDeviceEdit.setText("编辑");
-            flag=false;
-        }else {
-            flag=true;
+            flag = false;
+        } else {
+            flag = true;
             tvDeviceEdit.setText("完成");
         }
         device_adapter.notifyDataSetChanged();
@@ -110,6 +143,7 @@ public class DeviceFragment extends Fragment {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.device_gv_item, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
+            TextView tv_title=view.findViewById(R.id.tv_content);
             if (mList.size() == i) {
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(getActivity()).load(R.drawable.other).into(imageView);
@@ -117,12 +151,15 @@ public class DeviceFragment extends Fragment {
                     imageView.setVisibility(View.GONE);
                 }
             } else {
-                Glide.with(getActivity()).load(mList.get(i)).into(imageView);
+                Glide.with(getActivity()).load(mList.get(i).getIcon()).into(imageView);
+                tv_title.setText(mList.get(i).getTitle());
             }
 
             return view;
         }
     }
+
+    private DelDialog delDialog;
 
     class MyDeviceadapter extends BaseAdapter {
 
@@ -146,15 +183,18 @@ public class DeviceFragment extends Fragment {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.device_gv_edit_item, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
-            ImageView iv_del=view.findViewById(R.id.iv_device_del);
-            if (flag){
+            ImageView iv_del = view.findViewById(R.id.iv_device_del);
+            TextView tv_name = view.findViewById(R.id.tv_name);
+            if (flag) {
                 iv_del.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 iv_del.setVisibility(View.GONE);
             }
+            tv_name.setText("房间" + i);
             if (mList_device.size() == i) {
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
+                tv_name.setText("其他");
                 iv_del.setVisibility(View.GONE);
                 if (i == 10) {
                     imageView.setVisibility(View.GONE);
@@ -162,8 +202,26 @@ public class DeviceFragment extends Fragment {
             } else {
                 Glide.with(getActivity()).load(mList_device.get(i)).into(imageView);
             }
-
+            iv_del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    delDialog = new DelDialog(getActivity(), R.style.MyDialogStyle, clicker, "是否删除房间？");
+                    delDialog.show();
+                }
+            });
             return view;
         }
     }
+
+    public View.OnClickListener clicker = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.tv_del_ok:
+                    SmartToast.show("删除");
+                    delDialog.dismiss();
+                    break;
+            }
+        }
+    };
 }

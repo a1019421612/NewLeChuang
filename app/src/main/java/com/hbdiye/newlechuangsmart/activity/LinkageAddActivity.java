@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.hbdiye.newlechuangsmart.global.InterfaceManager.TIMECONDITION;
+
 public class LinkageAddActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_base_back)
@@ -39,6 +40,8 @@ public class LinkageAddActivity extends AppCompatActivity {
     ImageView ivLinkageIc;
     @BindView(R.id.lv_add_condition)
     ListView lvAddCondition;
+    @BindView(R.id.iv_addtion_time)
+    ImageView ivAddtionTime;
     private LinkageAddIconPopwindow popwindow;
 
     private List<Integer> mList_icon = new ArrayList<>();
@@ -86,7 +89,7 @@ public class LinkageAddActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.tv_linkage_add, R.id.ll_linkage_icon, R.id.iv_linkage_edit, R.id.iv_base_back})
+    @OnClick({R.id.tv_linkage_add, R.id.ll_linkage_icon, R.id.iv_linkage_edit, R.id.iv_base_back,R.id.iv_addtion_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_linkage_add:
@@ -100,6 +103,9 @@ public class LinkageAddActivity extends AppCompatActivity {
                 break;
             case R.id.iv_base_back:
                 finish();
+                break;
+            case R.id.iv_addtion_time:
+                startActivityForResult(new Intent(this,TimeConditionActivity.class),TIMECONDITION);
                 break;
         }
     }

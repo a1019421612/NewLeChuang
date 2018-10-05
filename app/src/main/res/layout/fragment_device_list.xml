@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.DeviceListFragment">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_detail_device"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:id="@+id/viewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:gravity="center_horizontal">-->
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tablayout_device_detail"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabIndicatorColor="#3da0f8"-->
+            <!--app:tabTextAppearance="@style/TabLayoutTextStyle"-->
+            <!--app:tabTextColor="#8c8c8c"-->
+            <!--app:tabIndicatorHeight="0dp"-->
+            <!--app:tabSelectedTextColor="#378ddb"></android.support.design.widget.TabLayout>-->
+    <!--</LinearLayout>-->
+</LinearLayout>

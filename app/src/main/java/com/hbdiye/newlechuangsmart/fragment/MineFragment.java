@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
+import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
@@ -83,12 +85,17 @@ public class MineFragment extends Fragment {
             case R.id.ll_mine_sys:
                 break;
             case R.id.ll_mine_family_member:
+                //家庭成员
+                startActivity(new Intent(getActivity(),FamilyMemberActivity.class));
                 break;
             case R.id.ll_mine_about_us:
                 break;
             case R.id.ll_mine_devices:
+                //我的设备
+                startActivity(new Intent(getActivity(),MyDeviceActivity.class));
                 break;
             case R.id.ll_mine_setting:
+                //设置
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             default:

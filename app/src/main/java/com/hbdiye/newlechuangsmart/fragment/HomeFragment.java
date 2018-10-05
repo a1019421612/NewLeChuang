@@ -21,6 +21,7 @@ import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
 import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
+import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -42,16 +44,20 @@ public class HomeFragment extends Fragment {
     GridView gvFragmentHome;
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
+    @BindView(R.id.iv_message)
+    ImageView ivMessage;
 
     private Unbinder bind;
     private WebSocketConnection mConnection;
     private String mobilephone;
     private String password;
+    private String url;
     public MyWebSocketHandler instance;
 
     private List<Integer> mList = new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,10 +79,11 @@ public class HomeFragment extends Fragment {
     private void initWebSocket() {
         mobilephone = (String) SPUtils.get(getActivity(), "mobilephone", "");
         password = (String) SPUtils.get(getActivity(), "password", "");
+        url= (String) SPUtils.get(getActivity(),"url","");
         mConnection = SingleWebSocketConnection.getInstance();
         instance = SingleWebSocketHandler.getInstance(mConnection, "{\"pn\":\"UITP\"}");
         try {
-            mConnection.connect("ws://39.104.119.0:18888/mobilephone=" + mobilephone + "&password=" + password, instance);
+            mConnection.connect(url, instance);
         } catch (WebSocketException e) {
             Log.e("sss", "异常：" + e.toString());
             e.printStackTrace();
@@ -314,6 +321,7 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
     private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
         @Override
         public void onImageClick(int position, View imageView) {
@@ -331,6 +339,7 @@ public class HomeFragment extends Fragment {
             PicUtils.showImgRoundedNoDiskCache(getActivity(), imageView, imageURL);
         }
     };
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -343,6 +352,11 @@ public class HomeFragment extends Fragment {
         //这是一条错误指令目的是为了立刻断开连接 如果用mConnection.disconnect()会等很长时间才会断开连接
 //        mConnection.sendTextMessage("{\"pn\":\"DLLL\", \"classify\":\"protype\", \"id\":\"PROTYPE07\"}");
         mConnection.disconnect();
+    }
+
+    @OnClick(R.id.iv_message)
+    public void onViewClicked() {
+        startActivity(new Intent(getActivity(),MessageActivity.class));
     }
 
     class Myadapter extends BaseAdapter {
