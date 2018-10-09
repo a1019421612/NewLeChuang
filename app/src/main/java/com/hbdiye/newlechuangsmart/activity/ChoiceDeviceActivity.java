@@ -9,6 +9,8 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.AddConditionAdapter;
 import com.hbdiye.newlechuangsmart.adapter.ChoiceDeviceAdapter;
 import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -26,18 +28,24 @@ public class ChoiceDeviceActivity extends BaseActivity {
     private List<RoomDeviceListBean.RoomList> mList=new ArrayList<>();
     private ChoiceDeviceAdapter adapter;
     private String title="";
+    private String token;
+    private String productId;
 
     @Override
     protected void initData() {
 //        adapter.notifyDataSetChanged();
+        token = (String) SPUtils.get(this,"token","");
         title = getIntent().getStringExtra("title");
+        productId = getIntent().getStringExtra("productId");
         tvBaseTitle.setText(title);
         roomAndDevice();
     }
 
     private void roomAndDevice() {
         OkHttpUtils.get()
-                .url("http://192.168.0.115:8888/DYPServer/device/findDeviceListByProductId?token=1234567812345678123456&productId=PRO002003001")
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.FINDDEVICELISTBYPRODUCTID))
+                .addParams("token",token)
+                .addParams("productId",productId)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -48,9 +56,14 @@ public class ChoiceDeviceActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response, int id) {
                         RoomDeviceListBean roomDeviceListBean = new Gson().fromJson(response, RoomDeviceListBean.class);
-                        List<RoomDeviceListBean.RoomList> roomList = roomDeviceListBean.roomList;
-                        mList.addAll(roomList);
-                        adapter.notifyDataSetChanged();
+                        if (roomDeviceListBean.errcode==0){
+                            List<RoomDeviceListBean.RoomList> roomList = roomDeviceListBean.roomList;
+                            if (roomList==null){
+                                return;
+                            }
+                            mList.addAll(roomList);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 });
     }

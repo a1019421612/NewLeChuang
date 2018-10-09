@@ -22,11 +22,6 @@ public class InterfaceManager {
     public static final String SENDCODE = "SENDCODE";//控制红外设备
 
 
-//    ===============================================================
-    public static final String NEWBASEURL="http://192.168.0.115:8888/";
-    public static final String DEVICELIST=NEWBASEURL+"";
-//    ===============================================================
-
     public static final String HOSTURL = "";
     public static final String BASEURL = "http://www.thingtill.com/Home/ThreeIr/";
     public static final String HWREGISTER_URL = BASEURL + "reg";
@@ -34,13 +29,24 @@ public class InterfaceManager {
     public static final String APPID = "123456";
     public static final String APPKEY = "3576be75bca3495e";
 
+    //    ===============================================================
+    public static final String NEWBASEURL="http://39.104.105.10:5678/";
+    public static final String DEVICELIST="NEWBASEURL";//第三级详情界面
+    public static final String FINDDEVICELISTBYPRODUCTID="FINDDEVICELISTBYPRODUCTID";//DYPServer/device/findDeviceListByProductId
+//    ===============================================================
+
+
     private static HashMap<String, String> urlManager = new HashMap<String, String>();
     private static InterfaceManager manager;
 
     public static InterfaceManager getInstance() {
         if (manager == null) {
             manager = new InterfaceManager();
+
+
             urlManager.put(InterfaceManager.LOGIN, NEWBASEURL+"DYPServer/user/login");
+            urlManager.put(InterfaceManager.DEVICELIST,NEWBASEURL+"DYPServer/device/findDeviceListByRoomId");
+            urlManager.put(InterfaceManager.FINDDEVICELISTBYPRODUCTID,NEWBASEURL+"DYPServer/device/findDeviceListByProductId");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

@@ -49,6 +49,8 @@ public class DeviceFragment extends Fragment {
 
     private boolean flag = false;//编辑设备分类
 
+    private String[] array_productId={"PRO003","PRO002","PRO001","PRO004","PRO008","PRO007","PRO006","PRO005","PRO009"};
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,10 +94,12 @@ public class DeviceFragment extends Fragment {
 
                 }else if (i==6){
                     //跳转遥控中心
-                    startActivity(new Intent(getActivity(),YaoKongCenterActivity.class));
+                    startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));
                 }else {
                     String title = mList.get(i).getTitle();
-                    startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class).putExtra("title",title));
+                    startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class)
+                            .putExtra("title",title)
+                            .putExtra("productId",array_productId[i]));
 
                 }
             }

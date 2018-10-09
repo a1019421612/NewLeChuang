@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.MyWebSocketHandler;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
@@ -22,6 +24,7 @@ import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
 import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
+import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
@@ -73,6 +76,14 @@ public class HomeFragment extends Fragment {
         mMyadapter = new Myadapter();
         gvFragmentHome.setAdapter(mMyadapter);
         viewpager.setImageResources(imageUrl, mAdCycleViewListener);
+       gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               if (position==mList.size()){
+                  startActivity(new Intent(getActivity(), MoreSceneActivity.class));
+               }
+           }
+       });
         return view;
     }
 
@@ -84,7 +95,7 @@ public class HomeFragment extends Fragment {
         instance = SingleWebSocketHandler.getInstance(mConnection, "{\"pn\":\"UITP\"}");
         try {
             mConnection.connect(url, instance);
-        } catch (WebSocketException e) {
+        } catch (Exception e) {
             Log.e("sss", "异常：" + e.toString());
             e.printStackTrace();
         }

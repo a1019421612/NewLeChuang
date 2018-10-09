@@ -13,7 +13,9 @@ import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.MyFragmentPagerAdapter;
 import com.hbdiye.newlechuangsmart.bean.DeviceClassyBean;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -40,6 +42,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
     ImageView ivBaseBack;
     private List<Integer> list_tabIcons = new ArrayList<>();
     private List<Integer> list_tabIconsPressed = new ArrayList<>();
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_classy);
         ButterKnife.bind(this);
         String roomName = getIntent().getStringExtra("roomName");
+        token = (String) SPUtils.get(this,"token","");
         tvClassyTitle.setText(roomName);
         initData();
     }
@@ -54,7 +58,9 @@ public class DeviceClassyActivity extends AppCompatActivity {
     private void initData() {
         OkHttpUtils
                 .get()
-                .url("http://192.168.0.115:8888/DYPServer/device/findDeviceListByRoomId?token=1234567812345678123456&roomId=R0")
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.DEVICELIST))
+                .addParams("token",token)
+                .addParams("roomId","R0")
                 .build()
                 .execute(new StringCallback() {
                     @Override

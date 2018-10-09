@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_subscribe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+     >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/subscribe_item_bg"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_item"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tab_me_hover"/>
+        <TextView
+            android:id="@+id/text_item"
+            android:layout_below="@id/iv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/subscribe_item_text_color_normal"
+            android:textSize="16.0sp" />
+    </RelativeLayout>
+
+    <!-- android:layout_margin="5dip" -->
+
+    <ImageView
+        android:id="@+id/iv_del"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/del"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

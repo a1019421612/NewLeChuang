@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity {
 
         OkHttpUtils.get()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.LOGIN))
-                .addParams("mobilephone", mPhone)
+                .addParams("phone", mPhone)
                 .addParams("password", mPassword)
                 .build()
                 .execute(new StringCallback() {
@@ -129,7 +129,7 @@ public class LoginActivity extends BaseActivity {
                                 SPUtils.put(LoginActivity.this, "mobilephone", mPhone);
                                 SPUtils.put(LoginActivity.this, "password", mPassword);
                                 SPUtils.put(LoginActivity.this,"token",token);
-                                SPUtils.put(LoginActivity.this,"url",url+token);
+                                SPUtils.put(LoginActivity.this,"url",url+"/token="+token);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {

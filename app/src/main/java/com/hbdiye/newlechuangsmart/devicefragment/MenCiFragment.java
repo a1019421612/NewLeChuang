@@ -21,34 +21,35 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ChaZuoFragment extends BaseFragment {
+public class MenCiFragment extends BaseFragment {
 
-    @BindView(R.id.iv_cz)
-    ImageView ivCz;
-    @BindView(R.id.tv_cz)
-    TextView tvCz;
-    @BindView(R.id.ll_cz)
-    LinearLayout llCz;
+    @BindView(R.id.iv_mc)
+    ImageView ivMc;
+    @BindView(R.id.tv_mc)
+    TextView tvMc;
+    @BindView(R.id.ll_mc)
+    LinearLayout llMc;
     private TextView tv_name;
-    private DeviceClassyBean.ProductList productList;
     private Unbinder bind;
+    private DeviceClassyBean.ProductList productList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chazuo, container, false);
+        View view = inflater.inflate(R.layout.fragment_menci, container, false);
         bind = ButterKnife.bind(this, view);
-        tv_name = view.findViewById(R.id.tv_chazuo_name);
+        tv_name = view.findViewById(R.id.tv_menci_name);
         return view;
     }
 
+    //    PRO003004001
     @Override
     protected void onFragmentFirstVisible() {
         Fragment parentFragment = (DeviceListFragment) getParentFragment();
         String data = ((DeviceListFragment) parentFragment).data;
         DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
         for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
-            if ("PRO006001001".equals(deviceClassyBean.productList.get(i).id)) {
+            if ("PRO003004001".equals(deviceClassyBean.productList.get(i).id)) {
                 productList = deviceClassyBean.productList.get(i);
                 String name = productList.name;
                 tv_name.setText(name);
@@ -57,13 +58,13 @@ public class ChaZuoFragment extends BaseFragment {
         DeviceClassyBean.ProductList.DeviceList.DevAttList devAttList = productList.deviceList.get(0).devAttList.get(0);
         int value = devAttList.value;
         if (value==0){
-            ivCz.setImageResource(R.drawable.mohu);
-            tvCz.setText("关");
-            tvCz.setTextColor(getResources().getColor(R.color.detail_text));
+            ivMc.setImageResource(R.drawable.mohu);
+            tvMc.setText("关");
+            tvMc.setTextColor(getResources().getColor(R.color.detail_text));
         }else {
-            ivCz.setImageResource(R.drawable.kaiguan);
-            tvCz.setText("开");
-            tvCz.setTextColor(getResources().getColor(R.color.bar_text_sel));
+            ivMc.setImageResource(R.drawable.kaiguan);
+            tvMc.setText("开");
+            tvMc.setTextColor(getResources().getColor(R.color.bar_text_sel));
         }
     }
 
@@ -73,8 +74,7 @@ public class ChaZuoFragment extends BaseFragment {
         bind.unbind();
     }
 
-    @OnClick(R.id.ll_cz)
+    @OnClick(R.id.ll_mc)
     public void onViewClicked() {
-
     }
 }
