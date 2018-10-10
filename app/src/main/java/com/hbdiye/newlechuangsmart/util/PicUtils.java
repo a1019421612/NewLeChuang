@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.hbdiye.newlechuangsmart.R;
 
 public class PicUtils {
 
@@ -84,7 +85,12 @@ public class PicUtils {
         Glide.with(mContext).load(url).transform(new CornersTransform(mContext, 10)).into(imageView);
         imageView.setTag(url);
     }
-
+    //显示圆角图片(清空缓存的)
+    public static void showImgRoundedNoDiskCacheNoUrl(Context mContext, ImageView imageView) {
+        imageView.setTag(null);//需要清空tag，否则报错
+        Glide.with(mContext).load(R.drawable.denglutupian).transform(new CornersTransform(mContext, 10)).into(imageView);
+        imageView.setTag("");
+    }
     /**
      * （2）
      * 获取到Bitmap---不设置错误图片，错误图片不显示

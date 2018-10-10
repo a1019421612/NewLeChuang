@@ -1,5 +1,9 @@
 package com.hbdiye.newlechuangsmart.devicefragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,13 +15,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.bean.DeviceClassyBean;
 import com.hbdiye.newlechuangsmart.fragment.BaseFragment;
 import com.hbdiye.newlechuangsmart.fragment.DeviceListFragment;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -55,6 +64,11 @@ public class KaiGuanThreeFragment extends BaseFragment {
     private WebSocketConnection mConnection;
     private String token;
     private String deviceId;
+    private int value_left;
+    private int value_middle;
+    private int value_right;
+
+    private HomeReceiver homeReceiver;
 
     @Nullable
     @Override
@@ -64,7 +78,10 @@ public class KaiGuanThreeFragment extends BaseFragment {
         tv_name = view.findViewById(R.id.tv_kg_three);
         mConnection = SingleWebSocketConnection.getInstance();
         token = (String) SPUtils.get(getActivity(),"token","");
-//        mConnection.sendTextMessage("{\"pn\":\"SLTP\"}");
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("DCPP");
+        homeReceiver = new HomeReceiver();
+        getActivity().registerReceiver(homeReceiver, intentFilter);
         return view;
     }
 
@@ -82,11 +99,11 @@ public class KaiGuanThreeFragment extends BaseFragment {
         }
         List<DeviceClassyBean.ProductList.DeviceList.DevAttList> devAttList = productList.deviceList.get(0).devAttList;
         deviceId = devAttList.get(0).deviceId;
-        int value_left = devAttList.get(0).value;
+        value_left = devAttList.get(0).value;
         setViewByAtt(value_left,ivKgLeft,tvKgLeft);
-        int value_middle = devAttList.get(1).value;
+        value_middle = devAttList.get(1).value;
         setViewByAtt(value_middle,ivKgMiddle,tvKgMiddle);
-        int value_right = devAttList.get(2).value;
+        value_right = devAttList.get(2).value;
         setViewByAtt(value_right,ivKgRight,tvKgRight);
 
     }
@@ -103,20 +120,66 @@ public class KaiGuanThreeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        getActivity().unregisterReceiver(homeReceiver);
     }
 
     @OnClick({R.id.ll_kg_left, R.id.ll_kg_middle, R.id.ll_kg_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_kg_left:
-                mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+token+"\",\"param\":\"\"}");
+                if (value_left==0){
+                    //左开动作
+                   String dactid= productList.deviceList.get(0).devActList.get(0).id;
+                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }else {
+//                    左关动作
+                    String dactid= productList.deviceList.get(0).devActList.get(1).id;
+                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }
                 break;
             case R.id.ll_kg_middle:
-
+                if (value_middle==0){
+                    //中开动作
+                    String dactid= productList.deviceList.get(0).devActList.get(2).id;
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }else {
+//                    中关动作
+                    String dactid= productList.deviceList.get(0).devActList.get(3).id;
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }
                 break;
             case R.id.ll_kg_right:
-
+                if (value_right==0){
+                    //右开动作
+                    String dactid= productList.deviceList.get(0).devActList.get(4).id;
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }else {
+//                    右关动作
+                    String dactid= productList.deviceList.get(0).devActList.get(5).id;
+                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                }
                 break;
+        }
+    }
+    class HomeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String message = intent.getStringExtra("message");
+            if (action.equals("DCPP")) {
+                try {
+                    JSONObject jsonObject=new JSONObject(message);
+                    String ecode = jsonObject.getString("ecode");
+                    String s = EcodeValue.resultEcode(ecode);
+                    SmartToast.show(s);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+//                parseData(message);
+            }
         }
     }
 }

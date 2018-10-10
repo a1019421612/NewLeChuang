@@ -1,6 +1,9 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hbdiye.newlechuangsmart.R;
@@ -21,13 +24,30 @@ public class LinkageDetailActivity extends AppCompatActivity {
     MyListView lvAddResult;
     private List<String> mList = new ArrayList<>();
     private LinkageConditionAdapter adapter,mAdapter;
+    private ProgressDialog progressDialog;
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            initData();
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linkage_detail);
         ButterKnife.bind(this);
         initView();
-        initData();
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("加载中...");
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message message = mHandler.obtainMessage();
+                mHandler.sendMessageDelayed(message,2000);
+            }
+        }).start();
+
     }
 
     private void initData() {
@@ -36,6 +56,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
         mAdapter.notifyDataSetChanged();
+        progressDialog.dismiss();
     }
 
     private void initView() {

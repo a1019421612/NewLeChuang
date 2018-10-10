@@ -7,52 +7,72 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.bean.ChannelItem;
+import com.hbdiye.newlechuangsmart.view.DragGrid;
 
 import java.util.List;
 
 public class DragAdapter extends BaseAdapter {
-    /** TAG*/
+    /**
+     * TAG
+     */
     private final static String TAG = "DragAdapter";
-    /** 是否显示底部的ITEM */
+    /**
+     * 是否显示底部的ITEM
+     */
     private boolean isItemShow = false;
     private Context context;
-    /** 控制的postion */
+    /**
+     * 控制的postion
+     */
     private int holdPosition;
-    /** 是否改变 */
+    /**
+     * 是否改变
+     */
     private boolean isChanged = false;
-    /** 列表数据是否改变 */
-    private boolean isListChanged = false;
-    /** 是否可见 */
+    /**
+     * 是否可见
+     */
     boolean isVisible = true;
-    /** 可以拖动的列表（即用户选择的频道列表） */
-    public List<String> channelList;
-    /** TextView 频道内容 */
+    /**
+     * 可以拖动的列表（即用户选择的频道列表）
+     */
+    public List<ChannelItem> channelList;
+    private DragGrid dragGrid;
+    /**
+     * TextView 频道内容
+     */
     private TextView item_text;
-    /** 要删除的position */
+    /**
+     * 要删除的position
+     */
     public int remove_position = -1;
-    /** 是否是用户频道 */
-    private boolean isUser = false;
-    private ImageView iv_del;
+    private boolean isDeleteIcon;
+    private RelativeLayout ri_delete;//删除按钮
+    private OnDelecteItemListener listener;
+    private boolean isDeleteing;//是否处于删除状态
+    private boolean hideDeleteIcon;
+    private OnStartDragingListener startDragingListener;
+    private ImageView imageView;
 
-    public DragAdapter(Context context, List<String> channelList, boolean isUser) {
+    public DragAdapter(Context context, List<ChannelItem> channelList, DragGrid dragGrid) {
         this.context = context;
         this.channelList = channelList;
-        this.isUser = isUser;
+        this.dragGrid = dragGrid;
     }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return channelList == null ? 0 : channelList.size();
     }
 
     @Override
-    public String getItem(int position) {
-        // TODO Auto-generated method stub
+    public ChannelItem getItem(int position) {
         if (channelList != null && channelList.size() != 0) {
             return channelList.get(position);
         }
@@ -61,58 +81,104 @@ public class DragAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_mygridview_item, null);
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.subscribe_category_item, null);
+        imageView = view.findViewById(R.id.imageview);
         item_text = (TextView) view.findViewById(R.id.text_item);
-        iv_del = view.findViewById(R.id.iv_del);
-        String channel = getItem(position);
-        item_text.setText(channel);
-        iv_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,"del", Toast.LENGTH_SHORT).show();
-                channelList.remove(position);
-                notifyDataSetChanged();
-            }
-        });
-        if(isUser){
-//            if ((position == 0) || (position == 1)){
-//                item_text.setEnabled(false);
-//            }
-        }
+        ri_delete = (RelativeLayout) view.findViewById(R.id.ri_delete);
+//        TextView icon_news = (TextView) view.findViewById(R.id.icon_new);
+        ChannelItem channel = getItem(position);
+        item_text.setText(channel.getName());
+
+//        if ((position == 0)) {
+////			item_text.setTextColor(context.getResources().getColor(R.color.black));
+//            item_text.setEnabled(false);
+//        }
         if (isChanged && (position == holdPosition) && !isItemShow) {
             item_text.setText("");
+            imageView.setVisibility(View.INVISIBLE);
+            ri_delete.setVisibility(View.INVISIBLE);
             item_text.setSelected(true);
             item_text.setEnabled(true);
+            ri_delete.setVisibility(View.INVISIBLE);
+            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
             isChanged = false;
         }
-        if (!isVisible && (position == -1 + channelList.size())) {
+        if (!isVisible && (position == -1 + channelList.size())) {//TODO 添加item时的处理
             item_text.setText("");
+            imageView.setVisibility(View.INVISIBLE);
+            ri_delete.setVisibility(View.INVISIBLE);
             item_text.setSelected(true);
             item_text.setEnabled(true);
+            ri_delete.setVisibility(View.INVISIBLE);
+            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
         }
-        if(remove_position == position){
+        if (remove_position == position) {
             item_text.setText("");
+            imageView.setVisibility(View.INVISIBLE);
+            ri_delete.setVisibility(View.INVISIBLE);
+            item_text.setSelected(true);
+            item_text.setEnabled(true);
+            ri_delete.setVisibility(View.INVISIBLE);
+            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
         }
+        //TODO 展示删除按钮
+        if (isDeleteIcon && position != -1) {
+            if (!isVisible && (position == -1 + channelList.size())
+                    || (remove_position == position) && isDeleteing
+                    || (position == dragGrid.getShowing()) && !isItemShow) {
+                ri_delete.setVisibility(View.INVISIBLE);
+            } else {
+                ri_delete.setVisibility(View.VISIBLE);
+            }
+        }
+        //TODO 判断是否展示新条目表示
+        int newItem = channel.getNewItem();
+//        if (newItem == 1) {
+//            if (!isVisible && (position == -1 + channelList.size())
+//                    || (remove_position == position) && isDeleteing
+//                    || (position == dragGrid.getShowing()) && !isItemShow) {
+//                icon_news.setVisibility(View.INVISIBLE);
+//            } else {
+//                icon_news.setVisibility(View.VISIBLE);
+//            }
+//        } else {
+//            icon_news.setVisibility(View.INVISIBLE);
+//        }
+        if (hideDeleteIcon) {
+            ri_delete.setVisibility(View.INVISIBLE);
+            if (position == channelList.size() - 1) {//到最后重置状态
+                hideDeleteIcon = false;
+            }
+        }
+        ri_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != listener)
+                    listener.onDelete(position, convertView, parent);
+            }
+        });
         return view;
     }
 
-    /** 添加频道列表 */
-    public void addItem(String channel) {
+    /**
+     * 添加频道列表
+     */
+    public void addItem(ChannelItem channel) {
         channelList.add(channel);
-        isListChanged = true;
         notifyDataSetChanged();
     }
 
-    /** 拖动变更频道排序 */
+    /**
+     * 拖动变更频道排序
+     */
     public void exchange(int dragPostion, int dropPostion) {
         holdPosition = dropPostion;
-        String dragItem = getItem(dragPostion);
+        ChannelItem dragItem = getItem(dragPostion);
         Log.d(TAG, "startPostion=" + dragPostion + ";endPosition=" + dropPostion);
         if (dragPostion < dropPostion) {
             channelList.add(dropPostion + 1, dragItem);
@@ -122,50 +188,99 @@ public class DragAdapter extends BaseAdapter {
             channelList.remove(dragPostion + 1);
         }
         isChanged = true;
-        isListChanged = true;
         notifyDataSetChanged();
     }
 
-    /** 获取频道列表 */
-    public List<String> getChannnelLst() {
+    /**
+     * 获取频道列表
+     */
+    public List<ChannelItem> getChannnelLst() {
         return channelList;
     }
 
-    /** 设置删除的position */
+    /**
+     * 设置删除的position
+     */
     public void setRemove(int position) {
         remove_position = position;
         notifyDataSetChanged();
     }
 
-    /** 删除频道列表 */
+    /**
+     * 删除频道列表
+     */
     public void remove() {
         channelList.remove(remove_position);
         remove_position = -1;
-        isListChanged = true;
         notifyDataSetChanged();
     }
 
-    /** 设置频道列表 */
-    public void setListDate(List<String> list) {
+    /**
+     * 设置频道列表
+     */
+    public void setListDate(List<ChannelItem> list) {
         channelList = list;
     }
 
-    /** 获取是否可见 */
+    /**
+     * 获取是否可见
+     */
     public boolean isVisible() {
         return isVisible;
     }
 
-    /** 排序是否发生改变 */
-    public boolean isListChanged() {
-        return isListChanged;
-    }
-
-    /** 设置是否可见 */
+    /**
+     * 设置是否可见
+     */
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
-    /** 显示放下的ITEM */
+
+    /**
+     * 显示放下的ITEM
+     */
     public void setShowDropItem(boolean show) {
         isItemShow = show;
+    }
+
+    //显示删除键的icon
+    public void showDeleteIcon(boolean isDeleteIcon) {
+        this.isDeleteIcon = isDeleteIcon;
+        if(startDragingListener!=null)
+            startDragingListener.onStartDraging();
+    }
+
+    //隐藏删除键
+    public void hideDeleteIcon(boolean hideDeleteIcon) {
+
+        this.hideDeleteIcon = hideDeleteIcon;
+    }
+
+    public interface OnDelecteItemListener {
+        void onDelete(int position, View convertView, ViewGroup parent);
+    }
+
+    public void setOnDelecteItemListener(OnDelecteItemListener listener) {
+
+        this.listener = listener;
+    }
+
+    /**
+     * 是否正在删除状态
+     *
+     * @param isDeleteing
+     */
+    public void setIsDeleteing(boolean isDeleteing) {
+
+        this.isDeleteing = isDeleteing;
+    }
+
+    public interface OnStartDragingListener{
+        void onStartDraging();
+    }
+
+    public void setOnStartDragingListener(OnStartDragingListener startDragingListener){
+
+        this.startDragingListener = startDragingListener;
     }
 }

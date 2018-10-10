@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/ll_root"
     tools:context=".activity.RoomActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/beijing" />
+            android:src="@drawable/denglutupian" />
+
         <RelativeLayout
             android:id="@+id/rl_head"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            >
+            android:layout_height="?attr/actionBarSize">
+
             <ImageView
                 android:id="@+id/iv_base_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/back"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                />
+                android:src="@mipmap/back" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_head1"
-            android:layout_below="@+id/rl_head"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/liandong_bg">
-            <RelativeLayout
-                android:id="@+id/ll_linkage_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_circle"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_centerHorizontal="true">
-                <ImageView
-                    android:id="@+id/iv_linkage_ic"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/huijia"
-                    />
+    </RelativeLayout>
 
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/tv_room_name"
-                android:layout_below="@id/ll_linkage_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="回家"
-                android:layout_centerHorizontal="true"
-                />
-            <ImageView
-                android:id="@+id/iv_linkage_edit"
-                android:layout_toRightOf="@id/tv_room_name"
-                android:layout_below="@id/ll_linkage_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:src="@drawable/edit"
-                android:layout_marginBottom="@dimen/dp_20"
-                />
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ll_linkage_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_circle"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_linkage_ic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/danrenfang" />
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_below="@id/ll_linkage_icon"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/tab_me_hover"
+        android:drawablePadding="@dimen/dp_10"
+        android:hint="请输入房间名称"
+        android:maxLines="1"
+        android:padding="@dimen/dp_10"
+        android:textColor="#555555"
+        android:textColorHint="#cccccc"
+        android:textSize="14sp" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="完成"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20"
+        android:background="@drawable/btn_bg" />
+</RelativeLayout>

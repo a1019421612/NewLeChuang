@@ -28,12 +28,8 @@ public class AddRoomActivity extends AppCompatActivity {
     ImageView ivLinkageIc;
     @BindView(R.id.ll_linkage_icon)
     RelativeLayout llLinkageIcon;
-    @BindView(R.id.tv_room_name)
-    TextView tvRoomName;
-    @BindView(R.id.iv_linkage_edit)
-    ImageView ivLinkageEdit;
     @BindView(R.id.ll_root)
-    LinearLayout llRoot;
+    RelativeLayout llRoot;
     private LinkageAddIconPopwindow popwindow;
     private List<Integer> mList_icon = new ArrayList<>();
     @Override

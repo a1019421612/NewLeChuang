@@ -109,6 +109,12 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
+
+//                =========================================================
+                if (message.contains("\"pn\":\"DCPP\"")) {
+                    websocketSendBroadcase(message, "DCPP");
+                }
+//                ========================================================
                 if (message.contains("\"pn\":\"SLTP\"")) {
                     websocketSendBroadcase(message, "SLTP");
                 }
@@ -347,7 +353,8 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void displayImage(String imageURL, ImageView imageView) {
-            PicUtils.showImgRoundedNoDiskCache(getActivity(), imageView, imageURL);
+//            PicUtils.showImgRoundedNoDiskCache(getActivity(), imageView, R.drawable.denglutupian);
+            PicUtils.showImgRoundedNoDiskCacheNoUrl(getActivity(), imageView);
         }
     };
 

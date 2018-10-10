@@ -6,117 +6,124 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.bean.ChannelItem;
 
 import java.util.List;
 
 public class OtherAdapter extends BaseAdapter {
+	private Context context;
+	public List<ChannelItem> channelList;
+	private TextView item_text;
+	/** 是否可见 */
+	boolean isVisible = true;
+	/** 要删除的position */
+	public int remove_position = -1;
+	/**
+	 * 删除图标是否可见
+	 */
+	boolean show=false;
+	private RelativeLayout ri_delete;
+	private ImageView imageview;
 
-    private Context context;
-    public List<String> channelList;
-    private TextView item_text;
-    /** 是否可见 在移动动画完毕之前不可见，动画完毕后可见*/
-    boolean isVisible = true;
-    /** 要删除的position */
-    public int remove_position = -1;
-    /** 是否是用户频道 */
-    private boolean isUser = false;
-    private ImageView iv_del;
-    private ImageView imageView;
+	public OtherAdapter(Context context, List<ChannelItem> channelList) {
+		this.context = context;
+		this.channelList = channelList;
+	}
 
-    public OtherAdapter(Context context, List<String> channelList , boolean isUser) {
-        this.context = context;
-        this.channelList = channelList;
-        this.isUser = isUser;
-    }
+	@Override
+	public int getCount() {
+		return channelList == null ? 0 : channelList.size();
+	}
 
-    @Override
-    public int getCount() {
-        return channelList == null ? 0 : channelList.size()+1;
-    }
+	@Override
+	public ChannelItem getItem(int position) {
+		if (channelList != null && channelList.size() != 0) {
+			return channelList.get(position);
+		}
+		return null;
+	}
 
-    @Override
-    public String getItem(int position) {
-        if (channelList != null && channelList.size() != 0&&position<=channelList.size()-1) {
-            return channelList.get(position);
-        }
-        return null;
-    }
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+	@Override
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		View view = LayoutInflater.from(context).inflate(R.layout.subscribe_category_item, null);
+		ri_delete = view.findViewById(R.id.ri_delete);
+		imageview = view.findViewById(R.id.imageview);
+		item_text = (TextView) view.findViewById(R.id.text_item);
+		ChannelItem channel = getItem(position);
+		item_text.setText(channel.getName());
+		if (!isVisible && (position == -1 + channelList.size())){
+			item_text.setText("");
+			imageview.setVisibility(View.INVISIBLE);
+			item_text.setVisibility(View.GONE);//在动画没有结束时，设置不可见
+		}
+		if(remove_position == position){
+			item_text.setText("");
+			item_text.setVisibility(View.GONE);
+			imageview.setVisibility(View.INVISIBLE);
+		}
+		if (show){
+			ri_delete.setVisibility(View.VISIBLE);
+		}else {
+			ri_delete.setVisibility(View.INVISIBLE);
+		}
+		ri_delete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				channelList.remove(position);
+				notifyDataSetChanged();
+			}
+		});
+		return view;
+	}
+	
+	/** 获取频道列表 */
+	public List<ChannelItem> getChannnelLst() {
+		return channelList;
+	}
+	
+	/** 添加频道列表 */
+	public void addItem(ChannelItem channel) {
+		channelList.add(channel);
+		notifyDataSetChanged();
+	}
+	public void  showDelIcon(boolean show){
+		this.show=show;
+		notifyDataSetChanged();
+	}
+	/** 设置删除的position */
+	public void setRemove(int position) {
+		remove_position = position;
+		notifyDataSetChanged();
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_mygridview_item, null);
-        item_text = (TextView) view.findViewById(R.id.text_item);
-        imageView = view.findViewById(R.id.iv_item);
-        iv_del = view.findViewById(R.id.iv_del);
-        if (position==channelList.size()){
-            iv_del.setVisibility(View.GONE);
-            item_text.setText("添加");
-            imageView.setImageResource(R.drawable.home_add);
-        }else {
-            String channel = getItem(position);
-            item_text.setText(channel);
-            if(isUser){
-                if ((position == 0) || (position == 1)){
-                    item_text.setEnabled(false);
-                }
-            }
-            if (!isVisible && (position == -1 + channelList.size())){
-                item_text.setText("");
-                item_text.setSelected(true);
-                item_text.setEnabled(true);
-            }
-            if(remove_position == position){
-                item_text.setText("");
-            }
-        }
-        return view;
-    }
+	/** 删除频道列表 */
+	public void remove() {
+		channelList.remove(remove_position);
+		remove_position = -1;
+		notifyDataSetChanged();
+	}
+	/** 设置频道列表 */
+	public void setListDate(List<ChannelItem> list) {
+		channelList = list;
+	}
 
-    /** 获取频道列表 */
-    public List<String> getChannnelLst() {
-        return channelList;
-    }
-
-    /** 添加频道列表 */
-    public void addItem(String channel) {
-        channelList.add(channel);
-        notifyDataSetChanged();
-    }
-
-    /** 设置删除的position */
-    public void setRemove(int position) {
-        remove_position = position;
-        notifyDataSetChanged();
-        // notifyDataSetChanged();
-    }
-
-    /** 删除频道列表 */
-    public void remove() {
-        channelList.remove(remove_position);
-        remove_position = -1;
-        notifyDataSetChanged();
-    }
-    /** 设置频道列表 */
-    public void setListDate(List<String> list) {
-        channelList = list;
-    }
-
-    /** 获取是否可见 */
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    /** 设置是否可见 */
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
-
+	/** 获取是否可见 */
+	public boolean isVisible() {
+		return isVisible;
+	}
+	
+	/** 设置是否可见 */
+	public void setVisible(boolean visible) {
+		isVisible = visible;
+	}
 }
