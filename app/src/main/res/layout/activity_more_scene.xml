@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_14"
                     android:textColor="#888888"
-                    android:text="切换栏目" />
+                    android:text="首页场景" />
 
                 <View
                     android:layout_width="0dp"
@@ -99,12 +99,13 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:gravity="center"
-                android:horizontalSpacing="6dip"
+                android:horizontalSpacing="20dp"
+                android:verticalSpacing="20dp"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="4"
                 android:scrollbars="vertical"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="14.0px" />
+              />
 
             <TextView
                 android:layout_width="match_parent"
@@ -130,7 +131,7 @@
                     android:layout_marginBottom="14.0dip"
                     android:layout_marginLeft="10.0dip"
                     android:layout_marginTop="5dp"
-                    android:text="更多栏目" />
+                    android:text="更多场景" />
 
                 <com.hbdiye.newlechuangsmart.view.OtherGridView
                     android:id="@+id/otherGridView"
@@ -139,12 +140,13 @@
                     android:layout_marginLeft="10dip"
                     android:layout_marginRight="10dip"
                     android:gravity="center"
-                    android:horizontalSpacing="6dip"
+                    android:horizontalSpacing="20dp"
+                    android:verticalSpacing="20dp"
                     android:listSelector="@android:color/transparent"
                     android:numColumns="4"
                     android:scrollbars="vertical"
                     android:stretchMode="columnWidth"
-                    android:verticalSpacing="14.0px" />
+                     />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

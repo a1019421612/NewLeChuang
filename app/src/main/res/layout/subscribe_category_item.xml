@@ -4,24 +4,29 @@
     android:layout_width="match_parent"
     android:descendantFocusability="blocksDescendants"
     android:layout_height="wrap_content">
-<ImageView
-    android:id="@+id/imageview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@mipmap/ic_launcher"
-    android:layout_centerHorizontal="true"
-    />
+    <com.hbdiye.newlechuangsmart.view.SquareLayout
+        android:id="@+id/rl_sl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/home_scene_shape">
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            />
+    </com.hbdiye.newlechuangsmart.view.SquareLayout>
+
     <TextView
         android:id="@+id/text_item"
-        android:layout_below="@id/imageview"
+        android:layout_below="@id/rl_sl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
         android:text="轻松一刻"
         android:textSize="13.0sp" />
 
@@ -35,8 +40,8 @@
         android:visibility="invisible">
 
         <ImageView
-            android:layout_width="9dp"
-            android:layout_height="9dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_centerInParent="true"
             android:background="@drawable/del" />
     </RelativeLayout>
