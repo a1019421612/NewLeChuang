@@ -222,6 +222,7 @@ public class CameraListActivity extends BaseActivity {
                         Intent intent = new Intent(CameraListActivity.this, EZMessageActivity2.class);
                         intent.putExtra(IntentConsts.EXTRA_DEVICE_ID, deviceInfo_msg.getDeviceSerial());
                         startActivity(intent);
+
                         break;
                     case R.id.tab_setdevice_btn:
                         //设置
