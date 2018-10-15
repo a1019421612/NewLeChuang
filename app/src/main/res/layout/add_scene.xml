@@ -21,9 +21,11 @@
             android:src="@drawable/home_add" />
     </com.hbdiye.newlechuangsmart.view.SquareLayout>
     <TextView
+        android:id="@+id/tv_content_home"
         android:layout_below="@id/rl_a"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
         android:text="回家"

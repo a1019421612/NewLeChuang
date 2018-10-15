@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment {
     public MyWebSocketHandler instance;
 
     private List<Integer> mList = new ArrayList<>();
+    private List<String> mList_t = new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
 
@@ -67,9 +69,21 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         bind = ButterKnife.bind(this, view);
         initWebSocket();
-        for (int i = 0; i < 5; i++) {
-            mList.add(R.drawable.tab_chat_hover);
-        }
+        mList.add(R.drawable.huijia);
+        mList.add(R.drawable.lijia);
+        mList.add(R.drawable.xican);
+        mList.add(R.drawable.xizao);
+        mList.add(R.drawable.yeqi);
+        mList.add(R.drawable.zuofan);
+        mList.add(R.drawable.xiawucha);
+        mList_t.add("回家");
+        mList_t.add("离家");
+        mList_t.add("西餐");
+        mList_t.add("洗澡");
+        mList_t.add("夜起");
+        mList_t.add("做饭");
+        mList_t.add("下午茶");
+
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
@@ -399,16 +413,18 @@ public class HomeFragment extends Fragment {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.add_scene, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
+            TextView textView=(TextView) view.findViewById(R.id.tv_content_home);
             if (mList.size() == i) {
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
+                textView.setText("更多");
                 if (i == 9) {
                     imageView.setVisibility(View.GONE);
                 }
             } else {
                 Glide.with(getActivity()).load(mList.get(i)).into(imageView);
+                textView.setText(mList_t.get(i));
             }
-
             return view;
         }
     }

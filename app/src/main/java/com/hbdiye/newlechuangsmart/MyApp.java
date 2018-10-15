@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.videogo.openapi.EZOpenSDK;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -20,13 +21,21 @@ public class MyApp extends Application{
      */
     public static List<Activity> mActivitys = Collections
             .synchronizedList(new LinkedList<Activity>());
-
+    public static String APPKEY="378b43177968438bb78bf72e645f2ddc";
+    public static String APPSECRET="1dab52a43e50c0c53c43bac177c7604d";
     private static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
         SmartToast.plainToast(this);
+        //摄像头
+        /** * sdk日志开关，正式发布需要去掉 */
+        EZOpenSDK.showSDKLog(true);
+        /** * 设置是否支持P2P取流,详见api */
+        EZOpenSDK.enableP2P(false);
+        /** * APP_KEY请替换成自己申请的 */
+        EZOpenSDK.initLib(this, APPKEY);
     }
     /**
      * @param activity 作用说明 ：添加一个activity到管理里

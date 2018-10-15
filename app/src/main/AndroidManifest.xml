@@ -2,12 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hbdiye.newlechuangsmart">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    //网络权限
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    //存储权限
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    //wifi 状态权限
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    //热点配网扫描wifi需要使用
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MyApp"
@@ -17,21 +28,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".activity.LoginActivity" >
+        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.videogo.main.EzvizWebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".receiver.EzvizBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.videogo.action.OAUTH_SUCCESS_ACTION" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ForgetPasswordActivityActivity" />
-        <activity android:name=".activity.WelcomeActivity">
-
-        </activity>
+        <activity android:name=".activity.WelcomeActivity" />
         <activity
             android:name=".activity.LinkageAddActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -52,7 +72,32 @@
         <activity android:name=".activity.ChoiceDeviceActivity" />
         <activity android:name=".activity.MyDeviceActivity" />
         <activity android:name=".activity.TimeConditionActivity" />
-        <activity android:name=".activity.MoreSceneActivity"></activity>
+        <activity android:name=".activity.MoreSceneActivity" />
+        <activity android:name=".activity.MyErCodeActivity" />
+        <activity android:name=".zxing.activity.CaptureActivity" />
+        <activity android:name=".activity.CameraListActivity" />
+        <activity android:name=".activity.EZRealPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".remoteplayback.list.PlayBackListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".message.EZMessageActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".message.remoteplayback.EZRemotePlayBackActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".message.EZMessageImageActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".devicemgt.ModifyDeviceNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".devicemgt.EZDeviceSettingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

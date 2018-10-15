@@ -15,11 +15,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
 import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
+import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
+import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +76,7 @@ public class MineFragment extends Fragment {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
                 //二维码图片
+                startActivity(new Intent(getActivity(), MyErCodeActivity.class));
                 break;
             case R.id.profile_image:
                 //头像
@@ -83,12 +87,14 @@ public class MineFragment extends Fragment {
                 startActivity(new Intent(getActivity(),PersonInfoActivity.class));
                 break;
             case R.id.ll_mine_sys:
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera",false));
                 break;
             case R.id.ll_mine_family_member:
                 //家庭成员
                 startActivity(new Intent(getActivity(),FamilyMemberActivity.class));
                 break;
             case R.id.ll_mine_about_us:
+                startActivity(new Intent(getActivity(), CameraListActivity.class));
                 break;
             case R.id.ll_mine_devices:
                 //我的设备
