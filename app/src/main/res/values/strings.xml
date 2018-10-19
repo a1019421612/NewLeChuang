@@ -455,7 +455,7 @@
     <string name="ez_settings_device_serial">序列号</string>
     <string name="detail_safe_close_btn_tip">关闭后，视频与图片查看的安全级别将降低，确定要关闭？</string>
     <string name="ez_please_input_sms_code">请输入短信验证码</string>
-    <string name="ez_dialog_btn_disable_video_encrypt">关闭视频加密</string>
+    <string name="ez_dialog_btn_disable_video_encrypt">关闭加密</string>
     <string name="interface_test_hint_input_serial">输入测试序列号</string>
     <string name="interface_test_api">测试接口</string>
     <string name="interface_test_openCloudPage">openCloudPage</string>

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -54,7 +55,7 @@ public class ModifyDeviceNameActivity extends RootActivity implements OnClickLis
     private final static int TYPE_DETECTOR = 0x04;
 
     /** 标题栏 */
-    private TitleBar mTitleBar;
+//    private TitleBar mTitleBar;
     /** 输入框 */
     private EditText mNameText;
     /** 类型 */
@@ -82,7 +83,8 @@ public class ModifyDeviceNameActivity extends RootActivity implements OnClickLis
 
     private String mDeviceName;
     private String mDeviceSerial;
-
+    private ImageView iv_back;
+    private TextView tv_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +100,12 @@ public class ModifyDeviceNameActivity extends RootActivity implements OnClickLis
      * 控件关联
      */
     private void findViews() {
-        mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-        mTitleBar.setBackButton(R.drawable.common_title_cancel_selector);
+//        mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+//        mTitleBar.setBackButton(R.drawable.common_title_cancel_selector);
+
+        iv_back = findViewById(R.id.iv_device_back);
+        tv_title = findViewById(R.id.tv_device_title);
+
         mNameText = (EditText) findViewById(R.id.name_text);
         mNameDelButton = (ImageButton) findViewById(R.id.name_del);
         mDetectorTypeView = (TextView) findViewById(R.id.detector_type);
@@ -132,14 +138,21 @@ public class ModifyDeviceNameActivity extends RootActivity implements OnClickLis
      * 初始化标题栏
      */
     private void initTitleBar() {
-        mTitleBar.setTitle(R.string.ez_modify_name);
-        mTitleBar.addBackButton(new OnClickListener() {
-
+        tv_title.setText("修改设备名称");
+        iv_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
+//        mTitleBar.setTitle(R.string.ez_modify_name);
+//        mTitleBar.addBackButton(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
 //        mTitleBar.addRightButton(R.drawable.common_title_confirm_selector, new OnClickListener() {
 //
 //            @Override

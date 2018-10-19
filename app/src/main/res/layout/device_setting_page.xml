@@ -6,10 +6,35 @@
     android:background="@color/common_bg"
     android:orientation="vertical" >
 
-    <com.videogo.widget.TitleBar
-        android:id="@+id/title_bar"
+    <LinearLayout
+        android:id="@+id/toolbar_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/iv_device_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/back"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                />
+            <TextView
+                android:id="@+id/tv_device_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="---"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/size_20"
+                />
+        </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -62,16 +87,19 @@
                             android:textSize="@dimen/device_set_sub_text_size" />
                     </LinearLayout>
 
-                    <ImageView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/device_set_arrow_padding"
                         android:layout_weight="0"
-                        android:src="@drawable/arrow_next" />
+                        android:textSize="@dimen/device_set_sub_text_size"
+                        android:textColor="@color/blue_text"
+                        android:text="更换名称" />
                </LinearLayout>
             </com.hbdiye.newlechuangsmart.widget.GroupLayout>
             
             <LinearLayout
+                android:visibility="gone"
                     android:id="@+id/ez_device_serial_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/device_set_layout_height"
@@ -83,6 +111,7 @@
                     android:paddingRight="@dimen/device_set_padding" >
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -118,6 +147,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/defence_plan_parent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,6 +160,7 @@
                     android:layout_marginTop="@dimen/device_set_layout_padding" >
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/device_set_layout_height"
                         android:gravity="center_vertical"
@@ -184,6 +215,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/defence_plan_set_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,6 +274,7 @@
                 </com.hbdiye.newlechuangsmart.widget.GroupLayout>
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/common_bg"
@@ -257,6 +290,7 @@
                 style="@style/CommonGroupLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/device_set_layout_padding" >
 
                 <LinearLayout
@@ -348,6 +382,7 @@
                 style="@style/CommonGroupLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/device_set_layout_padding" >
 
                 <LinearLayout
@@ -412,21 +447,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/detail_safe_mode"
+                            android:text="是否加密"
                             android:textColor="@color/common_text"
                             android:textSize="@dimen/device_set_text_size" />
 
                         <Button
                             android:id="@+id/encrypt_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="60dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/device_set_arrow_padding"
-                            android:layout_weight="0"
-                            android:background="@drawable/autologin_off" />
+                            android:background="@drawable/guan" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/modify_password_layout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/device_set_layout_height"
@@ -491,21 +526,17 @@
                         android:src="@drawable/arrow_next" />
                 </LinearLayout>
             </com.hbdiye.newlechuangsmart.widget.GroupLayout>
-            <com.hbdiye.newlechuangsmart.widget.GroupLayout
-                style="@style/CommonGroupLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/device_set_layout_padding" >
 
                 <TextView
                     android:id="@+id/device_delete"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/device_set_layout_height"
                     android:gravity="center"
-                    android:text="@string/delete"
-                    android:textColor="#ff0000"
+                    android:text="删除该设备"
+                    android:textColor="#df2d10"
+                    android:background="@drawable/btn_login_shape_white"
+                    android:layout_margin="@dimen/dp_20"
                     android:textSize="@dimen/device_set_text_size" />
-            </com.hbdiye.newlechuangsmart.widget.GroupLayout>
         </LinearLayout>
     </ScrollView>
 

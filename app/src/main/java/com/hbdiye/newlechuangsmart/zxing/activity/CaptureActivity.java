@@ -37,11 +37,17 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.SeriesNumSearchActivity;
 import com.hbdiye.newlechuangsmart.zxing.camera.CameraManager;
 import com.hbdiye.newlechuangsmart.zxing.decoding.CaptureActivityHandler;
 import com.hbdiye.newlechuangsmart.zxing.decoding.InactivityTimer;
 import com.hbdiye.newlechuangsmart.zxing.decoding.RGBLuminanceSource;
 import com.hbdiye.newlechuangsmart.zxing.view.ViewfinderView;
+import com.videogo.exception.BaseException;
+import com.videogo.exception.ExtraException;
+import com.videogo.util.ConnectionDetector;
+import com.videogo.util.LocalValidate;
+import com.videogo.util.LogUtil;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -98,11 +104,11 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
             iv_base_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("type", 0);
-//                    Intent intent = new Intent(CaptureActivity.this, SeriesNumSearchActivity.class);
-//                    intent.putExtras(bundle);
-//                    CaptureActivity.this.startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", 0);
+                    Intent intent = new Intent(CaptureActivity.this, SeriesNumSearchActivity.class);
+                    intent.putExtras(bundle);
+                    CaptureActivity.this.startActivity(intent);
                 }
             });
         }
@@ -256,7 +262,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
             playBeep = false;
         }
-//        initBeepSound();
+        initBeepSound();
         vibrate = true;
 
         //quit the scan view
@@ -332,7 +338,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         mSerialNoStr = "";
         mSerialVeryCodeStr = "";
         deviceType = "";
-//        LogUtil.errorLog(TAG, resultString);
+        LogUtil.errorLog(TAG, resultString);
         String[] newlineCharacterSet = {
                 "\n\r", "\r\n", "\r", "\n"};
         String stringOrigin = resultString;
@@ -398,10 +404,10 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         if (mSerialNoStr == null) {
             mSerialNoStr = stringOrigin;
         }
-//        LogUtil.debugLog(TAG, "mSerialNoStr = " + mSerialNoStr + ",mSerialVeryCodeStr = " + mSerialVeryCodeStr
-//                + ",deviceType = " + deviceType);
+        LogUtil.debugLog(TAG, "mSerialNoStr = " + mSerialNoStr + ",mSerialVeryCodeStr = " + mSerialVeryCodeStr
+                + ",deviceType = " + deviceType);
         // 判断是不是9位
-//        isValidate();
+        isValidate();
     }
 
     /**
@@ -410,47 +416,47 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
      * @throws
      */
     /** 本地数据合法性检测变量 */
-//    private LocalValidate mLocalValidate = null;
-//    private void isValidate() {
-//        mLocalValidate = new LocalValidate();
-//        try {
-//            mLocalValidate.localValidatSerialNo(mSerialNoStr);
-//            LogUtil.infoLog(TAG, mSerialNoStr);
-//        } catch (BaseException e) {
-//            handleLocalValidateSerialNoFail(e.getErrorCode());
-//            LogUtil.errorLog(TAG, "searchCameraBySN-> local validate serial no fail, errCode:" + e.getErrorCode());
-//            return;
-//        }
-//
-//        if (!ConnectionDetector.isNetworkAvailable(this)) {
-//            SmartToast.show(getResources().getString(R.string.query_camera_fail_network_exception));
-//            return;
-//        }
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("type", 1);
-//        bundle.putString("SerialNo", mSerialNoStr);
-//        bundle.putString("very_code", mSerialVeryCodeStr);
-//        bundle.putString("device_type", deviceType);
-//        LogUtil.debugLog(TAG, "very_code:" + mSerialVeryCodeStr);
-//        Intent intent = new Intent(CaptureActivity.this, SeriesNumSearchActivity.class);
-//        intent.putExtras(bundle);
-//        CaptureActivity.this.startActivity(intent);
-//    }
-//    private void handleLocalValidateSerialNoFail(int errCode) {
-//        switch (errCode) {
-//            case ExtraException.SERIALNO_IS_NULL:
-//                SmartToast.show(getResources().getString(R.string.serial_number_is_null));
-//                break;
-//            case ExtraException.SERIALNO_IS_ILLEGAL:
-//                // showToast(R.string.serial_number_is_illegal);
-//                SmartToast.show("设备编号不合法");
-//                break;
-//            default:
-//                SmartToast.show(getResources().getString(R.string.serial_number_error));
-//                LogUtil.errorLog(TAG, "handleLocalValidateSerialNoFail-> unkown error, errCode:" + errCode);
-//                break;
-//        }
-//    }
+    private LocalValidate mLocalValidate = null;
+    private void isValidate() {
+        mLocalValidate = new LocalValidate();
+        try {
+            mLocalValidate.localValidatSerialNo(mSerialNoStr);
+            LogUtil.infoLog(TAG, mSerialNoStr);
+        } catch (BaseException e) {
+            handleLocalValidateSerialNoFail(e.getErrorCode());
+            LogUtil.errorLog(TAG, "searchCameraBySN-> local validate serial no fail, errCode:" + e.getErrorCode());
+            return;
+        }
+
+        if (!ConnectionDetector.isNetworkAvailable(this)) {
+            SmartToast.show(getResources().getString(R.string.query_camera_fail_network_exception));
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 1);
+        bundle.putString("SerialNo", mSerialNoStr);
+        bundle.putString("very_code", mSerialVeryCodeStr);
+        bundle.putString("device_type", deviceType);
+        LogUtil.debugLog(TAG, "very_code:" + mSerialVeryCodeStr);
+        Intent intent = new Intent(CaptureActivity.this, SeriesNumSearchActivity.class);
+        intent.putExtras(bundle);
+        CaptureActivity.this.startActivity(intent);
+    }
+    private void handleLocalValidateSerialNoFail(int errCode) {
+        switch (errCode) {
+            case ExtraException.SERIALNO_IS_NULL:
+                SmartToast.show(getResources().getString(R.string.serial_number_is_null));
+                break;
+            case ExtraException.SERIALNO_IS_ILLEGAL:
+                // showToast(R.string.serial_number_is_illegal);
+                SmartToast.show("设备编号不合法");
+                break;
+            default:
+                SmartToast.show(getResources().getString(R.string.serial_number_error));
+                LogUtil.errorLog(TAG, "handleLocalValidateSerialNoFail-> unkown error, errCode:" + errCode);
+                break;
+        }
+    }
     private void initCamera(SurfaceHolder surfaceHolder) {
         try {
             CameraManager.get().openDriver(surfaceHolder);
@@ -498,29 +504,29 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
 
     }
 
-//    private void initBeepSound() {
-//        if (playBeep && mediaPlayer == null) {
-//            // The volume on STREAM_SYSTEM is not adjustable, and users found it
-//            // too loud,
-//            // so we now play on the music stream.
-//            setVolumeControlStream(AudioManager.STREAM_MUSIC);
-//            mediaPlayer = new MediaPlayer();
-//            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//            mediaPlayer.setOnCompletionListener(beepListener);
-//
-//            AssetFileDescriptor file = getResources().openRawResourceFd(
-//                    R.raw.beep);
-//            try {
-//                mediaPlayer.setDataSource(file.getFileDescriptor(),
-//                        file.getStartOffset(), file.getLength());
-//                file.close();
-//                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-//                mediaPlayer.prepare();
-//            } catch (IOException e) {
-//                mediaPlayer = null;
-//            }
-//        }
-//    }
+    private void initBeepSound() {
+        if (playBeep && mediaPlayer == null) {
+            // The volume on STREAM_SYSTEM is not adjustable, and users found it
+            // too loud,
+            // so we now play on the music stream.
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnCompletionListener(beepListener);
+
+            AssetFileDescriptor file = getResources().openRawResourceFd(
+                    R.raw.beep);
+            try {
+                mediaPlayer.setDataSource(file.getFileDescriptor(),
+                        file.getStartOffset(), file.getLength());
+                file.close();
+                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                mediaPlayer = null;
+            }
+        }
+    }
 
     private static final long VIBRATE_DURATION = 200L;
 

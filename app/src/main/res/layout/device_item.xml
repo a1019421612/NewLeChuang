@@ -48,10 +48,11 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/item_icon_area"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         android:paddingLeft="5dp" >
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingRight="10dp" >
@@ -65,19 +66,30 @@
                 android:paddingRight="8dp"
                 android:singleLine="true"
                 android:text="camera1"
+                android:textSize="@dimen/sp_16"
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                 />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="170dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="left|center_vertical|start"
             android:orientation="horizontal"
             android:layout_marginTop="4dp"
             android:paddingRight="15dp" >
-
+            <TextView
+                android:id="@+id/tv_online_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="8dp"
+                android:singleLine="true"
+                android:text="在线"
+                android:textSize="12sp"
+                />
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/tab_remoteplayback_rl"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -98,6 +110,7 @@
                     android:src="@drawable/open_cameralist_remotepb_selector" />
             </RelativeLayout>
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/tab_alarmlist_rl"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -118,6 +131,7 @@
                     android:src="@drawable/open_cameralist_alarmlist_selector" />
             </RelativeLayout>
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/tab_setdevice_rl"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -129,7 +143,6 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/tab_setdevice_btn"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_centerHorizontal="true"
@@ -139,4 +152,14 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/tab_setdevice_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:gravity="center"
+        android:src="@drawable/shezhi"/>
 </RelativeLayout>

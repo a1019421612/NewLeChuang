@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hbdiye.newlechuangsmart.R;
@@ -60,7 +61,7 @@ public class EZDeviceSettingActivity extends RootActivity {
     /**
      * 标题栏
      */
-    private TitleBar mTitleBar;
+//    private TitleBar mTitleBar;
     /**
      * 设备基本信息
      */
@@ -156,6 +157,9 @@ public class EZDeviceSettingActivity extends RootActivity {
     private String mValidateCode;
     private EZDeviceVersion mDeviceVersion = null;
     private EZDeviceInfo mEZDeviceInfo = null;
+    private ImageView iv_back;
+    private TextView tv_title;
+    private String deviceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +177,9 @@ public class EZDeviceSettingActivity extends RootActivity {
      * 控件关联
      */
     private void findViews() {
-        mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+//        mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+        iv_back = findViewById(R.id.iv_device_back);
+        tv_title = findViewById(R.id.tv_device_title);
 
         mDeviceInfoLayout = (ViewGroup) findViewById(R.id.device_info_layout);
         mDeviceNameView = (TextView) findViewById(R.id.device_name);
@@ -224,14 +230,22 @@ public class EZDeviceSettingActivity extends RootActivity {
      * 初始化标题栏
      */
     private void initTitleBar() {
-        mTitleBar.setTitle(R.string.ez_setting);
-        mTitleBar.addBackButton(new OnClickListener() {
-
+        String deviceName = mEZDeviceInfo.getDeviceName();
+        tv_title.setText(deviceName);
+        iv_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
+//        mTitleBar.setTitle(R.string.ez_setting);
+//        mTitleBar.addBackButton(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
     }
 
     /**
@@ -350,6 +364,7 @@ public class EZDeviceSettingActivity extends RootActivity {
                 String name = data.getStringExtra(IntentConsts.EXTRA_NAME);
                 if (!TextUtils.isEmpty(name)){
                     mEZDeviceInfo.setDeviceName(name);
+                    tv_title.setText(name);
                 }else{
                     LogUtil.debugLog(TAG,"modify device name is null");
                 }
@@ -436,8 +451,8 @@ public class EZDeviceSettingActivity extends RootActivity {
                 mEncryptParentLayout.setVisibility(View.GONE);
             } else {
                 mEncryptButton
-                        .setBackgroundResource((mEZDeviceInfo.getIsEncrypt() == 1) ? R.drawable.autologin_on
-                                : R.drawable.autologin_off);
+                        .setBackgroundResource((mEZDeviceInfo.getIsEncrypt() == 1) ? R.drawable.kai
+                                : R.drawable.guan);
                 mEncryptButton.setOnClickListener(mOnClickListener);
 
                 mModifyPasswordLayout.setOnClickListener(mOnClickListener);
@@ -829,7 +844,7 @@ public class EZDeviceSettingActivity extends RootActivity {
 //                mDevice.setIsEncrypt(1);
 //                bAction = !bAction;
                 mEZDeviceInfo.setIsEncrypt(bAction ? 1 : 0);
-                mEncryptButton.setBackgroundResource(bAction ? R.drawable.autologin_on : R.drawable.autologin_off);
+                mEncryptButton.setBackgroundResource(bAction ? R.drawable.kai : R.drawable.guan);
 //                if (mDevice.getSupportChangeSafePasswd() != DeviceConsts.NOT_SUPPORT)
 //                    mModifyPasswordLayout.setVisibility(View.VISIBLE);
             } else {
