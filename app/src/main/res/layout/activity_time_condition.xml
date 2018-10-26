@@ -44,6 +44,23 @@
         android:background="@color/black"
         />
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wv_hour"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="#f00"
+            android:layout_height="wrap_content"></com.wx.wheelview.widget.WheelView>
+        <com.wx.wheelview.widget.WheelView
+            android:id="@+id/wv_min"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"></com.wx.wheelview.widget.WheelView>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,30 +90,19 @@
             android:layout_marginLeft="@dimen/dp_10"
             />
     </LinearLayout>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="取消定时"
-        android:layout_gravity="right"
-        android:layout_marginRight="@dimen/dp_10"
-        android:button="@drawable/checkbox_selector"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_30"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:gravity="bottom|center_horizontal"
+        android:layout_weight="1">
 
-        <com.wx.wheelview.widget.WheelView
-            android:id="@+id/wv_hour"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="#f00"
-            android:layout_height="wrap_content"></com.wx.wheelview.widget.WheelView>
-        <com.wx.wheelview.widget.WheelView
-            android:id="@+id/wv_min"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"></com.wx.wheelview.widget.WheelView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消定时"
+            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
     </LinearLayout>
 </LinearLayout>

@@ -88,7 +88,7 @@ public class AutoWifiPrepareStepOneActivity extends RootActivity implements OnCl
      * @since V1.0
      */
     private void initUI() {
-
+        System.out.println();
         topTip = (TextView) findViewById(R.id.topTip);
         imageBg = (ImageView) findViewById(R.id.imageBg);
         btnNext = (Button) findViewById(R.id.btnNext);
