@@ -78,10 +78,11 @@ public class DeviceListFragment extends BaseFragment {
     @Override
     protected void onFragmentFirstVisible() {
         DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
-        List<DeviceClassyBean.ProductList> productList = deviceClassyBean.productList;
+        List<DeviceClassyBean.DeviceList> productList = deviceClassyBean.deviceList;
         for (int i = 0; i < productList.size(); i++) {
-            if (proId.equals(productList.get(i).id)){
-                mList_fragment.add(ClassyIconByProId.fragmentById(proId));
+            if ((productList.get(i).productId).contains(proId)){
+                String deviceid = productList.get(i).id;
+                mList_fragment.add(ClassyIconByProId.fragmentById(productList.get(i).productId,deviceid));
             }
         }
         fragmentDetailPagerAdapter = new FragmentDetailPagerAdapter(getChildFragmentManager(), getActivity(), mList_fragment);

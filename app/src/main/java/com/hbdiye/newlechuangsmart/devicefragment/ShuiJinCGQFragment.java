@@ -26,16 +26,16 @@ public class ShuiJinCGQFragment extends BaseFragment {
     }
     @Override
     protected void onFragmentFirstVisible() {
-        Fragment parentFragment = (DeviceListFragment)getParentFragment();
-        String data = ((DeviceListFragment) parentFragment).data;
-        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
-        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
-            if ("PRO003006004".equals(deviceClassyBean.productList.get(i).id)){
-                DeviceClassyBean.ProductList productList = deviceClassyBean.productList.get(i);
-                String name = productList.name;
-                tv_sj.setText(name);
-            }
-        }
+//        Fragment parentFragment = (DeviceListFragment)getParentFragment();
+//        String data = ((DeviceListFragment) parentFragment).data;
+//        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
+//        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
+//            if ("PRO003006004".equals(deviceClassyBean.productList.get(i).id)){
+//                DeviceClassyBean.ProductList productList = deviceClassyBean.productList.get(i);
+//                String name = productList.name;
+//                tv_sj.setText(name);
+//            }
+//        }
 //        SmartToast.show("水浸传感器获取父控件数据"+data);
     }
 }

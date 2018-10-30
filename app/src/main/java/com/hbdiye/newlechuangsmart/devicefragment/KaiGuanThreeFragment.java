@@ -58,7 +58,7 @@ public class KaiGuanThreeFragment extends BaseFragment {
     private String data;
     private String proId;
     private TextView tv_name;
-    private DeviceClassyBean.ProductList productList;
+    private DeviceClassyBean.DeviceList productList;
     private Unbinder unbinder;
 
     private WebSocketConnection mConnection;
@@ -69,7 +69,23 @@ public class KaiGuanThreeFragment extends BaseFragment {
     private int value_right;
 
     private HomeReceiver homeReceiver;
+    private String deviceid;
 
+    public static KaiGuanThreeFragment newInstance(String page) {
+        Bundle args = new Bundle();
+
+//        args.putInt(ARGS_PAGE, page);
+        args.putString("deviceid", page);
+        KaiGuanThreeFragment fragment = new KaiGuanThreeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        deviceid = getArguments().getString("deviceid");
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,24 +103,25 @@ public class KaiGuanThreeFragment extends BaseFragment {
 
     @Override
     protected void onFragmentFirstVisible() {
-        Fragment parentFragment = (DeviceListFragment) getParentFragment();
-        String data = ((DeviceListFragment) parentFragment).data;
-        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
-        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
-            if ("PRO002003001".equals(deviceClassyBean.productList.get(i).id)) {
-                productList = deviceClassyBean.productList.get(i);
-                String name = productList.name;
-                tv_name.setText(name);
-            }
-        }
-        List<DeviceClassyBean.ProductList.DeviceList.DevAttList> devAttList = productList.deviceList.get(0).devAttList;
-        deviceId = devAttList.get(0).deviceId;
-        value_left = devAttList.get(0).value;
-        setViewByAtt(value_left,ivKgLeft,tvKgLeft);
-        value_middle = devAttList.get(1).value;
-        setViewByAtt(value_middle,ivKgMiddle,tvKgMiddle);
-        value_right = devAttList.get(2).value;
-        setViewByAtt(value_right,ivKgRight,tvKgRight);
+        SmartToast.show(deviceid);
+//        Fragment parentFragment = (DeviceListFragment) getParentFragment();
+//        String data = ((DeviceListFragment) parentFragment).data;
+//        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
+//        for (int i = 0; i < deviceClassyBean.deviceList.size(); i++) {
+//            if ("PRO002003001".equals(deviceClassyBean.deviceList.get(i).id)) {
+//                productList = deviceClassyBean.deviceList.get(i);
+//                String name = productList.name;
+//                tv_name.setText(name);
+//            }
+//        }
+//        List<DeviceClassyBean.ProductList.DeviceList.DevAttList> devAttList = productList.deviceList.get(0).devAttList;
+//        deviceId = devAttList.get(0).deviceId;
+//        value_left = devAttList.get(0).value;
+//        setViewByAtt(value_left,ivKgLeft,tvKgLeft);
+//        value_middle = devAttList.get(1).value;
+//        setViewByAtt(value_middle,ivKgMiddle,tvKgMiddle);
+//        value_right = devAttList.get(2).value;
+//        setViewByAtt(value_right,ivKgRight,tvKgRight);
 
     }
     public void setViewByAtt(int value,ImageView iv,TextView tv){
@@ -125,43 +142,43 @@ public class KaiGuanThreeFragment extends BaseFragment {
 
     @OnClick({R.id.ll_kg_left, R.id.ll_kg_middle, R.id.ll_kg_right})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_kg_left:
-                if (value_left==0){
-                    //左开动作
-                   String dactid= productList.deviceList.get(0).devActList.get(0).id;
-                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }else {
-//                    左关动作
-                    String dactid= productList.deviceList.get(0).devActList.get(1).id;
-                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }
-                break;
-            case R.id.ll_kg_middle:
-                if (value_middle==0){
-                    //中开动作
-                    String dactid= productList.deviceList.get(0).devActList.get(2).id;
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }else {
-//                    中关动作
-                    String dactid= productList.deviceList.get(0).devActList.get(3).id;
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }
-                break;
-            case R.id.ll_kg_right:
-                if (value_right==0){
-                    //右开动作
-                    String dactid= productList.deviceList.get(0).devActList.get(4).id;
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }else {
-//                    右关动作
-                    String dactid= productList.deviceList.get(0).devActList.get(5).id;
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-                }
-                break;
-        }
+//        switch (view.getId()) {
+//            case R.id.ll_kg_left:
+//                if (value_left==0){
+//                    //左开动作
+//                   String dactid= productList.deviceList.get(0).devActList.get(0).id;
+//                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }else {
+////                    左关动作
+//                    String dactid= productList.deviceList.get(0).devActList.get(1).id;
+//                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }
+//                break;
+//            case R.id.ll_kg_middle:
+//                if (value_middle==0){
+//                    //中开动作
+//                    String dactid= productList.deviceList.get(0).devActList.get(2).id;
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }else {
+////                    中关动作
+//                    String dactid= productList.deviceList.get(0).devActList.get(3).id;
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }
+//                break;
+//            case R.id.ll_kg_right:
+//                if (value_right==0){
+//                    //右开动作
+//                    String dactid= productList.deviceList.get(0).devActList.get(4).id;
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }else {
+////                    右关动作
+//                    String dactid= productList.deviceList.get(0).devActList.get(5).id;
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                }
+//                break;
+//        }
     }
     class HomeReceiver extends BroadcastReceiver {
 

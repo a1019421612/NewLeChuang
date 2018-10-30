@@ -21,14 +21,19 @@ import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
 import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
 
 public class MineFragment extends Fragment {
     @BindView(R.id.iv_mine_er_code)
@@ -56,13 +61,34 @@ public class MineFragment extends Fragment {
     private Unbinder bind;
 
     private GetPhotoPopwindow getPhotoPopwindow;
+    private String token;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         bind = ButterKnife.bind(this, view);
+        token = (String) SPUtils.get(getActivity(),"token","");
+        personInfo();
         return view;
+    }
+
+    private void personInfo() {
+        OkHttpUtils.post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.PERSONINFO))
+                .addParams("token",token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
     }
 
     @Override

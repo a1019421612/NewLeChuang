@@ -42,13 +42,29 @@ public class ChaZuoFragment extends BaseFragment {
     @BindView(R.id.ll_cz)
     LinearLayout llCz;
     private TextView tv_name;
-    private DeviceClassyBean.ProductList productList;
+    private DeviceClassyBean.DeviceList productList;
     private Unbinder bind;
     private WebSocketConnection mConnection;
     private String token;
     private HomeReceiver homeReceiver;
     private int value;
-    private String deviceId;
+    private String deviceid;
+
+    public static ChaZuoFragment newInstance(String page) {
+        Bundle args = new Bundle();
+
+//        args.putInt(ARGS_PAGE, page);
+        args.putString("deviceid", page);
+        ChaZuoFragment fragment = new ChaZuoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        deviceid = getArguments().getString("deviceid");
+    }
 
     @Nullable
     @Override
@@ -67,28 +83,29 @@ public class ChaZuoFragment extends BaseFragment {
 
     @Override
     protected void onFragmentFirstVisible() {
-        Fragment parentFragment = (DeviceListFragment) getParentFragment();
-        String data = ((DeviceListFragment) parentFragment).data;
-        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
-        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
-            if ("PRO006001001".equals(deviceClassyBean.productList.get(i).id)) {
-                productList = deviceClassyBean.productList.get(i);
-                String name = productList.name;
-                tv_name.setText(name);
-            }
-        }
-        DeviceClassyBean.ProductList.DeviceList.DevAttList devAttList = productList.deviceList.get(0).devAttList.get(0);
-        deviceId = devAttList.deviceId;
-        value = devAttList.value;
-        if (value ==0){
-            ivCz.setImageResource(R.drawable.mohu);
-            tvCz.setText("关");
-            tvCz.setTextColor(getResources().getColor(R.color.detail_text));
-        }else {
-            ivCz.setImageResource(R.drawable.kaiguan);
-            tvCz.setText("开");
-            tvCz.setTextColor(getResources().getColor(R.color.bar_text_sel));
-        }
+        SmartToast.show(deviceid);
+//        Fragment parentFragment = (DeviceListFragment) getParentFragment();
+//        String data = ((DeviceListFragment) parentFragment).data;
+//        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
+//        for (int i = 0; i < deviceClassyBean.deviceList.size(); i++) {
+//            if ("PRO006001001".equals(deviceClassyBean.deviceList.get(i).id)) {
+//                productList = deviceClassyBean.deviceList.get(i);
+//                String name = productList.name;
+//                tv_name.setText(name);
+//            }
+//        }
+//        DeviceClassyBean.DeviceList.DevAttList devAttList = productList.deviceList.get(0).devAttList.get(0);
+//        deviceId = devAttList.deviceId;
+//        value = devAttList.value;
+//        if (value ==0){
+//            ivCz.setImageResource(R.drawable.mohu);
+//            tvCz.setText("关");
+//            tvCz.setTextColor(getResources().getColor(R.color.detail_text));
+//        }else {
+//            ivCz.setImageResource(R.drawable.kaiguan);
+//            tvCz.setText("开");
+//            tvCz.setTextColor(getResources().getColor(R.color.bar_text_sel));
+//        }
     }
 
     @Override
@@ -99,15 +116,15 @@ public class ChaZuoFragment extends BaseFragment {
 
     @OnClick(R.id.ll_cz)
     public void onViewClicked() {
-        if (value==0){
-            //开动作
-            String dactid= productList.deviceList.get(0).devActList.get(0).id;
-            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-        }else {
-//            关动作
-            String dactid= productList.deviceList.get(0).devActList.get(1).id;
-            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-        }
+//        if (value==0){
+//            //开动作
+//            String dactid= productList.deviceList.get(0).devActList.get(0).id;
+//            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//        }else {
+////            关动作
+//            String dactid= productList.deviceList.get(0).devActList.get(1).id;
+//            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//        }
     }
     class HomeReceiver extends BroadcastReceiver {
 

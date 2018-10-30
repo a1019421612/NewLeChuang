@@ -43,6 +43,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
     private List<Integer> list_tabIcons = new ArrayList<>();
     private List<Integer> list_tabIconsPressed = new ArrayList<>();
     private String token;
+    private String roomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_classy);
         ButterKnife.bind(this);
         String roomName = getIntent().getStringExtra("roomName");
+        roomId = getIntent().getStringExtra("roomId");
         token = (String) SPUtils.get(this,"token","");
         tvClassyTitle.setText(roomName);
         initData();
@@ -60,7 +62,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
                 .get()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.DEVICELIST))
                 .addParams("token",token)
-                .addParams("roomId","R0")
+                .addParams("roomId",roomId)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -71,7 +73,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response, int id) {
                         DeviceClassyBean deviceClassyBean = new Gson().fromJson(response, DeviceClassyBean.class);
-                        List<DeviceClassyBean.ProductList> productList = deviceClassyBean.productList;
+                        List<DeviceClassyBean.DeviceList> productList = deviceClassyBean.deviceList;
 
                         initPage(response, productList);
 
@@ -86,11 +88,11 @@ public class DeviceClassyActivity extends AppCompatActivity {
      * @param response
      * @param productList
      */
-    private void initPage(String response, List<DeviceClassyBean.ProductList> productList) {
+    private void initPage(String response, List<DeviceClassyBean.DeviceList> productList) {
         List<String> sort = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
-            String id1 = productList.get(i).id;
-            sort.add(id1);
+            String id1 = productList.get(i).productId;
+            sort.add(id1.substring(0,6));
         }
         List<String> strings = ClassyIconByProId.removeDuplicate(sort);
         for (int i = 0; i < strings.size(); i++) {

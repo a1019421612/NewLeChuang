@@ -43,12 +43,28 @@ public class MenCiFragment extends BaseFragment {
     LinearLayout llMc;
     private TextView tv_name;
     private Unbinder bind;
-    private DeviceClassyBean.ProductList productList;
+//    private DeviceClassyBean.ProductList productList;
     private WebSocketConnection mConnection;
     private String token;
     private HomeReceiver homeReceiver;
     private int value;
-    private String deviceId;
+    private String deviceid;
+
+    public static MenCiFragment newInstance(String page) {
+        Bundle args = new Bundle();
+
+//        args.putInt(ARGS_PAGE, page);
+        args.putString("deviceid", page);
+        MenCiFragment fragment = new MenCiFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        deviceid = getArguments().getString("deviceid");
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,28 +83,29 @@ public class MenCiFragment extends BaseFragment {
     //    PRO003004001
     @Override
     protected void onFragmentFirstVisible() {
-        Fragment parentFragment = (DeviceListFragment) getParentFragment();
-        String data = ((DeviceListFragment) parentFragment).data;
-        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
-        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
-            if ("PRO003004001".equals(deviceClassyBean.productList.get(i).id)) {
-                productList = deviceClassyBean.productList.get(i);
-                String name = productList.name;
-                tv_name.setText(name);
-            }
-        }
-        DeviceClassyBean.ProductList.DeviceList.DevAttList devAttList = productList.deviceList.get(0).devAttList.get(0);
-        deviceId = devAttList.deviceId;
-        value = devAttList.value;
-        if (value==0){
-            ivMc.setImageResource(R.drawable.mohu);
-            tvMc.setText("关");
-            tvMc.setTextColor(getResources().getColor(R.color.detail_text));
-        }else {
-            ivMc.setImageResource(R.drawable.kaiguan);
-            tvMc.setText("开");
-            tvMc.setTextColor(getResources().getColor(R.color.bar_text_sel));
-        }
+        SmartToast.show(deviceid);
+//        Fragment parentFragment = (DeviceListFragment) getParentFragment();
+//        String data = ((DeviceListFragment) parentFragment).data;
+//        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
+//        for (int i = 0; i < deviceClassyBean.productList.size(); i++) {
+//            if ("PRO003004001".equals(deviceClassyBean.productList.get(i).id)) {
+//                productList = deviceClassyBean.productList.get(i);
+//                String name = productList.name;
+//                tv_name.setText(name);
+//            }
+//        }
+//        DeviceClassyBean.ProductList.DeviceList.DevAttList devAttList = productList.deviceList.get(0).devAttList.get(0);
+//        deviceId = devAttList.deviceId;
+//        value = devAttList.value;
+//        if (value==0){
+//            ivMc.setImageResource(R.drawable.mohu);
+//            tvMc.setText("关");
+//            tvMc.setTextColor(getResources().getColor(R.color.detail_text));
+//        }else {
+//            ivMc.setImageResource(R.drawable.kaiguan);
+//            tvMc.setText("开");
+//            tvMc.setTextColor(getResources().getColor(R.color.bar_text_sel));
+//        }
     }
 
     @Override
@@ -99,15 +116,15 @@ public class MenCiFragment extends BaseFragment {
 
     @OnClick(R.id.ll_mc)
     public void onViewClicked() {
-        if (value==0){
-            //开动作
-            String dactid= productList.deviceList.get(0).devActList.get(0).id;
-            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-        }else {
-//            关动作
-            String dactid= productList.deviceList.get(0).devActList.get(1).id;
-            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
-        }
+//        if (value==0){
+//            //开动作
+//            String dactid= productList.deviceList.get(0).devActList.get(0).id;
+//            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//        }else {
+////            关动作
+//            String dactid= productList.deviceList.get(0).devActList.get(1).id;
+//            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//        }
     }
     class HomeReceiver extends BroadcastReceiver {
 

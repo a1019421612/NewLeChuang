@@ -1,13 +1,20 @@
 package com.hbdiye.newlechuangsmart.bean;
 
-public class FamilyMemberBean {
-    private String name;
+import java.io.Serializable;
+import java.util.List;
 
-    public String getName() {
-        return name;
-    }
+public class FamilyMemberBean implements Serializable {
 
-    public void setName(String name) {
-        this.name = name;
+    public String errcode;
+    public List<UserList> userList;
+
+    public class UserList implements Serializable {
+
+        public String familyId;
+        public String password;
+        public String phone;
+        public String name;
+        public String icon;
+        public String id;
     }
 }

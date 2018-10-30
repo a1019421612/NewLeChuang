@@ -2,7 +2,6 @@ package com.hbdiye.newlechuangsmart.devicefragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,16 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.fragment.BaseFragment;
 
-public class KaiGuanTwoFragment extends BaseFragment {
+public class ShengGuangBJQFragment extends BaseFragment {
     private String deviceid;
 
-    public static KaiGuanTwoFragment newInstance(String page) {
+    public static ShengGuangBJQFragment newInstance(String page) {
         Bundle args = new Bundle();
 
 //        args.putInt(ARGS_PAGE, page);
         args.putString("deviceid", page);
-        KaiGuanTwoFragment fragment = new KaiGuanTwoFragment();
+        ShengGuangBJQFragment fragment = new ShengGuangBJQFragment();
         fragment.setArguments(args);
-        Log.e("fragment","newInstance");
         return fragment;
     }
 
@@ -29,16 +27,17 @@ public class KaiGuanTwoFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         deviceid = getArguments().getString("deviceid");
-        Log.e("fragment","onCreate");
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_kaiguan_two,container,false);
+        View view=inflater.inflate(R.layout.fragment_shengguang,container,false);
         return view;
     }
+
     @Override
     protected void onFragmentFirstVisible() {
+        super.onFragmentFirstVisible();
         SmartToast.show(deviceid);
     }
 }

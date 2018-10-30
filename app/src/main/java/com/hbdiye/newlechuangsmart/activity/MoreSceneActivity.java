@@ -23,15 +23,21 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.DragAdapter;
 import com.hbdiye.newlechuangsmart.adapter.MoreSceneAdapter;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
 
 
 public class MoreSceneActivity extends AppCompatActivity  {
@@ -54,10 +60,13 @@ public class MoreSceneActivity extends AppCompatActivity  {
     private ImageView iv_back;
     private MoreSceneAdapter adapter;
     private List<String> mList=new ArrayList<>();
+    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_scene);
+        token = (String) SPUtils.get(this,"token","");
         initView();
         initData();
     }
@@ -90,11 +99,34 @@ public class MoreSceneActivity extends AppCompatActivity  {
     }
 
     private void initData() {
+
+        sceneList();
+
         for (int i = 0; i < 20; i++) {
             mList.add(i+"");
         }
         adapter.notifyDataSetChanged();
     }
+
+    private void sceneList() {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.SCENELIST))
+                .addParams("token",token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
+    }
+
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
         @Override
         public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos){

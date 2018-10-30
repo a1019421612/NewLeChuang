@@ -26,10 +26,13 @@ import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
 import com.hbdiye.newlechuangsmart.view.CustomViewPager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
+import okhttp3.Call;
 
 import static com.hbdiye.newlechuangsmart.MyApp.finishAllActivity;
 
@@ -62,13 +66,16 @@ public class HomeFragment extends Fragment {
     private List<String> mList_t = new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
+    private String token;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         bind = ButterKnife.bind(this, view);
+        token = (String) SPUtils.get(getActivity(),"token","");
         initWebSocket();
+        initData();
         mList.add(R.drawable.huijia);
         mList.add(R.drawable.lijia);
         mList.add(R.drawable.xican);
@@ -99,6 +106,25 @@ public class HomeFragment extends Fragment {
            }
        });
         return view;
+    }
+
+    private void initData() {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.GETINDEXDATA))
+                .addParams("token",token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
     }
 
     private void initWebSocket() {

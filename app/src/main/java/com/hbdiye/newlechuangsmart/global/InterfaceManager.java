@@ -31,8 +31,14 @@ public class InterfaceManager {
 
     //    ===============================================================
     public static final String NEWBASEURL="http://39.104.105.10:5678/";
-    public static final String DEVICELIST="NEWBASEURL";//第三级详情界面
+    public static final String DEVICELIST="DEVICELIST";//第三级详情界面
     public static final String FINDDEVICELISTBYPRODUCTID="FINDDEVICELISTBYPRODUCTID";//DYPServer/device/findDeviceListByProductId
+    public static final String PERSONINFO="PERSONINFO";//我的信息（包含家庭信息）
+    public static final String GETINDEXDATA="GETINDEXDATA";//首页数据初始化
+    public static final String MEMBERLIST="MEMBERLIST";//家庭成员列表
+    public static final String KICKEDOUTUSERBYPHONE="KICKEDOUTUSERBYPHONE";//踢出家庭成员
+    public static final String MESSAGELIST="MESSAGELIST";//消息列表
+    public static final String SCENELIST="SCENELIST";//场景列表
 //    ===============================================================
 
 
@@ -45,8 +51,14 @@ public class InterfaceManager {
 
 
             urlManager.put(InterfaceManager.LOGIN, NEWBASEURL+"DYPServer/user/login");
-            urlManager.put(InterfaceManager.DEVICELIST,NEWBASEURL+"DYPServer/device/findDeviceListByRoomId");
-            urlManager.put(InterfaceManager.FINDDEVICELISTBYPRODUCTID,NEWBASEURL+"DYPServer/device/findDeviceListByProductId");
+            urlManager.put(InterfaceManager.DEVICELIST,NEWBASEURL+"DYPServer/device/findDeviceListByRoom");
+            urlManager.put(InterfaceManager.FINDDEVICELISTBYPRODUCTID,NEWBASEURL+"DYPServer/device/findDeviceListGroupByRoomByProduct");
+            urlManager.put(InterfaceManager.PERSONINFO,NEWBASEURL+"DYPServer/user/findUser");
+            urlManager.put(InterfaceManager.GETINDEXDATA,NEWBASEURL+"DYPServer/index/getIndexData");
+            urlManager.put(InterfaceManager.MEMBERLIST,NEWBASEURL+"DYPServer/user/findUserList");
+            urlManager.put(InterfaceManager.KICKEDOUTUSERBYPHONE,NEWBASEURL+"DYPServer/user/kickedOutUserByPhone");
+            urlManager.put(InterfaceManager.MESSAGELIST,NEWBASEURL+"DYPServer/index/findMessageListByPageBean");
+            urlManager.put(InterfaceManager.SCENELIST,NEWBASEURL+"DYPServer/scene/findSceneList");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");
