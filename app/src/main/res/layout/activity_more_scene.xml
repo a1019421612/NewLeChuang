@@ -39,6 +39,13 @@
                 android:textColor="#ffcc3131"
                 android:visibility="gone"
                 />
+            <ImageView
+                android:id="@+id/iv_more_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/my_add"
+                android:layout_alignParentRight="true"
+                />
         </RelativeLayout>
     <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
         android:id="@+id/rv_more_scene"

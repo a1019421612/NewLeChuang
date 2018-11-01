@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/yidongchazuo"
+        android:src="@drawable/menci"
         android:layout_marginTop="50dp"
         />
     <TextView
@@ -20,9 +20,18 @@
         android:gravity="center_horizontal"
         android:textColor="@color/gray_9999"
         />
-    <LinearLayout
-        android:id="@+id/ll_mc"
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正常"
+        android:background="@drawable/shape_blue"
+        android:paddingLeft="@dimen/dp_30"
+        android:paddingRight="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
@@ -30,21 +39,57 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
             <ImageView
-                android:id="@+id/iv_mc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/kaiguan"
+                android:src="@drawable/qianya"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
-                android:id="@+id/tv_mc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/bar_text_sel"
-                android:text="开关"
+                android:text="电池电压"
+                android:textColor="@color/gray_9999"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chai"
+                android:padding="@dimen/dp_10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备被拆"
+                android:textColor="@color/gray_9999"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dianliangbuzu"
+                android:padding="@dimen/dp_10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电量不足"
+                android:textColor="@color/gray_9999"
                 />
         </LinearLayout>
     </LinearLayout>

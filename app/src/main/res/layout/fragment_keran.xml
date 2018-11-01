@@ -8,13 +8,14 @@
 <ImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/renti"
+    android:src="@drawable/keran"
     android:layout_marginTop="50dp"
     />
     <TextView
+        android:id="@+id/tv_sj_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="人体感应器"
+        android:text="---"
         android:padding="@dimen/dp_10"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_9999"
@@ -22,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="检查到有人"
+        android:text="正常"
         android:background="@drawable/shape_blue"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_30"

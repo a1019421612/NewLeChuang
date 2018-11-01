@@ -35,6 +35,6 @@ public class WenShiDuFragment extends BaseFragment {
     }
     @Override
     protected void onFragmentFirstVisible() {
-        SmartToast.show(deviceid);
+//        SmartToast.show(deviceid);
     }
 }

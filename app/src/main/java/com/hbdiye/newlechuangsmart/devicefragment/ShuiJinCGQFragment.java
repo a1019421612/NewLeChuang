@@ -17,6 +17,23 @@ import com.hbdiye.newlechuangsmart.fragment.DeviceListFragment;
 
 public class ShuiJinCGQFragment extends BaseFragment {
     private TextView tv_sj;
+    private String deviceid;
+
+    public static ShuiJinCGQFragment newInstance(String page) {
+        Bundle args = new Bundle();
+
+//        args.putInt(ARGS_PAGE, page);
+        args.putString("deviceid", page);
+        ShuiJinCGQFragment fragment = new ShuiJinCGQFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        deviceid = getArguments().getString("deviceid");
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,6 +43,7 @@ public class ShuiJinCGQFragment extends BaseFragment {
     }
     @Override
     protected void onFragmentFirstVisible() {
+//        SmartToast.show(deviceid);
 //        Fragment parentFragment = (DeviceListFragment)getParentFragment();
 //        String data = ((DeviceListFragment) parentFragment).data;
 //        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);

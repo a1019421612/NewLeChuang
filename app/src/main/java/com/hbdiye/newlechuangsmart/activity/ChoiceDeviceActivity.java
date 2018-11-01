@@ -36,7 +36,7 @@ public class ChoiceDeviceActivity extends BaseActivity {
 //        adapter.notifyDataSetChanged();
         token = (String) SPUtils.get(this,"token","");
         title = getIntent().getStringExtra("title");
-        productId = getIntent().getStringExtra("productId");
+
         tvBaseTitle.setText(title);
         roomAndDevice();
     }
@@ -75,7 +75,8 @@ public class ChoiceDeviceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        adapter=new ChoiceDeviceAdapter(this,mList);
+        productId = getIntent().getStringExtra("productId");
+        adapter=new ChoiceDeviceAdapter(this,mList,productId);
         lvChoiceDevice.setAdapter(adapter);
     }
 

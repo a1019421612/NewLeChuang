@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/bar_text_sel"
-                android:text="左路"
+                android:text="---"
                 />
         </LinearLayout>
         <LinearLayout
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/bar_text_sel"
-                android:text="中路"
+                android:text="---"
                 />
         </LinearLayout>
         <LinearLayout
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/bar_text_sel"
-                android:text="右路"
+                android:text="---"
                 />
         </LinearLayout>
     </LinearLayout>

@@ -76,14 +76,14 @@ public class ChaZuoFragment extends BaseFragment {
         token = (String) SPUtils.get(getActivity(),"token","");
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
-        homeReceiver = new HomeReceiver();
-        getActivity().registerReceiver(homeReceiver, intentFilter);
+//        homeReceiver = new HomeReceiver();
+//        getActivity().registerReceiver(homeReceiver, intentFilter);
         return view;
     }
 
     @Override
     protected void onFragmentFirstVisible() {
-        SmartToast.show(deviceid);
+//        SmartToast.show(deviceid);
 //        Fragment parentFragment = (DeviceListFragment) getParentFragment();
 //        String data = ((DeviceListFragment) parentFragment).data;
 //        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);
@@ -136,8 +136,10 @@ public class ChaZuoFragment extends BaseFragment {
                 try {
                     JSONObject jsonObject=new JSONObject(message);
                     String ecode = jsonObject.getString("ecode");
-                    String s = EcodeValue.resultEcode(ecode);
-                    SmartToast.show(s);
+                    if (!ecode.equals("0")){
+                        String s = EcodeValue.resultEcode(ecode);
+                        SmartToast.show(s);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

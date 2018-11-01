@@ -22,6 +22,7 @@ import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanThreeFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.YanWuCGQFragment;
 import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class DeviceListFragment extends BaseFragment {
     private String proId;
     private Unbinder unbinder;
     private List<Fragment> mList_fragment = new ArrayList<>();
+    private List<String> mList_position=new ArrayList<>();
     FragmentDetailPagerAdapter fragmentDetailPagerAdapter;
 
 
@@ -49,12 +51,17 @@ public class DeviceListFragment extends BaseFragment {
      * 图片轮播指示个图
      */
     private ImageView mImageView = null;
+    private String productId;
+    private int flag=-1;
+    private String deviceId;
 
-    public static DeviceListFragment newInstance(String data,String id) {
+    public static DeviceListFragment newInstance(String data,String id,String productId,String deviceId) {
         Bundle args = new Bundle();
 
         args.putString("args_page", data);
         args.putString("proId",id);
+        args.putString("productId",productId);
+        args.putString("deviceId",deviceId);
         DeviceListFragment fragment = new DeviceListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -65,7 +72,8 @@ public class DeviceListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         data = getArguments().getString("args_page");
         proId= getArguments().getString("proId");
-
+        productId = getArguments().getString("productId");
+        deviceId = getArguments().getString("deviceId");
     }
 
     @Nullable
@@ -83,11 +91,19 @@ public class DeviceListFragment extends BaseFragment {
             if ((productList.get(i).productId).contains(proId)){
                 String deviceid = productList.get(i).id;
                 mList_fragment.add(ClassyIconByProId.fragmentById(productList.get(i).productId,deviceid));
+                mList_position.add(productList.get(i).id);
+            }
+        }
+        for (int i = 0; i < mList_position.size(); i++) {
+            if (mList_position.get(i).equals(deviceId)){
+                flag=i;
             }
         }
         fragmentDetailPagerAdapter = new FragmentDetailPagerAdapter(getChildFragmentManager(), getActivity(), mList_fragment);
         viewpagerDetailDevice.setAdapter(fragmentDetailPagerAdapter);
-
+        if (flag!=-1){
+            viewpagerDetailDevice.setCurrentItem(flag);
+        }
         viewPagerIndicator();
 
     }
@@ -105,7 +121,7 @@ public class DeviceListFragment extends BaseFragment {
             mImageView.setLayoutParams(params);
             params.leftMargin=30;
             mImageViews[i] = mImageView;
-            if (i == 0) {
+            if (i == flag) {
                 mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_focus);
             } else {
                 mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_blur);

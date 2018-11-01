@@ -39,6 +39,7 @@ public class InterfaceManager {
     public static final String KICKEDOUTUSERBYPHONE="KICKEDOUTUSERBYPHONE";//踢出家庭成员
     public static final String MESSAGELIST="MESSAGELIST";//消息列表
     public static final String SCENELIST="SCENELIST";//场景列表
+    public static final String DEVICEDETAIL="DEVICEDETAIL";//设备详情
 //    ===============================================================
 
 
@@ -59,6 +60,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.KICKEDOUTUSERBYPHONE,NEWBASEURL+"DYPServer/user/kickedOutUserByPhone");
             urlManager.put(InterfaceManager.MESSAGELIST,NEWBASEURL+"DYPServer/index/findMessageListByPageBean");
             urlManager.put(InterfaceManager.SCENELIST,NEWBASEURL+"DYPServer/scene/findSceneList");
+            urlManager.put(InterfaceManager.DEVICEDETAIL,NEWBASEURL+"DYPServer/device/findDeviceDetails");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

@@ -95,7 +95,7 @@ public class DianjiFragment extends BaseFragment {
     }
     @Override
     protected void onFragmentFirstVisible() {
-        SmartToast.show(deviceid+"");
+//        SmartToast.show(deviceid+"");
 //        Fragment parentFragment = (DeviceListFragment) getParentFragment();
 //        String data = ((DeviceListFragment) parentFragment).data;
 //        DeviceClassyBean deviceClassyBean = new Gson().fromJson(data, DeviceClassyBean.class);

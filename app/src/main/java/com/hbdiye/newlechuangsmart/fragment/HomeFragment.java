@@ -154,6 +154,9 @@ public class HomeFragment extends Fragment {
                 if (message.contains("\"pn\":\"DCPP\"")) {
                     websocketSendBroadcase(message, "DCPP");
                 }
+                if (message.contains("\"pn\":\"DAPP\"")) {
+                    websocketSendBroadcase(message, "DAPP");
+                }
 //                ========================================================
                 if (message.contains("\"pn\":\"SLTP\"")) {
                     websocketSendBroadcase(message, "SLTP");

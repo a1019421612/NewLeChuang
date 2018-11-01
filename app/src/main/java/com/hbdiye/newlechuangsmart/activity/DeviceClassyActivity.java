@@ -44,6 +44,9 @@ public class DeviceClassyActivity extends AppCompatActivity {
     private List<Integer> list_tabIconsPressed = new ArrayList<>();
     private String token;
     private String roomId;
+    private String productId;
+    private int flag=-1;
+    private String deviceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class DeviceClassyActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String roomName = getIntent().getStringExtra("roomName");
         roomId = getIntent().getStringExtra("roomId");
+        productId = getIntent().getStringExtra("productId");
+        deviceId = getIntent().getStringExtra("deviceId");
         token = (String) SPUtils.get(this,"token","");
         tvClassyTitle.setText(roomName);
         initData();
@@ -74,7 +79,9 @@ public class DeviceClassyActivity extends AppCompatActivity {
                     public void onResponse(String response, int id) {
                         DeviceClassyBean deviceClassyBean = new Gson().fromJson(response, DeviceClassyBean.class);
                         List<DeviceClassyBean.DeviceList> productList = deviceClassyBean.deviceList;
-
+                        if (productList==null){
+                            return;
+                        }
                         initPage(response, productList);
 
                     }
@@ -95,14 +102,32 @@ public class DeviceClassyActivity extends AppCompatActivity {
             sort.add(id1.substring(0,6));
         }
         List<String> strings = ClassyIconByProId.removeDuplicate(sort);
+//        for (int i = 0; i < strings.size(); i++) {
+//            if (strings.get(i).contains(productId)){
+//                list_tabIcons.add(ClassyIconByProId.iconNormal(strings.get(i)));
+//                list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
+//            }
+//        }
+//        for (int i = 0; i < strings.size(); i++) {
+//            if (!strings.get(i).contains(productId)){
+//                list_tabIcons.add(ClassyIconByProId.iconNormal(strings.get(i)));
+//                list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
+//            }
+//        }
         for (int i = 0; i < strings.size(); i++) {
-            list_tabIcons.add(ClassyIconByProId.iconNormal(strings.get(i)));
-            list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
+            if (productId.contains(strings.get(i))){
+                flag = i;
+            }
+                list_tabIcons.add(ClassyIconByProId.iconNormal(strings.get(i)));
+                list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
         }
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), DeviceClassyActivity.this, strings, response);
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), DeviceClassyActivity.this, strings, response,productId,deviceId);
         viewpagerDevice.setAdapter(myFragmentPagerAdapter);
         tablayoutDevice.setupWithViewPager(viewpagerDevice);
         tablayoutDevice.setTabMode(TabLayout.MODE_SCROLLABLE);
+        if (flag!=-1){
+            viewpagerDevice.setCurrentItem(flag);
+        }
         for (int i = 0; i < strings.size(); i++) {
             tablayoutDevice.getTabAt(i).setCustomView(getTabView(i));
         }
@@ -156,7 +181,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
         ImageView img_title = (ImageView) view.findViewById(R.id.img_title);
         img_title.setImageResource(list_tabIcons.get(position));
 
-        if (position == 0) {
+        if (position == flag) {
             img_title.setImageResource(list_tabIconsPressed.get(position));
         } else {
             img_title.setImageResource(list_tabIcons.get(position));

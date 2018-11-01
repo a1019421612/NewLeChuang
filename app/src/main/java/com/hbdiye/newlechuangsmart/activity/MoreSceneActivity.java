@@ -57,11 +57,10 @@ public class MoreSceneActivity extends AppCompatActivity  {
 //    boolean isMove = false;
 //    private TextView tv_save;
     private SwipeMenuRecyclerView rv_more_scene;
-    private ImageView iv_back;
+    private ImageView iv_back,iv_more_add;
     private MoreSceneAdapter adapter;
     private List<String> mList=new ArrayList<>();
     private String token;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +72,7 @@ public class MoreSceneActivity extends AppCompatActivity  {
 
     private void initView() {
         iv_back=findViewById(R.id.iv_base_back);
+        iv_more_add=findViewById(R.id.iv_more_add);
         rv_more_scene=findViewById(R.id.rv_more_scene);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -91,8 +91,13 @@ public class MoreSceneActivity extends AppCompatActivity  {
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-                vibrator.vibrate(1000);
+               finish();
+            }
+        });
+        iv_more_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

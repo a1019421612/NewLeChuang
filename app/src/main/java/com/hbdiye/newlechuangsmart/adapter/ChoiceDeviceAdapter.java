@@ -19,10 +19,12 @@ import java.util.List;
 public class ChoiceDeviceAdapter extends BaseAdapter {
     private Context context;
     private List<RoomDeviceListBean.RoomList> mList;
+    private String productId;
 
-    public ChoiceDeviceAdapter(Context context, List<RoomDeviceListBean.RoomList> mList) {
+    public ChoiceDeviceAdapter(Context context, List<RoomDeviceListBean.RoomList> mList, String productId) {
         this.context = context;
         this.mList = mList;
+        this.productId = productId;
     }
 
     @Override
@@ -55,7 +57,9 @@ public class ChoiceDeviceAdapter extends BaseAdapter {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 context.startActivity(new Intent(context, DeviceClassyActivity.class)
                         .putExtra("roomName", name)
-                        .putExtra("roomId", deviceList.get(i).roomId));
+                        .putExtra("roomId", deviceList.get(i).roomId)
+                        .putExtra("productId", deviceList.get(i).productId)
+                .putExtra("deviceId",deviceList.get(i).id));
             }
         });
         return view;

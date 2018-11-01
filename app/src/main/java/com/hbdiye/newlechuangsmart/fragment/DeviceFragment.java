@@ -21,6 +21,7 @@ import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomActivity;
 import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
+import com.hbdiye.newlechuangsmart.activity.YiLiaoActivity;
 import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
 import com.hbdiye.newlechuangsmart.view.DelDialog;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
@@ -95,12 +96,15 @@ public class DeviceFragment extends Fragment {
                 }else if (i==6){
                     //跳转遥控中心
                     startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));
-                }else {
+                }else if (i==4){
+                    //医疗
+                    startActivity(new Intent(getActivity(), YiLiaoActivity.class));
+                }
+                else {
                     String title = mList.get(i).getTitle();
                     startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class)
                             .putExtra("title",title)
                             .putExtra("productId",array_productId[i]));
-
                 }
             }
         });

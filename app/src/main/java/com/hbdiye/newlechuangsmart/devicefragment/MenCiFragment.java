@@ -35,18 +35,11 @@ import de.tavendo.autobahn.WebSocketConnection;
 
 public class MenCiFragment extends BaseFragment {
 
-    @BindView(R.id.iv_mc)
-    ImageView ivMc;
-    @BindView(R.id.tv_mc)
-    TextView tvMc;
-    @BindView(R.id.ll_mc)
-    LinearLayout llMc;
-    private TextView tv_name;
     private Unbinder bind;
 //    private DeviceClassyBean.ProductList productList;
     private WebSocketConnection mConnection;
     private String token;
-    private HomeReceiver homeReceiver;
+//    private HomeReceiver homeReceiver;
     private int value;
     private String deviceid;
 
@@ -70,13 +63,12 @@ public class MenCiFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menci, container, false);
         bind = ButterKnife.bind(this, view);
-        tv_name = view.findViewById(R.id.tv_menci_name);
         mConnection = SingleWebSocketConnection.getInstance();
         token = (String) SPUtils.get(getActivity(),"token","");
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
-        homeReceiver = new HomeReceiver();
-        getActivity().registerReceiver(homeReceiver, intentFilter);
+//        homeReceiver = new HomeReceiver();
+//        getActivity().registerReceiver(homeReceiver, intentFilter);
         return view;
     }
 
@@ -114,8 +106,8 @@ public class MenCiFragment extends BaseFragment {
         bind.unbind();
     }
 
-    @OnClick(R.id.ll_mc)
-    public void onViewClicked() {
+//    @OnClick(R.id.ll_mc)
+//    public void onViewClicked() {
 //        if (value==0){
 //            //开动作
 //            String dactid= productList.deviceList.get(0).devActList.get(0).id;
@@ -125,7 +117,7 @@ public class MenCiFragment extends BaseFragment {
 //            String dactid= productList.deviceList.get(0).devActList.get(1).id;
 //            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceId+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
 //        }
-    }
+//    }
     class HomeReceiver extends BroadcastReceiver {
 
         @Override
@@ -136,8 +128,10 @@ public class MenCiFragment extends BaseFragment {
                 try {
                     JSONObject jsonObject=new JSONObject(message);
                     String ecode = jsonObject.getString("ecode");
-                    String s = EcodeValue.resultEcode(ecode);
-                    SmartToast.show(s);
+                    if (!ecode.equals("0")){
+                        String s = EcodeValue.resultEcode(ecode);
+                        SmartToast.show(s);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

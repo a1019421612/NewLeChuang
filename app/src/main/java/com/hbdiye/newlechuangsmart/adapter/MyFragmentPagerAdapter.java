@@ -19,17 +19,21 @@ public class MyFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private List<String> mList_id;
     private Context context;
     private String response;
-    public MyFragmentPagerAdapter(FragmentManager fm, Context context, List<String> mList_id,String response) {
-        super(fm);
-        this.context=context;
-        this.mList_id=mList_id;
-        this.response=response;
+    private String productId;
+    private String deviceId;
 
+    public MyFragmentPagerAdapter(FragmentManager fm, Context context, List<String> mList_id, String response, String productId, String deviceId) {
+        super(fm);
+        this.context = context;
+        this.mList_id = mList_id;
+        this.response = response;
+        this.productId = productId;
+        this.deviceId=deviceId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return DeviceListFragment.newInstance(response,mList_id.get(position));
+        return DeviceListFragment.newInstance(response, mList_id.get(position), productId,deviceId);
     }
 
     @Override
