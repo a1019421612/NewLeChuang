@@ -30,12 +30,14 @@ public class ChoiceDeviceActivity extends BaseActivity {
     private String title="";
     private String token;
     private String productId;
+    private int icon;
 
     @Override
     protected void initData() {
 //        adapter.notifyDataSetChanged();
         token = (String) SPUtils.get(this,"token","");
         title = getIntent().getStringExtra("title");
+
 
         tvBaseTitle.setText(title);
         roomAndDevice();
@@ -76,7 +78,8 @@ public class ChoiceDeviceActivity extends BaseActivity {
     @Override
     protected void initView() {
         productId = getIntent().getStringExtra("productId");
-        adapter=new ChoiceDeviceAdapter(this,mList,productId);
+        icon = getIntent().getIntExtra("icon",-1);
+        adapter=new ChoiceDeviceAdapter(this,mList,productId,icon);
         lvChoiceDevice.setAdapter(adapter);
     }
 

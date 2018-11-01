@@ -102,8 +102,10 @@ public class DeviceFragment extends Fragment {
                 }
                 else {
                     String title = mList.get(i).getTitle();
+                    int icon = mList.get(i).getIcon();
                     startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class)
                             .putExtra("title",title)
+                            .putExtra("icon",icon)
                             .putExtra("productId",array_productId[i]));
                 }
             }

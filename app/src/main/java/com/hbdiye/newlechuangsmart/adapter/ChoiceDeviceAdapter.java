@@ -20,11 +20,13 @@ public class ChoiceDeviceAdapter extends BaseAdapter {
     private Context context;
     private List<RoomDeviceListBean.RoomList> mList;
     private String productId;
+    private int icon;
 
-    public ChoiceDeviceAdapter(Context context, List<RoomDeviceListBean.RoomList> mList, String productId) {
+    public ChoiceDeviceAdapter(Context context, List<RoomDeviceListBean.RoomList> mList, String productId,int icon) {
         this.context = context;
         this.mList = mList;
         this.productId = productId;
+        this.icon=icon;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class ChoiceDeviceAdapter extends BaseAdapter {
         final String name = mList.get(i).name;
         tv_name.setText(name);
         final List<RoomDeviceListBean.RoomList.DeviceList> deviceList = mList.get(i).deviceList;
-        ChoiceDeviceItemAdapter adapter = new ChoiceDeviceItemAdapter(context, deviceList);
+        ChoiceDeviceItemAdapter adapter = new ChoiceDeviceItemAdapter(context, deviceList,icon);
         myGridView.setAdapter(adapter);
         myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
