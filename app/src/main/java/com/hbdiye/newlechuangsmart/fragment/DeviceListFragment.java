@@ -121,10 +121,18 @@ public class DeviceListFragment extends BaseFragment {
             mImageView.setLayoutParams(params);
             params.leftMargin=30;
             mImageViews[i] = mImageView;
-            if (i == flag) {
-                mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_focus);
-            } else {
-                mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_blur);
+            if (flag!=-1){
+                if (i == flag) {
+                    mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_focus);
+                } else {
+                    mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_blur);
+                }
+            }else {
+                if (i == 0) {
+                    mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_focus);
+                } else {
+                    mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_blur);
+                }
             }
             mGroup.addView(mImageViews[i]);
         }
