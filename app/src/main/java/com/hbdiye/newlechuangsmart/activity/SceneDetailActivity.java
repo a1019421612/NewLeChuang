@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tv_scene_add:
                 //添加设备
+                startActivity(new Intent(this,AddSceneDeviceActivity.class));
                 break;
         }
     }

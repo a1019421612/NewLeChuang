@@ -1,6 +1,7 @@
 package com.hbdiye.newlechuangsmart.activity;
 
 import android.app.Service;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
@@ -97,7 +98,7 @@ public class MoreSceneActivity extends AppCompatActivity  {
         iv_more_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MoreSceneActivity.this,SceneDetailActivity.class));
             }
         });
 

@@ -116,7 +116,9 @@
         <activity android:name=".devicelist.AutoWifiPrepareStepOneActivity" />
         <activity android:name=".activity.YiLiaoActivity" />
         <activity android:name=".activity.SceneDetailActivity" />
-        <activity android:name=".activity.AddSceneDeviceActivity"></activity>
+        <activity android:name=".activity.AddSceneDeviceActivity" />
+        <activity android:name=".activity.ZhiNengzjActivity" />
+        <activity android:name=".activity.ZhuJiDetailActivity"></activity>
     </application>
 
 </manifest>

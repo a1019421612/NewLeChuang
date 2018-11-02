@@ -22,6 +22,7 @@ import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomActivity;
 import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
 import com.hbdiye.newlechuangsmart.activity.YiLiaoActivity;
+import com.hbdiye.newlechuangsmart.activity.ZhiNengzjActivity;
 import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
 import com.hbdiye.newlechuangsmart.view.DelDialog;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
@@ -99,6 +100,13 @@ public class DeviceFragment extends Fragment {
                 }else if (i==4){
                     //医疗
                     startActivity(new Intent(getActivity(), YiLiaoActivity.class));
+                }else if (i==2){
+                    String title = mList.get(i).getTitle();
+                    int icon = mList.get(i).getIcon();
+                    startActivity(new Intent(getActivity(), ZhiNengzjActivity.class)
+                            .putExtra("title",title)
+                            .putExtra("icon",icon)
+                            .putExtra("productId",array_productId[i]));
                 }
                 else {
                     String title = mList.get(i).getTitle();
