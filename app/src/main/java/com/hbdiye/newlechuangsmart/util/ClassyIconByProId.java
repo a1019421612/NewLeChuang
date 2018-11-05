@@ -6,11 +6,15 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.devicefragment.ChaZuoFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.ChuangLianFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.DianjiFragment;
+import com.hbdiye.newlechuangsmart.devicefragment.JinJianFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanOneFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanThreeFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanTwoFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KeRanCGQFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.MenCiFragment;
+import com.hbdiye.newlechuangsmart.devicefragment.RenTiGYFragment;
+import com.hbdiye.newlechuangsmart.devicefragment.ScenePanelFragment;
+import com.hbdiye.newlechuangsmart.devicefragment.ScenePanelSixFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.ShengGuangBJQFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.ShuiJinCGQFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.WenShiDuFragment;
@@ -120,6 +124,14 @@ public class ClassyIconByProId {
             return YiYanghtCGQFragment.newInstance(id);
         }else if (produceId.equals("PRO003006007")){//震动传感器
             return ZhenDongCGQFragment.newInstance(id);
+        }else if (produceId.equals("PRO003006001")){//人体传感器
+            return RenTiGYFragment.newInstance(id);
+        }else if (produceId.equals("PRO003003001")){//紧急按钮
+            return JinJianFragment.newInstance(id);
+        }else if (produceId.equals("PRO009001001")){//六键场景按钮
+            return ScenePanelSixFragment.newInstance(id);
+        }else if (produceId.equals("PRO009001002")){//四键场景按钮
+            return ScenePanelFragment.newInstance(id);
         }
         else {
             return ZhenDongCGQFragment.newInstance(id);

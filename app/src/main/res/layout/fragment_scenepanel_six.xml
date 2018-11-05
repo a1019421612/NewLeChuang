@@ -8,7 +8,7 @@
 <ImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/sijian"
+    android:src="@drawable/liujian"
     android:layout_marginTop="50dp"
     />
     <TextView
@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sijian_a"
+                android:src="@drawable/liujian_a"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sijian_b"
+                android:src="@drawable/liujian_b"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
@@ -71,7 +71,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sijian_c"
+                android:src="@drawable/liujian_c"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
@@ -79,6 +79,51 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/bar_text_sel"
                 android:text="场景三"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/liujian_d"
+                android:padding="@dimen/dp_10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bar_text_sel"
+                android:text="场景四"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/liujian_e"
+                android:padding="@dimen/dp_10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bar_text_sel"
+                android:text="场景五"
                 />
         </LinearLayout>
         <LinearLayout
@@ -89,14 +134,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sijian_d"
+                android:src="@drawable/liujian_f"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/bar_text_sel"
-                android:text="场景四"
+                android:text="场景六"
                 />
         </LinearLayout>
     </LinearLayout>

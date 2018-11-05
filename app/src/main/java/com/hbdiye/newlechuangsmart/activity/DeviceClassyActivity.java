@@ -114,21 +114,29 @@ public class DeviceClassyActivity extends AppCompatActivity {
 //                list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
 //            }
 //        }
+        String cur_str="";
+        List<String> final_str=new ArrayList<>();
         for (int i = 0; i < strings.size(); i++) {
             if (productId.contains(strings.get(i))){
                 flag = i;
+                cur_str = strings.get(i);
+            }else {
+                final_str.add(strings.get(i));
             }
-                list_tabIcons.add(ClassyIconByProId.iconNormal(strings.get(i)));
-                list_tabIconsPressed.add(ClassyIconByProId.iconPressed(strings.get(i)));
         }
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), DeviceClassyActivity.this, strings, response,productId,deviceId);
+        final_str.add(0,cur_str);
+        for (int i = 0; i < final_str.size(); i++) {
+            list_tabIcons.add(ClassyIconByProId.iconNormal(final_str.get(i)));
+            list_tabIconsPressed.add(ClassyIconByProId.iconPressed(final_str.get(i)));
+        }
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), DeviceClassyActivity.this, final_str, response,productId,deviceId);
         viewpagerDevice.setAdapter(myFragmentPagerAdapter);
         tablayoutDevice.setupWithViewPager(viewpagerDevice);
         tablayoutDevice.setTabMode(TabLayout.MODE_SCROLLABLE);
-        if (flag!=-1){
-            viewpagerDevice.setCurrentItem(flag);
-        }
-        for (int i = 0; i < strings.size(); i++) {
+//        if (flag!=-1){
+//            viewpagerDevice.setCurrentItem(flag);
+//        }
+        for (int i = 0; i < final_str.size(); i++) {
             tablayoutDevice.getTabAt(i).setCustomView(getTabView(i));
         }
         tablayoutDevice.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -181,7 +189,7 @@ public class DeviceClassyActivity extends AppCompatActivity {
         ImageView img_title = (ImageView) view.findViewById(R.id.img_title);
         img_title.setImageResource(list_tabIcons.get(position));
 
-        if (position == flag) {
+        if (position == 0) {
             img_title.setImageResource(list_tabIconsPressed.get(position));
         } else {
             img_title.setImageResource(list_tabIcons.get(position));

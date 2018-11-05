@@ -103,6 +103,7 @@ public class KaiGuanOneFragment extends BaseFragment {
 
     @Override
     protected void onFragmentFirstVisible() {
+        Log.e("WW","WW");
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(DEVICEDETAIL))
                 .addParams("token",token)
