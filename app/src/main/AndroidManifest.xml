@@ -118,7 +118,13 @@
         <activity android:name=".activity.SceneDetailActivity" />
         <activity android:name=".activity.AddSceneDeviceActivity" />
         <activity android:name=".activity.ZhiNengzjActivity" />
-        <activity android:name=".activity.ZhuJiDetailActivity"></activity>
+        <activity android:name=".activity.ZhuJiDetailActivity" />
+        <activity android:name=".activity.HealthActivity" />
+        <activity android:name=".activity.TiZhongActivity" />
+        <activity android:name=".activity.TiWenActivity" />
+        <activity android:name=".activity.TiZhiLvActivity" />
+        <activity android:name=".activity.XueTangActivity" />
+        <activity android:name=".activity.XueYaActivity"></activity>
     </application>
 
 </manifest>

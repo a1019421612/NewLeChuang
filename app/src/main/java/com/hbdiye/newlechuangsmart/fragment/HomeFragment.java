@@ -447,7 +447,6 @@ public class HomeFragment extends Fragment {
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
             TextView textView=(TextView) view.findViewById(R.id.tv_content_home);
             if (mList.size() == i) {
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
                 textView.setText("更多");
                 if (i == 9) {

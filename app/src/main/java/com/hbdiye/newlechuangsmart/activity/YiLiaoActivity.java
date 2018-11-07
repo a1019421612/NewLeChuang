@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 医疗注册界面
+ */
 public class YiLiaoActivity extends BaseActivity {
 
     @BindView(R.id.ll_yl_age)
@@ -32,6 +36,8 @@ public class YiLiaoActivity extends BaseActivity {
     TextView tvYlAge;
     @BindView(R.id.tv_yl_data)
     TextView tvYlData;
+    @BindView(R.id.tv_yl_register)
+    TextView tvYlRegister;
 
     @Override
     protected void initData() {
@@ -53,9 +59,12 @@ public class YiLiaoActivity extends BaseActivity {
         return R.layout.activity_yi_liao;
     }
 
-    @OnClick({R.id.ll_yl_age, R.id.ll_yl_date})
+    @OnClick({R.id.ll_yl_age, R.id.ll_yl_date, R.id.tv_yl_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_yl_register:
+                startActivity(new Intent(this, HealthActivity.class));
+                break;
             case R.id.ll_yl_age:
                 OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
                     @Override

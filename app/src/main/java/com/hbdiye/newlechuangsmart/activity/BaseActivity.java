@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.iv_base_back})
-    public void onViewClicked(View view) {
+    public void onViewClickedback(View view) {
         switch (view.getId()) {
             case R.id.iv_base_back:
                 finish();
