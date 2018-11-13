@@ -5,6 +5,10 @@
         <attr name="comment_attr" format="string" />
         <attr name="comment_value" format="string" />
     </declare-styleable>
+    <declare-styleable name="ItemCommentSceneView">
+        <attr name="comment_scene_name" format="string" />
+        <attr name="comment_scene_attr" format="string" />
+    </declare-styleable>
     <declare-styleable name="ViewfinderView">
         <attr name="corner_color" format="color"/>
         <attr name="laser_color" format="color"/>

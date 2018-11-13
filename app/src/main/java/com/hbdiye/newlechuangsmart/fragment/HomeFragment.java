@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
+import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.MyWebSocketHandler;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
@@ -26,13 +27,18 @@ import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
+import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
 import com.hbdiye.newlechuangsmart.view.CustomViewPager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +68,9 @@ public class HomeFragment extends Fragment {
     private String url;
     public MyWebSocketHandler instance;
 
-    private List<Integer> mList = new ArrayList<>();
-    private List<String> mList_t = new ArrayList<>();
+//    private List<Integer> mList = new ArrayList<>();
+//    private List<String> mList_t = new ArrayList<>();
+    private List<HomeSceneBean.SceneList> list=new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
     private String token;
@@ -76,20 +83,20 @@ public class HomeFragment extends Fragment {
         token = (String) SPUtils.get(getActivity(),"token","");
         initWebSocket();
         initData();
-        mList.add(R.drawable.huijia);
-        mList.add(R.drawable.lijia);
-        mList.add(R.drawable.xican);
-        mList.add(R.drawable.xizao);
-        mList.add(R.drawable.yeqi);
-        mList.add(R.drawable.zuofan);
-        mList.add(R.drawable.xiawucha);
-        mList_t.add("回家");
-        mList_t.add("离家");
-        mList_t.add("西餐");
-        mList_t.add("洗澡");
-        mList_t.add("夜起");
-        mList_t.add("做饭");
-        mList_t.add("下午茶");
+//        mList.add(R.drawable.huijia);
+//        mList.add(R.drawable.lijia);
+//        mList.add(R.drawable.xican);
+//        mList.add(R.drawable.xizao);
+//        mList.add(R.drawable.yeqi);
+//        mList.add(R.drawable.zuofan);
+//        mList.add(R.drawable.xiawucha);
+//        mList_t.add("回家");
+//        mList_t.add("离家");
+//        mList_t.add("西餐");
+//        mList_t.add("洗澡");
+//        mList_t.add("夜起");
+//        mList_t.add("做饭");
+//        mList_t.add("下午茶");
 
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
@@ -100,7 +107,7 @@ public class HomeFragment extends Fragment {
        gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               if (position==mList.size()){
+               if (position==list.size()){
                   startActivity(new Intent(getActivity(), MoreSceneActivity.class));
                }
            }
@@ -122,7 +129,19 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                HomeSceneBean homeSceneBean = new Gson().fromJson(response, HomeSceneBean.class);
+                                List<HomeSceneBean.SceneList> sceneList = homeSceneBean.sceneList;
+                                if (sceneList!=null&&sceneList.size()>0){
+                                    list.addAll(sceneList);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
@@ -157,7 +176,7 @@ public class HomeFragment extends Fragment {
                 if (message.contains("\"pn\":\"DAPP\"")) {
                     websocketSendBroadcase(message, "DAPP");
                 }
-                if (message.contains("\"pn\":\"GOPP\"")) {
+                if (message.contains("\"pn\":\"GOPP\"")) {//删除场景
                     websocketSendBroadcase(message, "GOPP");
                 }
 //                ========================================================
@@ -427,12 +446,12 @@ public class HomeFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return mList.size() + 1 == 8 ? 8 : mList.size() + 1;
+            return list.size() + 1 == 8 ? 8 : list.size() + 1;
         }
 
         @Override
         public Object getItem(int i) {
-            return mList.get(i);
+            return list.get(i);
         }
 
         @Override
@@ -446,15 +465,15 @@ public class HomeFragment extends Fragment {
             view = LayoutInflater.from(getActivity()).inflate(R.layout.add_scene, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
             TextView textView=(TextView) view.findViewById(R.id.tv_content_home);
-            if (mList.size() == i) {
+            if (list.size() == i) {
                 Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
                 textView.setText("更多");
                 if (i == 9) {
                     imageView.setVisibility(View.GONE);
                 }
             } else {
-                Glide.with(getActivity()).load(mList.get(i)).into(imageView);
-                textView.setText(mList_t.get(i));
+                Glide.with(getActivity()).load(IconByName.drawableByName(list.get(i).icon)).into(imageView);
+                textView.setText(list.get(i).name);
             }
             return view;
         }

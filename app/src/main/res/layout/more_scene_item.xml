@@ -8,8 +8,9 @@
     android:layout_marginBottom="1dp"
     android:orientation="horizontal">
 <ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/iv_more_scene"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
     android:src="@mipmap/ic_launcher_round"
     />
     <TextView
@@ -32,7 +33,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
             android:text="每天"
             />
     </LinearLayout>

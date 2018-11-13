@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_scene_detail_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/chumokaiguan1"
+            />
+        <TextView
+            android:id="@+id/tv_scene_device_item"
+            android:padding="@dimen/dp_10"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="---" />
+        <TextView
+            android:id="@+id/tv_scene_device_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="编辑动作"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableLeft="@drawable/scene_edit"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</LinearLayout>

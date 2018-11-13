@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_scene_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.SceneDetailActivity">
@@ -72,10 +73,11 @@
                         />
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_scene_detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:text="回家"
+                    android:text="---"
                     />
                 <ImageView
                     android:id="@+id/iv_scene_edit"
@@ -99,12 +101,26 @@
                     />
             </LinearLayout>
         </RelativeLayout>
+        <com.hbdiye.newlechuangsmart.view.MyListView
+            android:id="@+id/mlv_scene"
+            android:layout_below="@+id/rl_head1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:layout_marginTop="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:background="@color/white"
+            android:listSelector="@android:color/transparent">
 
+        </com.hbdiye.newlechuangsmart.view.MyListView>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_scene_detail"
             android:layout_below="@+id/rl_head1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:padding="@dimen/dp_10"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/dp_10"
             >
         </android.support.v7.widget.RecyclerView>
