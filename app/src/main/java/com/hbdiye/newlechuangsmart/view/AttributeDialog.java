@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.AttrDialogAdapter;
+import com.hbdiye.newlechuangsmart.bean.DeviceList;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class AttributeDialog extends Dialog {
     private Context context;
     private View.OnClickListener clicerm;
     private AdapterView.OnItemClickListener gv_listener;
-    private List<String> mList;
+    private List<DeviceList.DevActList> mList;
     private AttrDialogAdapter adapter;
 
     public AttributeDialog(@NonNull Context context) {
@@ -27,7 +28,7 @@ public class AttributeDialog extends Dialog {
         this.context = context;
     }
 
-    public AttributeDialog(Context context, int theme, View.OnClickListener clicerm, List<String> mList, AdapterView.OnItemClickListener gv_listener) {
+    public AttributeDialog(Context context, int theme, View.OnClickListener clicerm, List<DeviceList.DevActList> mList,AdapterView.OnItemClickListener gv_listener) {
         super(context, theme);
         this.context = context;
         this.clicerm = clicerm;

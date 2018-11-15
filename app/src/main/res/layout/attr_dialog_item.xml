@@ -9,6 +9,7 @@
     android:layout_height="45dp"
     android:gravity="center"
     android:background="@drawable/attr_g"
-    android:text="---"
+    android:text="kaigggg"
+    android:textColor="@color/default_text"
     />
 </LinearLayout>

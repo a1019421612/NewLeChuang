@@ -21,8 +21,8 @@ import java.util.List;
 
 public class SceneDetailListAdapter extends BaseAdapter {
     private Context context;
-    private List<SceneDetailBean.DeviceList> mList;
-    public SceneDetailListAdapter(Context context, List<SceneDetailBean.DeviceList> mList) {
+    private List<SceneDetailBean.SceneTaskList> mList;
+    public SceneDetailListAdapter(Context context, List<SceneDetailBean.SceneTaskList> mList) {
         this.context=context;
         this.mList=mList;
     }
@@ -53,9 +53,9 @@ public class SceneDetailListAdapter extends BaseAdapter {
 
         for (int j = 0; j < mList.get(i).devAttList.size(); j++) {
             CommentSceneView commentView = new CommentSceneView(context);
-            List<SceneDetailBean.DeviceList.DevAttList> devAttList = mList.get(i).devAttList;
-            String name = devAttList.get(i).name;
-            int index = devAttList.get(i).index;
+            List<SceneDetailBean.SceneTaskList.DevAttList> devAttList = mList.get(i).devAttList;
+            String name = devAttList.get(j).name;
+            int index = devAttList.get(j).index;
             commentView.setTvSceneDeviceName(name);
             if (index==0){
                 commentView.setTvSceneDeviceAttr("关");

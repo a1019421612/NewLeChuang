@@ -30,7 +30,7 @@ public class InterfaceManager {
     public static final String APPKEY = "3576be75bca3495e";
 
     //    ===============================================================
-    public static final String NEWBASEURL="http://39.104.105.10:5678/";
+    public static final String NEWBASEURL="http://39.104.119.0:5678/";
     public static final String DEVICELIST="DEVICELIST";//第三级详情界面
     public static final String FINDDEVICELISTBYPRODUCTID="FINDDEVICELISTBYPRODUCTID";//DYPServer/device/findDeviceListByProductId
     public static final String PERSONINFO="PERSONINFO";//我的信息（包含家庭信息）
@@ -43,7 +43,9 @@ public class InterfaceManager {
     public static final String GATEWAYLIST="GATEWAYLIST";//主机列表
     public static final String UPDATESCENEINDEX="UPDATESCENEINDEX";//场景排序
     public static final String UPDATESCENE="UPDATESCENE";//修改场景名称和图标
-    public static final String SCENEDETAIL="SCENEDETAIL";
+    public static final String SCENEDETAIL="SCENEDETAIL";//场景详情
+    public static final String CREATESCENE="CREATESCENE";//创建场景
+    public static final String DEVICELISTSCENE="DEVICELISTSCENE";//场景添加设备列表
 //    ===============================================================
 
 
@@ -69,6 +71,8 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.UPDATESCENEINDEX,NEWBASEURL+"DYPServer/scene/updateSceneIndex");
             urlManager.put(InterfaceManager.UPDATESCENE,NEWBASEURL+"DYPServer/scene/updateSceneNameAndIcon");
             urlManager.put(InterfaceManager.SCENEDETAIL,NEWBASEURL+"DYPServer/scene/findSceneDetails");
+            urlManager.put(InterfaceManager.CREATESCENE,NEWBASEURL+"DYPServer/scene/createScene");
+            urlManager.put(InterfaceManager.DEVICELISTSCENE,NEWBASEURL+"DYPServer/device/findDeviceDetailsListGroupByRoomByIncludeAction");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

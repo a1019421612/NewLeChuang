@@ -3,7 +3,7 @@ package com.hbdiye.newlechuangsmart.adapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hbdiye.newlechuangsmart.R;
-import com.hbdiye.newlechuangsmart.bean.Content;
+import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class AddSceneDeviceAdapter extends BaseSectionQuickAdapter<SecneSectionB
 
     @Override
     protected void convert(BaseViewHolder helper, SecneSectionBean item) {
-        Content content=(Content) item.t;
-        helper.setText(R.id.tv_scene_device_name,content.getName());
+        DeviceList content=(DeviceList) item.t;
+        helper.setText(R.id.tv_scene_device_name,content.name);
     }
 }

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.hbdiye.newlechuangsmart.view.SceneDialog;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
@@ -79,6 +81,7 @@ public class MoreSceneActivity extends AppCompatActivity {
     private int end_pos = -1;
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
+    private SceneDialog sceneDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,10 +124,63 @@ public class MoreSceneActivity extends AppCompatActivity {
         iv_more_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MoreSceneActivity.this, SceneDetailActivity.class));
+//                startActivity(new Intent(MoreSceneActivity.this, SceneDetailActivity.class) .putExtra("sceneId", ""));
+                sceneDialog=new SceneDialog(MoreSceneActivity.this,R.style.MyDialogStyle,clicker,"创建场景");
+                sceneDialog.show();
             }
         });
 
+    }
+    private View.OnClickListener clicker=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.app_cancle_tv:
+                    sceneDialog.dismiss();
+                    break;
+                case R.id.app_sure_tv:
+                    String sceneName = sceneDialog.getSceneName();
+                    if (!TextUtils.isEmpty(sceneName)){
+                        createScene(sceneName);
+                    }
+                    break;
+            }
+        }
+    };
+    /**
+     * 创建场景
+     */
+    private void createScene(String name) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.CREATESCENE))
+                .addParams("token",token)
+                .addParams("icon","shouye")
+                .addParams("name",name)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            String msg = EcodeValue.resultEcode(errcode);
+                            SmartToast.show(msg);
+                            if (errcode.equals("0")){
+                                if (sceneDialog!=null){
+                                    sceneDialog.dismiss();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void initData() {

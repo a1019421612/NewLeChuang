@@ -20,7 +20,6 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.AddSceneDeviceAdapter;
 import com.hbdiye.newlechuangsmart.adapter.SceneDetailListAdapter;
 import com.hbdiye.newlechuangsmart.adapter.SceneDeviceAdapter;
-import com.hbdiye.newlechuangsmart.bean.Content;
 import com.hbdiye.newlechuangsmart.bean.SceneDetailBean;
 import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
@@ -46,15 +45,15 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
     private ImageView iv_base_back, iv_scene_ic, iv_scene_edit;
     private LinearLayout ll_scene_icon, ll_scent_root;
     private TextView tv_scene_add, tv_scene_name;
-    private RecyclerView rv_scene_detail;
-    private SceneDeviceAdapter adapter;
+//    private RecyclerView rv_scene_detail;
+//    private SceneDeviceAdapter adapter;
     private List<SecneSectionBean> mList = new ArrayList<>();
     private String sceneId = "";
     private String token;
 
     private MyListView mlv_scene;
     private SceneDetailListAdapter mAdapter;
-    private List<SceneDetailBean.DeviceList> list = new ArrayList<>();
+    private List<SceneDetailBean.SceneTaskList> list = new ArrayList<>();
     private LinkageAddIconPopwindow popwindow;
     private List<Integer> mList_icon = new ArrayList<>();
     private SceneDialog sceneDialog;
@@ -90,6 +89,9 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
         mList_icon.add(R.drawable.huazhuang);
         mList_icon.add(R.drawable.dushu);
         mList_icon.add(R.drawable.qichuang);
+        if (sceneId.equals("")){
+            return;
+        }
         sceneDetail();
     }
 
@@ -99,7 +101,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
         tv_scene_name = findViewById(R.id.tv_scene_detail_name);
         ll_scene_icon = findViewById(R.id.ll_scene_icon);
         tv_scene_add = findViewById(R.id.tv_scene_add);
-        rv_scene_detail = findViewById(R.id.rv_scene_detail);
+//        rv_scene_detail = findViewById(R.id.rv_scene_detail);
         ll_scent_root = findViewById(R.id.ll_scene_root);
         iv_scene_edit = findViewById(R.id.iv_scene_edit);
 
@@ -113,43 +115,43 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
         iv_scene_edit.setOnClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv_scene_detail.setLayoutManager(manager);
-        adapter = new SceneDeviceAdapter(R.layout.scene_device_item, R.layout.scene_device_header, mList);
-        rv_scene_detail.setAdapter(adapter);
-        for (int i = 0; i < 3; i++) {
-
-            SecneSectionBean secneSectionBean = new SecneSectionBean(true, "厨房开关" + i);
-            secneSectionBean.setIshead(true);
-            secneSectionBean.setTitle("厨房开关" + i);
-            mList.add(secneSectionBean);
-            for (int j = 0; j < i + 1; j++) {
-                Content content = new Content();
-                content.setName("左开" + i);
-                mList.add(new SecneSectionBean(content));
-            }
-        }
+//        rv_scene_detail.setLayoutManager(manager);
+//        adapter = new SceneDeviceAdapter(R.layout.scene_device_item, R.layout.scene_device_header, mList);
+//        rv_scene_detail.setAdapter(adapter);
+//        for (int i = 0; i < 3; i++) {
+//
+//            SecneSectionBean secneSectionBean = new SecneSectionBean(true, "厨房开关" + i);
+//            secneSectionBean.setIshead(true);
+//            secneSectionBean.setTitle("厨房开关" + i);
+//            mList.add(secneSectionBean);
+//            for (int j = 0; j < i + 1; j++) {
+//                Content content = new Content();
+//                content.setName("左开" + i);
+//                mList.add(new SecneSectionBean(content));
+//            }
+//        }
         mAdapter.notifyDataSetChanged();
-        adapter.notifyDataSetChanged();
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SecneSectionBean secneSectionBean = mList.get(position);
-                if (!secneSectionBean.isHeader) {
-                    SmartToast.show(secneSectionBean.t.getName());
-                }
-            }
-        });
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                SecneSectionBean secneSectionBean = mList.get(position);
-                switch (view.getId()) {
-                    case R.id.iv_scene_detail_del:
-                        SmartToast.show("del" + position);
-                        break;
-                }
-            }
-        });
+//        adapter.notifyDataSetChanged();
+//        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                SecneSectionBean secneSectionBean = mList.get(position);
+//                if (!secneSectionBean.isHeader) {
+//                    SmartToast.show(secneSectionBean.t.getName());
+//                }
+//            }
+//        });
+//        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                SecneSectionBean secneSectionBean = mList.get(position);
+//                switch (view.getId()) {
+//                    case R.id.iv_scene_detail_del:
+//                        SmartToast.show("del" + position);
+//                        break;
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -165,7 +167,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tv_scene_add:
                 //添加设备
-                startActivity(new Intent(this, AddSceneDeviceActivity.class));
+                startActivity(new Intent(this, AddSceneDeviceActivity.class).putExtra("sceneId",sceneId));
                 break;
             case R.id.iv_scene_edit:
                 //修改名称
@@ -224,7 +226,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
                             String errcode = jsonObject.getString("errcode");
                             if (errcode.equals("0")) {
                                 SceneDetailBean sceneDetailBean = new Gson().fromJson(response, SceneDetailBean.class);
-                                List<SceneDetailBean.DeviceList> deviceList = sceneDetailBean.deviceList;
+                                List<SceneDetailBean.SceneTaskList> deviceList = sceneDetailBean.sceneTaskList;
                                 tv_scene_name.setText(sceneDetailBean.scene.name);
                                 Glide.with(SceneDetailActivity.this).load(IconByName.drawableByName(sceneDetailBean.scene.icon)).into(iv_scene_ic);
                                 if (deviceList != null) {
