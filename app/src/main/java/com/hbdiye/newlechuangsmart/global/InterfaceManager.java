@@ -46,6 +46,7 @@ public class InterfaceManager {
     public static final String SCENEDETAIL="SCENEDETAIL";//场景详情
     public static final String CREATESCENE="CREATESCENE";//创建场景
     public static final String DEVICELISTSCENE="DEVICELISTSCENE";//场景添加设备列表
+    public static final String SCENEEDITACTION="SCENEEDITACTION";//场景编辑动作
 //    ===============================================================
 
 
@@ -73,6 +74,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.SCENEDETAIL,NEWBASEURL+"DYPServer/scene/findSceneDetails");
             urlManager.put(InterfaceManager.CREATESCENE,NEWBASEURL+"DYPServer/scene/createScene");
             urlManager.put(InterfaceManager.DEVICELISTSCENE,NEWBASEURL+"DYPServer/device/findDeviceDetailsListGroupByRoomByIncludeAction");
+            urlManager.put(InterfaceManager.SCENEEDITACTION,NEWBASEURL+"DYPServer/device/findDeviceDetailsListGroupByRoomByIncludeAttribute");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

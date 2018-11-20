@@ -27,6 +27,7 @@ import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
+import com.hbdiye.newlechuangsmart.activity.SceneDetailActivity;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.IconByName;
@@ -109,6 +110,8 @@ public class HomeFragment extends Fragment {
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                if (position==list.size()){
                   startActivity(new Intent(getActivity(), MoreSceneActivity.class));
+               }else {
+                   startActivity(new Intent(getActivity(), SceneDetailActivity.class).putExtra("sceneId",list.get(position).id));
                }
            }
        });
@@ -178,6 +181,9 @@ public class HomeFragment extends Fragment {
                 }
                 if (message.contains("\"pn\":\"GOPP\"")) {//删除场景
                     websocketSendBroadcase(message, "GOPP");
+                }
+                if (message.contains("\"pn\":\"DOPP\"")) {//场景添加设备
+                    websocketSendBroadcase(message, "DOPP");
                 }
 //                ========================================================
                 if (message.contains("\"pn\":\"SLTP\"")) {

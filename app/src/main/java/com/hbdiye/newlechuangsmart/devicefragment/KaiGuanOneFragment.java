@@ -49,6 +49,8 @@ public class KaiGuanOneFragment extends BaseFragment {
     private HomeReceiver homeReceiver;
     private int value_left;
     private KaiGuanBean kaiGuanBean;
+    private int index;
+    private List<KaiGuanBean.Data.DevActList> devActList;
 
     public static KaiGuanOneFragment newInstance(String page) {
         Bundle args = new Bundle();
@@ -85,16 +87,48 @@ public class KaiGuanOneFragment extends BaseFragment {
                 if (kaiGuanBean==null){
                     return;
                 }
+                List<KaiGuanBean.Data.DevActList> devActList = kaiGuanBean.data.devActList;
                 if (value_left==0){
 //                    //左开动作
-                    String dactid = kaiGuanBean.data.devActList.get(0).id;
-//                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+
+                    for (int i = 0; i < devActList.size(); i++) {
+                        int comNo = devActList.get(i).comNo;
+                        if (comNo==1){
+                            String dactid =devActList.get(i).id;
+                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                        }
+                    }
+//                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+
+//                    for (int i = 0; i < devActList.size(); i++) {
+//                        int indexs = devActList.get(i).index;
+//                        if (index==indexs){
+//                            String dactid = kaiGuanBean.data.devActList.get(i).id;
+////                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+//                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                        }
+//                    }
+
                 }else {
 //                    左关动作
-                    String dactid = kaiGuanBean.data.devActList.get(1).id;
-//                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
-                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                    for (int i = 0; i < devActList.size(); i++) {
+                        int comNo = devActList.get(i).comNo;
+                        if (comNo==0){
+                            String dactid =devActList.get(i).id;
+                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                        }
+                    }
+//                    String dactid = kaiGuanBean.data.devActList.get(0).id;
+////                    String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+//                    mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                    for (int i = 0; i < devActList.size(); i++) {
+//                        int indexs = devActList.get(i).index;
+//                        if (index==indexs){
+//                            String dactid = kaiGuanBean.data.devActList.get(i).id;
+////                   String sss="{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}";
+//                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+//                        }
+//                    }
                 }
             }
         });
@@ -103,7 +137,6 @@ public class KaiGuanOneFragment extends BaseFragment {
 
     @Override
     protected void onFragmentFirstVisible() {
-        Log.e("WW","WW");
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(DEVICEDETAIL))
                 .addParams("token",token)
@@ -128,7 +161,9 @@ public class KaiGuanOneFragment extends BaseFragment {
                                 tv_name.setText(name);
 
                                 KaiGuanBean.Data.DevAttList devAttList = kaiGuanBean.data.devAttList.get(0);
+                                devActList = kaiGuanBean.data.devActList;
                                 value_left = devAttList.value;
+                                index = devAttList.index;
                                 String left_name = devAttList.name;
                                 tv_att_name.setText(left_name);
                                 setViewByAtt(value_left,iv_att,tv_att_name);

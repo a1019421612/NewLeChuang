@@ -111,6 +111,7 @@ public class AddSceneDeviceActivity extends BaseActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
         intentFilter.addAction("DAPP");
+        intentFilter.addAction("DOPP");
         homeReceiver = new HomeReceiver();
         registerReceiver(homeReceiver, intentFilter);
         rvAddSceneDevice.setLayoutManager(new GridLayoutManager(this, 3));
@@ -182,20 +183,19 @@ public class AddSceneDeviceActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             String message = intent.getStringExtra("message");
-            if (action.equals("DCPP")) {
-//                try {
-//                    JSONObject jsonObject=new JSONObject(message);
-//                    String sdid = jsonObject.getString("sdid");
-//                    if (sdid.equals(deviceid)){
-//                        String ecode = jsonObject.getString("ecode");
-//                        if (!ecode.equals("0")){
-//                            String s = EcodeValue.resultEcode(ecode);
-//                            SmartToast.show(s);
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+            if (action.equals("DOPP")) {
+                try {
+                    JSONObject jsonObject=new JSONObject(message);
+                        String ecode = jsonObject.getString("ecode");
+                        if (ecode.equals("0")){
+                            String s = EcodeValue.resultEcode(ecode);
+                            SmartToast.show(s);
+                            AddSceneDeviceActivity.this.setResult(100,new Intent());
+                            finish();
+                        }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 //                parseData(message);
             }else if (action.equals("DAPP")){
 //                try {
