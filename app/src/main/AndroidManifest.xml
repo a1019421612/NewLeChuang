@@ -125,7 +125,12 @@
         <activity android:name=".activity.TiZhiLvActivity" />
         <activity android:name=".activity.XueTangActivity" />
         <activity android:name=".activity.XueYaActivity" />
-        <activity android:name=".activity.EditActionActivity"></activity>
+        <activity android:name=".activity.EditActionActivity" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

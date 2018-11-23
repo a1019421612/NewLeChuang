@@ -1,187 +1,44 @@
-package com.hbdiye.newlechuangsmart.fragment;
+package com.hbdiye.newlechuangsmart;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.coder.zzq.smartshow.toast.SmartToast;
-import com.google.gson.Gson;
-import com.hbdiye.newlechuangsmart.MyWebSocketHandler;
-import com.hbdiye.newlechuangsmart.R;
-import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
-import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
-import com.hbdiye.newlechuangsmart.SocketSendMessage;
-import com.hbdiye.newlechuangsmart.activity.LoginActivity;
-import com.hbdiye.newlechuangsmart.activity.MessageActivity;
-import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
-import com.hbdiye.newlechuangsmart.activity.SceneDetailActivity;
-import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
-import com.hbdiye.newlechuangsmart.global.InterfaceManager;
-import com.hbdiye.newlechuangsmart.util.IconByName;
-import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
-import com.hbdiye.newlechuangsmart.util.StringUtil;
-import com.hbdiye.newlechuangsmart.view.CustomViewPager;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
-import okhttp3.Call;
 
-import static com.hbdiye.newlechuangsmart.MyApp.finishAllActivity;
-
-public class HomeFragment extends Fragment {
-    @BindView(R.id.gv_fragment_home)
-    GridView gvFragmentHome;
-    @BindView(R.id.viewpager)
-    CustomViewPager viewpager;
-    @BindView(R.id.iv_message)
-    ImageView ivMessage;
-
-    private Unbinder bind;
+public class MyService extends Service {
     private WebSocketConnection mConnection;
-    private String mobilephone;
-    private String password;
-    private String url;
     public MyWebSocketHandler instance;
-
-//    private List<Integer> mList = new ArrayList<>();
-//    private List<String> mList_t = new ArrayList<>();
-    private List<HomeSceneBean.SceneList> list=new ArrayList<>();
-    private Myadapter mMyadapter;
-    private ArrayList<String> imageUrl = new ArrayList<>();
-    private String token;
-
-    @Nullable
+    private String url="";
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        bind = ButterKnife.bind(this, view);
-        token = (String) SPUtils.get(getActivity(),"token","");
-//        initWebSocket();
-        initData();
-//        mList.add(R.drawable.huijia);
-//        mList.add(R.drawable.lijia);
-//        mList.add(R.drawable.xican);
-//        mList.add(R.drawable.xizao);
-//        mList.add(R.drawable.yeqi);
-//        mList.add(R.drawable.zuofan);
-//        mList.add(R.drawable.xiawucha);
-//        mList_t.add("回家");
-//        mList_t.add("离家");
-//        mList_t.add("西餐");
-//        mList_t.add("洗澡");
-//        mList_t.add("夜起");
-//        mList_t.add("做饭");
-//        mList_t.add("下午茶");
-
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
-        mMyadapter = new Myadapter();
-        gvFragmentHome.setAdapter(mMyadapter);
-        viewpager.setImageResources(imageUrl, mAdCycleViewListener);
-       gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               if (position==list.size()){
-                  startActivity(new Intent(getActivity(), MoreSceneActivity.class));
-               }else {
-                   startActivity(new Intent(getActivity(), SceneDetailActivity.class).putExtra("sceneId",list.get(position).id));
-               }
-           }
-       });
-        return view;
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        return null;
     }
-
-    private void initData() {
-        OkHttpUtils
-                .post()
-                .url(InterfaceManager.getInstance().getURL(InterfaceManager.GETINDEXDATA))
-                .addParams("token",token)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        try {
-                            JSONObject jsonObject=new JSONObject(response);
-                            String errcode = jsonObject.getString("errcode");
-                            if (errcode.equals("0")){
-                                HomeSceneBean homeSceneBean = new Gson().fromJson(response, HomeSceneBean.class);
-                                List<HomeSceneBean.SceneList> sceneList = homeSceneBean.sceneList;
-                                if (sceneList!=null&&sceneList.size()>0){
-                                    if (list.size()>0){
-                                        list.clear();
-                                    }
-                                    list.addAll(sceneList);
-                                    mMyadapter.notifyDataSetChanged();
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
-
     @Override
-    public void onResume() {
-        super.onResume();
-        initData();
-    }
+    public void onCreate() {
+        super.onCreate();
+        url= (String) SPUtils.get(MyApp.getContextObject(),"url","");
+        Log.e("sss","onCreate+url=="+url);
 
-    private void initWebSocket() {
-        mobilephone = (String) SPUtils.get(getActivity(), "mobilephone", "");
-        password = (String) SPUtils.get(getActivity(), "password", "");
-        url= (String) SPUtils.get(getActivity(),"url","");
         mConnection = SingleWebSocketConnection.getInstance();
         instance = SingleWebSocketHandler.getInstance(mConnection, "{\"pn\":\"UITP\"}");
         try {
             mConnection.connect(url, instance);
-        } catch (Exception e) {
-            Log.e("sss", "异常：" + e.toString());
+        } catch (WebSocketException e) {
             e.printStackTrace();
         }
         instance.SetSocketsendMessage(new SocketSendMessage() {
             @Override
             public void websocketSendMessage(String message) {
-                if (message.contains("\"pn\":\"PRTP\"")) {
-                    Log.e("EEE", message);
-                    mConnection.disconnect();
-                    finishAllActivity();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                }
-
 //                =========================================================
                 if (message.contains("\"pn\":\"DCPP\"")) {
                     websocketSendBroadcase(message, "DCPP");
@@ -231,15 +88,15 @@ public class HomeFragment extends Fragment {
                     //删除联动
                     websocketSendBroadcase(message, "LDTP");
                 }
-                if (message.contains("\"pn\":\"LATP\"")) {
-                    //LATPSPUtils.put(this,"isTrigger",true);
-                    boolean isTrigger = (boolean) SPUtils.get(getActivity(), "isTrigger", false);
-                    if (!isTrigger) {
-                        websocketSendBroadcase(message, "LATP");
-                    } else {
-                        websocketSendBroadcase(message, "LATP_T");
-                    }
-                }
+//                if (message.contains("\"pn\":\"LATP\"")) {
+//                    //LATPSPUtils.put(this,"isTrigger",true);
+//                    boolean isTrigger = (boolean) SPUtils.get(getActivity(), "isTrigger", false);
+//                    if (!isTrigger) {
+//                        websocketSendBroadcase(message, "LATP");
+//                    } else {
+//                        websocketSendBroadcase(message, "LATP_T");
+//                    }
+//                }
 //========================scenesettingActivity======================================
                 if (message.contains("\"pn\":\"STLTP\"")) {
                     //STLTP  scenesettingActivity
@@ -408,90 +265,49 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
     private void websocketSendBroadcase(String message, String param) {
         Intent intent = new Intent();
         intent.setAction(param);
         intent.putExtra("message", message);
         try {
-            getActivity().sendBroadcast(intent);
+            sendBroadcast(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
-        @Override
-        public void onImageClick(int position, View imageView) {
-            // TODO 单击图片处理事件
-            int curPos = viewpager.getCurPos();
-            String url = imageUrl.get(curPos);
-//            Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
-            if (StringUtil.isBlank(url)) {
-                return;
-            }
-        }
-
-        @Override
-        public void displayImage(String imageURL, ImageView imageView) {
-//            PicUtils.showImgRoundedNoDiskCache(getActivity(), imageView, R.drawable.denglutupian);
-            PicUtils.showImgRoundedNoDiskCacheNoUrl(getActivity(), imageView);
-        }
-    };
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        bind.unbind();
-    }
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("sss","onStartCommand");
+        Notification.Builder builder = new Notification.Builder(this.getApplicationContext()); //获取一个Notification构造器
+        Intent nfIntent = new Intent(this, MainActivity.class);
 
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                .setContentTitle("下拉列表中的Title") // 设置下拉列表里的标题
+                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+                .setContentText("要显示的内容") // 设置上下文内容
+                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+        Notification notification = builder.build(); // 获取构建好的Notification
+
+        //让该service前台运行，避免手机休眠时系统自动杀掉该服务
+        //如果 id 为 0 ，那么状态栏的 notification 将不会显示。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground(10, notification);
+            Log.e("sss","8.0");
+        }else {
+            startForeground(0, notification);
+        }
+
+        return super.onStartCommand(intent, flags, startId);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //这是一条错误指令目的是为了立刻断开连接 如果用mConnection.disconnect()会等很长时间才会断开连接
-//        mConnection.sendTextMessage("{\"pn\":\"DLLL\", \"classify\":\"protype\", \"id\":\"PROTYPE07\"}");
-//        mConnection.disconnect();
-    }
-
-    @OnClick(R.id.iv_message)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity(),MessageActivity.class));
-    }
-
-    class Myadapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return list.size() + 1 == 8 ? 8 : list.size() + 1;
+        Log.e("sss","onDestroy");
+        stopForeground(true);// 停止前台服务--参数：表示是否移除之前的通知
+        if (mConnection!=null){
+            mConnection.disconnect();
         }
-
-        @Override
-        public Object getItem(int i) {
-            return list.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.add_scene, null);
-            ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
-            TextView textView=(TextView) view.findViewById(R.id.tv_content_home);
-            if (list.size() == i) {
-                Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
-                textView.setText("更多");
-                if (i == 9) {
-                    imageView.setVisibility(View.GONE);
-                }
-            } else {
-                Glide.with(getActivity()).load(IconByName.drawableByName(list.get(i).icon)).into(imageView);
-                textView.setText(list.get(i).name);
-            }
-            return view;
-        }
+        stopSelf();
     }
 }

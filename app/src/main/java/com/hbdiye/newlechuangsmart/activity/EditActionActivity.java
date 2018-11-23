@@ -3,7 +3,10 @@ package com.hbdiye.newlechuangsmart.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.AddSceneDeviceAdapter;
@@ -23,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 
+/**
+ * 添加条件
+ */
 public class EditActionActivity extends BaseActivity {
 
     @BindView(R.id.rv_scene_action_device)
@@ -30,9 +36,12 @@ public class EditActionActivity extends BaseActivity {
     private String token;
     private List<SecneSectionBean> mList = new ArrayList<>();
     private SceneActionAdapter adapter;
+    private String linkageId;
+
     @Override
     protected void initData() {
         token = (String) SPUtils.get(this,"token","");
+        linkageId = getIntent().getStringExtra("linkageId");
         includeAttribute();
     }
 
@@ -81,6 +90,37 @@ public class EditActionActivity extends BaseActivity {
         rvSceneActionDevice.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new SceneActionAdapter(R.layout.action_scene_device_item, R.layout.add_scene_device_header, mList);
         rvSceneActionDevice.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SecneSectionBean secneSectionBean = mList.get(position);
+                boolean ishead = secneSectionBean.isIshead();
+                if (!ishead){
+                    String name = secneSectionBean.t.name;
+                    SmartToast.show(name);
+                    OkHttpUtils
+                            .post()
+                            .url(InterfaceManager.getInstance().getURL(InterfaceManager.CREATECONDITION))
+                            .addParams("token",token)
+                            .addParams("linkageId",linkageId)
+                            .addParams("devAttId","")
+                            .addParams("condition","")
+                            .addParams("value","")
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+
+                                }
+
+                                @Override
+                                public void onResponse(String response, int id) {
+
+                                }
+                            });
+                }
+            }
+        });
     }
 
     @Override

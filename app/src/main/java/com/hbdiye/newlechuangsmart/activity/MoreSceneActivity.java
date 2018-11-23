@@ -259,7 +259,7 @@ public class MoreSceneActivity extends AppCompatActivity {
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.UPDATESCENEINDEX))
                 .addParams("token", token)
-                .addParams("currIndex", currIndex)
+//                .addParams("currIndex", currIndex)
                 .addParams("newIndex", newIndex)
                 .addParams("sceneId", sceneId)
                 .build()

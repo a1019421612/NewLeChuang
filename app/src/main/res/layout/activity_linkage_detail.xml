@@ -2,167 +2,230 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/ll_root"
     tools:context=".activity.LinkageAddActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:src="@drawable/beijing" />
+
         <RelativeLayout
             android:id="@+id/rl_head"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            >
+            android:layout_height="?attr/actionBarSize">
+
             <ImageView
                 android:id="@+id/iv_base_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/back"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                />
+                android:src="@mipmap/back" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:layout_below="@id/rl_head"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/dp_10"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_below="@id/rl_head"
             android:background="@color/comment_bg"></RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rl_head1"
-            android:layout_below="@+id/rl_head"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_head">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liandong"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:id="@+id/ll_linkage_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_circle"
                     android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/bg_circle"
                     android:gravity="center">
+
                     <ImageView
                         android:id="@+id/iv_linkage_ic"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/huijia"
-                        />
+                        android:src="@drawable/huijia" />
                 </LinearLayout>
+
                 <TextView
+                    android:id="@+id/tv_linkage_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:text="回家"
-                    />
+                    android:text="---" />
+
                 <ImageView
                     android:id="@+id/iv_linkage_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:src="@drawable/edit"
-                    />
+                    android:src="@drawable/edit" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:src="@drawable/ds"
-                    />
+                    android:src="@drawable/ds" />
             </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_below="@+id/rl_head1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            >
-            <ScrollView
+            android:layout_below="@+id/rl_head1">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/liandong_bg"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="如果" />
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/liandong_bg"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="如果"
-                            android:padding="@dimen/dp_10"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/wendu_circle"
                             />
-                        <com.hbdiye.newlechuangsmart.view.MyListView
-                            android:id="@+id/lv_add_condition"
-                            android:layout_width="match_parent"
-                            android:descendantFocusability="beforeDescendants"
-                            android:layout_height="match_parent"
-                            android:divider="@null"
-                            android:listSelector="@android:color/transparent"
-                            >
-
-                        </com.hbdiye.newlechuangsmart.view.MyListView>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="添加新条件"
-                            android:gravity="center_horizontal"
+                            android:id="@+id/tv_linkage_condition_name"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:text="---"
+                            android:gravity="center_vertical"
+                            />
+                        <TextView
+                            android:id="@+id/tv_linkage_condition_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="编辑"
                             />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/liandong_bg"
-                        android:orientation="vertical">
-
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_condition_name"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="那么"
+                            android:layout_marginRight="@dimen/dp_10"
                             android:padding="@dimen/dp_10"
-                            />
-                        <com.hbdiye.newlechuangsmart.view.MyListView
-                            android:id="@+id/lv_add_result"
-                            android:layout_width="match_parent"
-                            android:descendantFocusability="beforeDescendants"
-                            android:layout_height="match_parent"
-                            android:listSelector="@android:color/transparent"
-                            android:divider="@null"
-                           >
-
-                        </com.hbdiye.newlechuangsmart.view.MyListView>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="添加新任务"
+                            android:background="@color/comment_bg"
                             android:gravity="center_horizontal"
+                            android:text="---"
+                            android:drawableRight="@drawable/down"
+                            />
+                        <TextView
+                            android:id="@+id/tv_condition_attr"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:background="@color/comment_bg"
+                            android:gravity="center_horizontal"
+                            android:text="---"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:drawableRight="@drawable/down"
+                            />
+                        <TextView
+                            android:id="@+id/tv_condition_value"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:background="@color/comment_bg"
+                            android:gravity="center_horizontal"
+                            android:text="---"
                             />
                     </LinearLayout>
                 </LinearLayout>
-            </ScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/liandong_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="那么" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_linkage_detail_add_attr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_linkage_detail_add_attr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_corner_shape"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:textColor="@color/white"
+                    android:text="添加条件"
+                />
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DeviceFragment deviceFragment;
     private LinkageFragment linkageFragment;
     private MineFragment mineFragment;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initStatusBar();
         initView();
+
+        intent = new Intent(MainActivity.this, MyService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }else {
+            startService(intent);
+        }
+
 //        initData();
         String[] perm={Permission.CAMERA,Permission.WRITE_EXTERNAL_STORAGE,Permission.ACCESS_COARSE_LOCATION};
         AndPermission.with(this)
@@ -212,5 +222,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showFragment(3);
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(intent);
     }
 }
