@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +16,13 @@ import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.DeviceListSceneBean;
 import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,32 +102,61 @@ public class EditActionActivity extends BaseActivity {
                 boolean ishead = secneSectionBean.isIshead();
                 if (!ishead){
                     String name = secneSectionBean.t.name;
-                    SmartToast.show(name);
-                    OkHttpUtils
-                            .post()
-                            .url(InterfaceManager.getInstance().getURL(InterfaceManager.CREATECONDITION))
-                            .addParams("token",token)
-                            .addParams("linkageId",linkageId)
-                            .addParams("devAttId","")
-                            .addParams("condition","")
-                            .addParams("value","")
-                            .build()
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onError(Call call, Exception e, int id) {
+                    DeviceList dev_list = secneSectionBean.t;
+                    String device_id = dev_list.id;
+                    DeviceList.DevAttList devAttList = dev_list.devAttList.get(0);
+                    int type = devAttList.type;
+                    String devAttId = devAttList.id;
+                    if (type==2){
+                        //检测器（温湿度）
+                        createJianCeQi(device_id,devAttId);
+                    }else {
+                        createJianCeQi(device_id,devAttId);
+                    }
 
-                                }
-
-                                @Override
-                                public void onResponse(String response, int id) {
-
-                                }
-                            });
                 }
             }
         });
     }
 
+    /**
+     * 添加检测器
+     * @return
+     */
+    private void createJianCeQi(String deviceId,String devAttId){
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.CREATECONDITION))
+                .addParams("token",token)
+                .addParams("linkageId",linkageId)
+                .addParams("deviceId",deviceId)
+                .addParams("devAttId",devAttId)
+                .addParams("condition","3")
+                .addParams("value","1")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            String s = EcodeValue.resultEcode(errcode);
+                            SmartToast.show(s);
+                            if (errcode.equals("0")){
+                                setResult(101,new Intent());
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
     @Override
     protected int getLayoutID() {
         return R.layout.activity_edit_action;

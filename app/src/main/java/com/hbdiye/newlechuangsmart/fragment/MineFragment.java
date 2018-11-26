@@ -120,7 +120,7 @@ public class MineFragment extends Fragment {
                 startActivity(new Intent(getActivity(),FamilyMemberActivity.class));
                 break;
             case R.id.ll_mine_about_us:
-                startActivity(new Intent(getActivity(), CameraListActivity.class));
+
                 break;
             case R.id.ll_mine_devices:
                 //我的设备

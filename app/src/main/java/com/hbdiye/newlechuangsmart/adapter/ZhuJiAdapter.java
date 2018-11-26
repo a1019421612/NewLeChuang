@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
 import com.hbdiye.newlechuangsmart.activity.ZhuJiDetailActivity;
+import com.hbdiye.newlechuangsmart.bean.GateWayBean;
 import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
 
@@ -19,12 +20,12 @@ import java.util.List;
 
 public class ZhuJiAdapter extends BaseAdapter {
     private Context context;
-    private List<RoomDeviceListBean.RoomList> mList;
+    private List<GateWayBean.RoomList> mList;
     private String productId;
     private int icon;
     private String data;
 
-    public ZhuJiAdapter(Context context, List<RoomDeviceListBean.RoomList> mList, String productId,int icon,String data) {
+    public ZhuJiAdapter(Context context, List<GateWayBean.RoomList> mList, String productId,int icon,String data) {
         this.context = context;
         this.mList = mList;
         this.productId = productId;
@@ -54,8 +55,8 @@ public class ZhuJiAdapter extends BaseAdapter {
         TextView tv_name = view.findViewById(R.id.tv_condition_name);
         final String name = mList.get(i).name;
         tv_name.setText(name);
-        final List<RoomDeviceListBean.RoomList.DeviceList> deviceList = mList.get(i).deviceList;
-        ChoiceDeviceItemAdapter adapter = new ChoiceDeviceItemAdapter(context, deviceList,icon);
+        final List<GateWayBean.RoomList.GatewayList> deviceList = mList.get(i).gatewayList;
+        ChoiceZhujiItemAdapter adapter = new ChoiceZhujiItemAdapter(context, deviceList,icon);
         myGridView.setAdapter(adapter);
         myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

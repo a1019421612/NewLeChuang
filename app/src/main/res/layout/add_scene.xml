@@ -20,7 +20,7 @@
             <!--android:layout_centerInParent="true"-->
             <!--android:src="@drawable/huijia" />-->
     <!--</RelativeLayout>-->
-    <com.hbdiye.newlechuangsmart.view.SquareLayout
+    <RelativeLayout
         android:id="@+id/rl_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:padding="@dimen/dp_10"
             android:layout_centerInParent="true"
             android:src="@drawable/home_add" />
-    </com.hbdiye.newlechuangsmart.view.SquareLayout>
+    </RelativeLayout>
     <TextView
         android:id="@+id/tv_content_home"
         android:layout_below="@id/rl_a"
@@ -44,6 +44,9 @@
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/sp_14"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="回家"
         />
 </RelativeLayout>

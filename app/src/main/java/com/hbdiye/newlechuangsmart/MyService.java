@@ -1,10 +1,13 @@
 package com.hbdiye.newlechuangsmart;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -278,23 +281,65 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("sss","onStartCommand");
+
+        //新增---------------------------------------------
+        String CHANNEL_ONE_ID = "com.primedu.cn";
+        String CHANNEL_ONE_NAME = "Channel One";
+//        NotificationChannel notificationChannel = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            notificationChannel = new NotificationChannel(CHANNEL_ONE_ID,
+//                    CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH);
+//            notificationChannel.enableLights(true);
+//            notificationChannel.setLightColor(Color.RED);
+//            notificationChannel.setShowBadge(true);
+//            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+//            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//            manager.createNotificationChannel(notificationChannel);
+//        }
+//--------------------------------------------------------新增
+
         Notification.Builder builder = new Notification.Builder(this.getApplicationContext()); //获取一个Notification构造器
         Intent nfIntent = new Intent(this, MainActivity.class);
 
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
-                .setContentTitle("下拉列表中的Title") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
-                .setContentText("要显示的内容") // 设置上下文内容
-                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
-        Notification notification = builder.build(); // 获取构建好的Notification
+//        builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+//                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+//                .setContentTitle("下拉列表中的Title") // 设置下拉列表里的标题
+//                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+//                .setContentText("要显示的内容") // 设置上下文内容
+//                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+//        Notification notification = builder.build(); // 获取构建好的Notification
 
         //让该service前台运行，避免手机休眠时系统自动杀掉该服务
         //如果 id 为 0 ，那么状态栏的 notification 将不会显示。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel notificationChannel = null;
+//                        notificationChannel = new NotificationChannel(CHANNEL_ONE_ID,
+//                                CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH);
+//            notificationChannel.enableLights(true);
+//            notificationChannel.setLightColor(Color.RED);
+//            notificationChannel.setShowBadge(true);
+//            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+//            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//            manager.createNotificationChannel(notificationChannel);
+
+            builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+                    .setChannelId(CHANNEL_ONE_ID)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                    .setContentTitle("下拉列表中的Title") // 设置下拉列表里的标题
+                    .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+                    .setContentText("要显示的内容") // 设置上下文内容
+                    .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+            Notification notification = builder.build(); // 获取构建好的Notification
             startForeground(10, notification);
             Log.e("sss","8.0");
         }else {
+            builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                    .setContentTitle("下拉列表中的Title") // 设置下拉列表里的标题
+                    .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+                    .setContentText("要显示的内容") // 设置上下文内容
+                    .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+            Notification notification = builder.build(); // 获取构建好的Notification
             startForeground(0, notification);
         }
 

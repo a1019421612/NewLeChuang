@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.ChoiceDeviceAdapter;
 import com.hbdiye.newlechuangsmart.adapter.ZhuJiAdapter;
+import com.hbdiye.newlechuangsmart.bean.GateWayBean;
 import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
@@ -28,7 +29,7 @@ public class ZhiNengzjActivity extends BaseActivity {
     @BindView(R.id.lv_zj_device)
     ListView lvZjDevice;
     private String token;
-    private List<RoomDeviceListBean.RoomList> mList=new ArrayList<>();
+    private List<GateWayBean.RoomList> mList=new ArrayList<>();
     private ZhuJiAdapter adapter;
     private String productId;
     private int icon;
@@ -54,8 +55,8 @@ public class ZhiNengzjActivity extends BaseActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
                             if (errcode.equals("0")) {
-                                RoomDeviceListBean roomDeviceListBean = new Gson().fromJson(response, RoomDeviceListBean.class);
-                                List<RoomDeviceListBean.RoomList> roomList = roomDeviceListBean.roomList;
+                                GateWayBean roomDeviceListBean = new Gson().fromJson(response, GateWayBean.class);
+                                List<GateWayBean.RoomList> roomList = roomDeviceListBean.roomList;
                                 if (roomList==null){
                                     return;
                                 }

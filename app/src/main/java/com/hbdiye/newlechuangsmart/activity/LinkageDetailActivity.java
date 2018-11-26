@@ -99,23 +99,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
                                 String devAttId = linkageConditionList2.devAttId;
                                 List<LinkageDetailBean.LinkageConditionLists.DevAttList> devAttList = linkageConditionLists.devAttList;
                                 int value1 = linkageConditionList2.value;
-                                switch (value1) {
-                                    case 1:
-                                        tvConditionAttr.setText("小于");
-                                        break;
-                                    case 2:
-                                        tvConditionAttr.setText("小于等于");
-                                        break;
-                                    case 3:
-                                        tvConditionAttr.setText("等于");
-                                        break;
-                                    case 4:
-                                        tvConditionAttr.setText("大于等于");
-                                        break;
-                                    case 5:
-                                        tvConditionAttr.setText("大于");
-                                        break;
-                                }
+
                                 for (int i = 0; i < devAttList.size(); i++) {
                                     String id1 = devAttList.get(i).id;
                                     if (id1.equals(devAttId)) {
@@ -124,10 +108,43 @@ public class LinkageDetailActivity extends AppCompatActivity {
                                         int value = devAttList.get(i).value;
                                         int type = devAttList.get(i).type;
                                         if (type == 2) {
+                                            switch (value1) {
+                                                case 1:
+                                                    tvConditionAttr.setText("小于");
+                                                    break;
+                                                case 2:
+                                                    tvConditionAttr.setText("小于等于");
+                                                    break;
+                                                case 3:
+                                                    tvConditionAttr.setText("等于");
+                                                    break;
+                                                case 4:
+                                                    tvConditionAttr.setText("大于等于");
+                                                    break;
+                                                case 5:
+                                                    tvConditionAttr.setText("大于");
+                                                    break;
+                                            }
                                             //监测器属性（属性的 type=2），
                                             //1 小于，2 小于等于，3 等于，4 大于等于，5 大于
                                             tvConditionValue.setText(value+"");
 
+                                        }else {
+                                            switch (value1) {
+                                                case 1:
+                                                    tvConditionAttr.setText("有感应");
+                                                    break;
+                                                case 4:
+                                                    tvConditionAttr.setText("被拆除");
+                                                    break;
+                                                case 8:
+                                                    tvConditionAttr.setText("电池欠压");
+                                                    break;
+                                                case 512:
+                                                    tvConditionAttr.setText("电池故障");
+                                                    break;
+                                            }
+                                            tvConditionValue.setVisibility(View.GONE);
                                         }
                                     }
                                 }
@@ -152,7 +169,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
                 break;
             case R.id.tv_linkage_detail_add_attr:
                 //添加条件
-                startActivity(new Intent(this, EditActionActivity.class).putExtra("linkageId",linkageId));
+                startActivityForResult(new Intent(this, EditActionActivity.class).putExtra("linkageId",linkageId),101);
                 break;
             case R.id.tv_linkage_condition_edit:
                 //条件编辑
@@ -167,6 +184,15 @@ public class LinkageDetailActivity extends AppCompatActivity {
             case R.id.tv_condition_value:
                 //条件属性值
                 break;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data!=null){
+
+            if (requestCode==101){
+                linkageDetail();
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.AddRoomActivity;
+import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomActivity;
@@ -26,6 +27,7 @@ import com.hbdiye.newlechuangsmart.activity.ZhiNengzjActivity;
 import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
 import com.hbdiye.newlechuangsmart.view.DelDialog;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
+import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,7 @@ public class DeviceFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i==8){
-
+                    startActivity(new Intent(getActivity(), CameraListActivity.class));
                 }else if (i==6){
                     //跳转遥控中心
                     startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));

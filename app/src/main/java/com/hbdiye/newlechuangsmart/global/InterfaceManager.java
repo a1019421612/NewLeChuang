@@ -53,6 +53,8 @@ public class InterfaceManager {
     public static final String DELLINKAGE="DELLINKAGE";//删除联动
     public static final String LINKAGEDETAIL="LINKAGEDETAIL";//联动详情
     public static final String CREATECONDITION="CREATECONDITION";//创建联动条件
+
+    public static final String BINDGATEWAY="BINDGATEWAY";
 //    ===============================================================
 
 
@@ -87,6 +89,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.DELLINKAGE,NEWBASEURL+"DYPServer/linkage/deleteLinkage");
             urlManager.put(InterfaceManager.LINKAGEDETAIL,NEWBASEURL+"DYPServer/linkage/findLinkageDetails");
             urlManager.put(InterfaceManager.CREATECONDITION,NEWBASEURL+"DYPServer/linkage/createLinkageCondition");
+            urlManager.put(InterfaceManager.BINDGATEWAY,NEWBASEURL+"DYPServer/device/bindGateway");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

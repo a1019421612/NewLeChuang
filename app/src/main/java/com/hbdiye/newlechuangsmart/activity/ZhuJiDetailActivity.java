@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.FragmentDetailPagerAdapter;
 import com.hbdiye.newlechuangsmart.bean.DeviceClassyBean;
+import com.hbdiye.newlechuangsmart.bean.GateWayBean;
 import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
 import com.hbdiye.newlechuangsmart.devicefragment.WangGuanFragment;
 import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
@@ -64,10 +65,10 @@ public class ZhuJiDetailActivity extends BaseActivity {
         if (TextUtils.isEmpty(data)){
             return;
         }
-        RoomDeviceListBean roomDeviceListBean = new Gson().fromJson(data, RoomDeviceListBean.class);
-        List<RoomDeviceListBean.RoomList> roomList = roomDeviceListBean.roomList;
+        GateWayBean roomDeviceListBean = new Gson().fromJson(data, GateWayBean.class);
+        List<GateWayBean.RoomList> roomList = roomDeviceListBean.roomList;
         for (int i = 0; i < roomList.size(); i++) {
-            List<RoomDeviceListBean.RoomList.DeviceList> deviceList = roomList.get(i).deviceList;
+            List<GateWayBean.RoomList.GatewayList> deviceList = roomList.get(i).gatewayList;
             for (int j = 0; j < deviceList.size(); j++) {
                 String deviceid = deviceList.get(j).id;
                 String name = deviceList.get(j).name;

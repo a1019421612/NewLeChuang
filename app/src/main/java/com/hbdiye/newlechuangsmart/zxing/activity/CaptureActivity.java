@@ -37,6 +37,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.GateWaySeriesNumActivity;
 import com.hbdiye.newlechuangsmart.activity.SeriesNumSearchActivity;
 import com.hbdiye.newlechuangsmart.zxing.camera.CameraManager;
 import com.hbdiye.newlechuangsmart.zxing.decoding.CaptureActivityHandler;
@@ -100,7 +101,6 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         iv_base_back=findViewById(R.id.iv_base_back);
         iv_base_right=findViewById(R.id.iv_base_right);
         if (isCamera){
-            iv_base_right.setVisibility(View.VISIBLE);
             iv_base_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -108,6 +108,14 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                     bundle.putInt("type", 0);
                     Intent intent = new Intent(CaptureActivity.this, SeriesNumSearchActivity.class);
                     intent.putExtras(bundle);
+                    CaptureActivity.this.startActivity(intent);
+                }
+            });
+        }else {
+            iv_base_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CaptureActivity.this, GateWaySeriesNumActivity.class);
                     CaptureActivity.this.startActivity(intent);
                 }
             });
