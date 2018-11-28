@@ -70,6 +70,20 @@ public class LinkageDetailListAdapter extends BaseAdapter {
             }
             final String stid = sceneTaskList.get(j).id;
             ImageView iv_del = commentView.getImageViewDel();
+            TextView tv_attr_name=commentView.getTvSceneDeviceName();
+            TextView tv_attr_att=commentView.getTvSceneAttr();
+            tv_attr_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mAttrNameListener.OnAttrNameListener();
+                }
+            });
+            tv_attr_att.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mAttrAttListener.OnAttrAttListener();
+                }
+            });
             iv_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -80,34 +94,6 @@ public class LinkageDetailListAdapter extends BaseAdapter {
             });
             ll_root.addView(commentView);
         }
-//        for (int j = 0; j < mList.get(i).devAttList.size(); j++) {
-//            CommentSceneView commentView = new CommentSceneView(context);
-//             List<SceneDetailBean.SceneTaskList.DevAttList> devAttList = mList.get(i).devAttList;
-//             SceneDetailBean.SceneTaskList.DevAttList devAttList1 = devAttList.get(j);
-//
-//            final String stid = "";
-//
-//            String name = devAttList.get(j).name;
-//            int value = devAttList.get(j).value;
-//            commentView.setTvSceneDeviceName(name);
-//            if (value==0){
-//                commentView.setTvSceneDeviceAttr("关");
-//            }else if (value==1){
-//                commentView.setTvSceneDeviceAttr("开");
-//            }
-//            ImageView iv_del = commentView.getImageViewDel();
-//            iv_del.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mImageViewDelListener!=null){
-//                        mImageViewDelListener.OnImageViewDelListener(stid);
-//                    }
-//                }
-//            });
-//            ll_root.addView(commentView);
-//        }
-//        LinkageConditionItemAdapter adapter=new LinkageConditionItemAdapter(context,mList,this);
-//        listView.setAdapter(adapter);
         if (mListener!=null){
             tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -133,5 +119,19 @@ public class LinkageDetailListAdapter extends BaseAdapter {
     private GridOnItemClickListener mListener;
     public void setOnItemClickListener(GridOnItemClickListener mListener){
         this.mListener=mListener;
+    }
+    public interface AttrNameListener{
+        void OnAttrNameListener();
+    }
+    private AttrNameListener mAttrNameListener;
+    public void setOnAttrNameListener(AttrNameListener mAttrNameListener){
+        this.mAttrNameListener=mAttrNameListener;
+    }
+    public interface AttrAttListener{
+        void OnAttrAttListener();
+    }
+    private AttrAttListener mAttrAttListener;
+    public void setOnAttrAttListener(AttrAttListener mAttrAttListener){
+        this.mAttrAttListener=mAttrAttListener;
     }
 }

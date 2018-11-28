@@ -184,6 +184,20 @@ public class LinkageDetailActivity extends AppCompatActivity {
     private void initView() {
         mAdapter = new LinkageDetailListAdapter(this, list);
         mlvLinkageResult.setAdapter(mAdapter);
+        //动作名称
+        mAdapter.setOnAttrNameListener(new LinkageDetailListAdapter.AttrNameListener() {
+            @Override
+            public void OnAttrNameListener() {
+
+            }
+        });
+        //动作属性
+        mAdapter.setOnAttrAttListener(new LinkageDetailListAdapter.AttrAttListener() {
+            @Override
+            public void OnAttrAttListener() {
+
+            }
+        });
         //删除动作
         mAdapter.setImageViewDelListener(new LinkageDetailListAdapter.ImageViewDelListener() {
             @Override

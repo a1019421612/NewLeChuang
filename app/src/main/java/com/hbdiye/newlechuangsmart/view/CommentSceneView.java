@@ -62,6 +62,9 @@ public class CommentSceneView extends LinearLayout {
     public TextView getTvSceneAttr(){
         return tvSceneDeviceAttr;
     }
+    public TextView getTvSceneDeviceName(){
+        return tvSceneDeviceName;
+    }
     public void setTvSceneDeviceName(String value){
         tvSceneDeviceName.setText(value);
     }
