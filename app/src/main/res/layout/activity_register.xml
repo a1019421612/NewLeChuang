@@ -57,8 +57,6 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="昵称"
-                android:inputType="phone"
-                android:maxLength="11"
                 android:maxLines="1"
                 android:textColor="#555555"
                 android:textColorHint="#cccccc"

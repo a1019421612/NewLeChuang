@@ -30,6 +30,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     TextView tvBaseTitle;
     @BindView(R.id.iv_base_add)
     ImageView ivBaseAdd;
+    @BindView(R.id.tv_base_enter)
+    TextView tvBaseEnter;
     private Unbinder unbinder;
     @BindView(R.id.iv_base_right)
     ImageView ivBaseEdit;

@@ -131,8 +131,13 @@
             android:name=".MyService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".AliveService"
+            android:process=":live" />
 
-        <activity android:name=".activity.GateWaySeriesNumActivity"></activity>
+        <activity android:name=".activity.GateWaySeriesNumActivity" />
+        <activity android:name=".activity.AddLinkageDeviceActivity" />
+        <activity android:name=".activity.EditInfoActivity"></activity>
     </application>
 
 </manifest>

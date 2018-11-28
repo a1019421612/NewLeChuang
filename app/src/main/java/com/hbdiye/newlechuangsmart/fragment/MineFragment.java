@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
@@ -21,6 +22,7 @@ import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
+import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
@@ -62,6 +64,7 @@ public class MineFragment extends Fragment {
 
     private GetPhotoPopwindow getPhotoPopwindow;
     private String token;
+    private UserFamilyInfoBean userFamilyInfoBean;
 
     @Nullable
     @Override
@@ -75,7 +78,7 @@ public class MineFragment extends Fragment {
 
     private void personInfo() {
         OkHttpUtils.post()
-                .url(InterfaceManager.getInstance().getURL(InterfaceManager.PERSONINFO))
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.USERANDFAMILYINFO))
                 .addParams("token",token)
                 .build()
                 .execute(new StringCallback() {
@@ -86,7 +89,14 @@ public class MineFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-
+                        userFamilyInfoBean = new Gson().fromJson(response, UserFamilyInfoBean.class);
+                        String errcode = userFamilyInfoBean.errcode;
+                        if (errcode.equals("0")){
+                            String user_name = userFamilyInfoBean.user.name;
+                            String family_name = userFamilyInfoBean.family.name;
+                            tvMineName.setText(user_name);
+                            tvMineFamilyName.setText("家庭名称："+family_name);
+                        }
                     }
                 });
     }
@@ -110,7 +120,9 @@ public class MineFragment extends Fragment {
                 getPhotoPopwindow.showPopupWindowBottom(llParent);
                 break;
             case R.id.rl_mine_info:
-                startActivity(new Intent(getActivity(),PersonInfoActivity.class));
+                if (userFamilyInfoBean!=null){
+                    startActivity(new Intent(getActivity(),PersonInfoActivity.class).putExtra("info",userFamilyInfoBean));
+                }
                 break;
             case R.id.ll_mine_sys:
                 startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera",false));
@@ -176,4 +188,10 @@ public class MineFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        personInfo();
+    }
 }

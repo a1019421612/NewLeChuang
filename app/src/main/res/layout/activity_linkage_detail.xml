@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/dp_10"
             android:layout_below="@id/rl_head"
-            android:background="@color/comment_bg"></RelativeLayout>
+            android:background="#FAFAFA"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_head1"
@@ -48,7 +48,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liandong"
+                android:background="@drawable/bg_linkage_corner_shape"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -92,6 +94,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
+                    android:visibility="gone"
                     android:src="@drawable/ds" />
             </LinearLayout>
         </RelativeLayout>
@@ -101,28 +104,40 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@+id/rl_head1">
-
-            <LinearLayout
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                >
 
                 <LinearLayout
+                    android:id="@+id/ll_linkage_condition"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/liandong_bg"
+                    android:layout_height="160dp"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/bg_linkage_corner_shape"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
+                        android:textSize="@dimen/sp_16"
                         android:text="如果" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4F4F4"
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
                         <ImageView
                             android:layout_width="40dp"
@@ -149,8 +164,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_10"
                         android:orientation="horizontal">
                         <TextView
@@ -191,19 +207,66 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_below="@+id/ll_linkage_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/liandong_bg"
+                    android:background="@drawable/bg_linkage_corner_shape"
+                    android:layout_margin="@dimen/dp_10"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_16"
                         android:padding="@dimen/dp_10"
                         android:text="那么" />
-                </LinearLayout>
-            </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4F4F4"
+                        />
+                    <com.hbdiye.newlechuangsmart.view.MyListView
+                        android:id="@+id/mlv_linkage_result"
+                        android:layout_width="match_parent"
+                        android:background="@color/white"
+                        android:divider="@null"
+                        android:listSelector="@android:color/transparent"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_height="wrap_content">
 
+                    </com.hbdiye.newlechuangsmart.view.MyListView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F4F4F4"
+                        />
+                    <TextView
+                        android:id="@+id/tv_linkage_add_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="添加新任务"
+                        android:padding="@dimen/dp_10"
+                        android:gravity="center_horizontal"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linkage_line"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="160dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linkage_line"
+                    android:layout_marginRight="80dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="160dp"
+                    />
+            </RelativeLayout>
+            </ScrollView>
             <LinearLayout
                 android:id="@+id/ll_linkage_detail_add_attr"
                 android:layout_width="match_parent"

@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.coder.zzq.smartshow.toast.SmartToast;
@@ -82,7 +83,7 @@ public class MoreSceneActivity extends AppCompatActivity {
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
     private SceneDialog sceneDialog;
-
+    private boolean scene_flag=true;//场景是否可用点击状态
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +128,28 @@ public class MoreSceneActivity extends AppCompatActivity {
 //                startActivity(new Intent(MoreSceneActivity.this, SceneDetailActivity.class) .putExtra("sceneId", ""));
                 sceneDialog=new SceneDialog(MoreSceneActivity.this,R.style.MyDialogStyle,clicker,"创建场景");
                 sceneDialog.show();
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (scene_flag){//可点击状态
+                    scene_flag=false;
+                    mConnection.sendTextMessage("{\"pn\":\"GOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"3\",\"sceneid\":\"" + mList_c.get(position).id + "\"}");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!scene_flag){//视为发送请求10秒以后没有接受到返回信息
+                                SmartToast.show("响应失效");
+                                scene_flag=true;
+                            }
+                        }
+                    },10000);
+                }else {//不可点击状态
+                    SmartToast.show("请稍候");
+                }
+
             }
         });
 
@@ -175,6 +198,7 @@ public class MoreSceneActivity extends AppCompatActivity {
                                 if (sceneDialog!=null){
                                     sceneDialog.dismiss();
                                 }
+                                sceneList();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -380,9 +404,12 @@ public class MoreSceneActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(message);
                     String ecode = jsonObject.getString("ecode");
                     String s = EcodeValue.resultEcode(ecode);
-                    SmartToast.show(s);
-                    if (ecode.equals("0")) {
+                    if (ecode.equals("0")&&message.contains("\"oper\":\"4\"")) {
+                        SmartToast.show("删除成功");
                         sceneList();
+                    }else if (ecode.equals("0")&&message.contains("\"oper\":\"3\"")){
+                        scene_flag=true;
+                        SmartToast.show("开启成功");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -390,6 +417,12 @@ public class MoreSceneActivity extends AppCompatActivity {
 //                parseData(message);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sceneList();
     }
 
     @Override

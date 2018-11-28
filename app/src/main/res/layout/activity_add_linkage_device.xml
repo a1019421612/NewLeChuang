@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context=".activity.MyErCodeActivity">
+    tools:context=".activity.AddLinkageDeviceActivity">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_add_scene_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_myercode"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

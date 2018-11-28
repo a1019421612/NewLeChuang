@@ -47,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
 
         intent = new Intent(MainActivity.this, MyService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        }else {
-            startService(intent);
-        }
+        startService(intent);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(intent);
+//        }else {
+//            startService(intent);
+//        }
 
 //        initData();
         String[] perm={Permission.CAMERA,Permission.WRITE_EXTERNAL_STORAGE,Permission.ACCESS_COARSE_LOCATION};

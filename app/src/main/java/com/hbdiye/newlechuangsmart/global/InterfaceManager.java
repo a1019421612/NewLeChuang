@@ -53,8 +53,12 @@ public class InterfaceManager {
     public static final String DELLINKAGE="DELLINKAGE";//删除联动
     public static final String LINKAGEDETAIL="LINKAGEDETAIL";//联动详情
     public static final String CREATECONDITION="CREATECONDITION";//创建联动条件
+    public static final String CREATETASK="CREATETASK";//创建联动任务
+    public static final String DELLINKAGEACTION="DELLINKAGEACTION";//删除联动动作
 
-    public static final String BINDGATEWAY="BINDGATEWAY";
+    public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
+    public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
+    public static final String UPDATENICKNAME="UPDATENICKNAME";//修改昵称
 //    ===============================================================
 
 
@@ -90,6 +94,10 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.LINKAGEDETAIL,NEWBASEURL+"DYPServer/linkage/findLinkageDetails");
             urlManager.put(InterfaceManager.CREATECONDITION,NEWBASEURL+"DYPServer/linkage/createLinkageCondition");
             urlManager.put(InterfaceManager.BINDGATEWAY,NEWBASEURL+"DYPServer/device/bindGateway");
+            urlManager.put(InterfaceManager.USERANDFAMILYINFO,NEWBASEURL+"DYPServer/user/findUserAndFamily");
+            urlManager.put(InterfaceManager.UPDATENICKNAME,NEWBASEURL+"DYPServer/user/updateUserNickname");
+            urlManager.put(InterfaceManager.CREATETASK,NEWBASEURL+"DYPServer/linkage/createLinkageTask");
+            urlManager.put(InterfaceManager.DELLINKAGEACTION,NEWBASEURL+"DYPServer/linkage/deleteLinkageTask");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

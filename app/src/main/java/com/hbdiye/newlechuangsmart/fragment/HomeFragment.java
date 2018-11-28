@@ -1,7 +1,11 @@
 package com.hbdiye.newlechuangsmart.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +34,7 @@ import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
 import com.hbdiye.newlechuangsmart.activity.SceneDetailActivity;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
@@ -61,7 +66,7 @@ public class HomeFragment extends Fragment {
     CustomViewPager viewpager;
     @BindView(R.id.iv_message)
     ImageView ivMessage;
-
+    private HomeReceiver homeReceiver;
     private Unbinder bind;
     private WebSocketConnection mConnection;
     private String mobilephone;
@@ -69,35 +74,28 @@ public class HomeFragment extends Fragment {
     private String url;
     public MyWebSocketHandler instance;
 
-//    private List<Integer> mList = new ArrayList<>();
+    //    private List<Integer> mList = new ArrayList<>();
 //    private List<String> mList_t = new ArrayList<>();
-    private List<HomeSceneBean.SceneList> list=new ArrayList<>();
+    private List<HomeSceneBean.SceneList> list = new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
     private String token;
+
+    private boolean scene_flag=true;//场景是否可用点击状态
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         bind = ButterKnife.bind(this, view);
-        token = (String) SPUtils.get(getActivity(),"token","");
+        token = (String) SPUtils.get(getActivity(), "token", "");
 //        initWebSocket();
+        mConnection = SingleWebSocketConnection.getInstance();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("GOPP");
+        homeReceiver = new HomeReceiver();
+        getActivity().registerReceiver(homeReceiver, intentFilter);
         initData();
-//        mList.add(R.drawable.huijia);
-//        mList.add(R.drawable.lijia);
-//        mList.add(R.drawable.xican);
-//        mList.add(R.drawable.xizao);
-//        mList.add(R.drawable.yeqi);
-//        mList.add(R.drawable.zuofan);
-//        mList.add(R.drawable.xiawucha);
-//        mList_t.add("回家");
-//        mList_t.add("离家");
-//        mList_t.add("西餐");
-//        mList_t.add("洗澡");
-//        mList_t.add("夜起");
-//        mList_t.add("做饭");
-//        mList_t.add("下午茶");
 
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
@@ -105,16 +103,31 @@ public class HomeFragment extends Fragment {
         mMyadapter = new Myadapter();
         gvFragmentHome.setAdapter(mMyadapter);
         viewpager.setImageResources(imageUrl, mAdCycleViewListener);
-       gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               if (position==list.size()){
-                  startActivity(new Intent(getActivity(), MoreSceneActivity.class));
-               }else {
-                   startActivity(new Intent(getActivity(), SceneDetailActivity.class).putExtra("sceneId",list.get(position).id));
-               }
-           }
-       });
+        gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == list.size()) {
+                    startActivity(new Intent(getActivity(), MoreSceneActivity.class));
+                } else {
+                    if (scene_flag){//可点击状态
+                        scene_flag=false;
+                        mConnection.sendTextMessage("{\"pn\":\"GOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"3\",\"sceneid\":\"" + list.get(position).id + "\"}");
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!scene_flag){//视为发送请求10秒以后没有接受到返回信息
+                                    SmartToast.show("响应失效");
+                                    scene_flag=true;
+                                }
+                            }
+                        },10000);
+                    }else {//不可点击状态
+                        SmartToast.show("请稍候");
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -122,7 +135,7 @@ public class HomeFragment extends Fragment {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.GETINDEXDATA))
-                .addParams("token",token)
+                .addParams("token", token)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -133,13 +146,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onResponse(String response, int id) {
                         try {
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
-                            if (errcode.equals("0")){
+                            if (errcode.equals("0")) {
                                 HomeSceneBean homeSceneBean = new Gson().fromJson(response, HomeSceneBean.class);
                                 List<HomeSceneBean.SceneList> sceneList = homeSceneBean.sceneList;
-                                if (sceneList!=null&&sceneList.size()>0){
-                                    if (list.size()>0){
+                                if (sceneList != null && sceneList.size() > 0) {
+                                    if (list.size() > 0) {
                                         list.clear();
                                     }
                                     list.addAll(sceneList);
@@ -162,7 +175,7 @@ public class HomeFragment extends Fragment {
     private void initWebSocket() {
         mobilephone = (String) SPUtils.get(getActivity(), "mobilephone", "");
         password = (String) SPUtils.get(getActivity(), "password", "");
-        url= (String) SPUtils.get(getActivity(),"url","");
+        url = (String) SPUtils.get(getActivity(), "url", "");
         mConnection = SingleWebSocketConnection.getInstance();
         instance = SingleWebSocketHandler.getInstance(mConnection, "{\"pn\":\"UITP\"}");
         try {
@@ -409,6 +422,29 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    class HomeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String message = intent.getStringExtra("message");
+            if (action.equals("GOPP")) {
+                try {
+                    JSONObject jsonObject = new JSONObject(message);
+                    String ecode = jsonObject.getString("ecode");
+                    String s = EcodeValue.resultEcode(ecode);
+                    if (ecode.equals("0")) {
+                        scene_flag=true;
+                        SmartToast.show("开启成功");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+//                parseData(message);
+            }
+        }
+    }
+
     private void websocketSendBroadcase(String message, String param) {
         Intent intent = new Intent();
         intent.setAction(param);
@@ -443,6 +479,7 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         bind.unbind();
+        getActivity().unregisterReceiver(homeReceiver);
     }
 
     @Override
@@ -455,7 +492,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.iv_message)
     public void onViewClicked() {
-        startActivity(new Intent(getActivity(),MessageActivity.class));
+        startActivity(new Intent(getActivity(), MessageActivity.class));
     }
 
     class Myadapter extends BaseAdapter {
@@ -480,7 +517,7 @@ public class HomeFragment extends Fragment {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.add_scene, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
-            TextView textView=(TextView) view.findViewById(R.id.tv_content_home);
+            TextView textView = (TextView) view.findViewById(R.id.tv_content_home);
             if (list.size() == i) {
                 Glide.with(getActivity()).load(R.drawable.home_add).into(imageView);
                 textView.setText("更多");
@@ -494,4 +531,5 @@ public class HomeFragment extends Fragment {
             return view;
         }
     }
+
 }
