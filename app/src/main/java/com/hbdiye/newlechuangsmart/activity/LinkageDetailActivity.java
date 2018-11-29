@@ -2,16 +2,22 @@ package com.hbdiye.newlechuangsmart.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.adapter.AlertdialogListAttAdapter;
+import com.hbdiye.newlechuangsmart.adapter.AlertdialogListNameAdapter;
 import com.hbdiye.newlechuangsmart.adapter.LinkageDetailListAdapter;
 import com.hbdiye.newlechuangsmart.bean.LinkageDetailBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
@@ -31,6 +37,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
+
+import static com.hbdiye.newlechuangsmart.global.InterfaceManager.UPDATELINKAGETASK;
 
 public class LinkageDetailActivity extends AppCompatActivity {
 
@@ -187,15 +195,155 @@ public class LinkageDetailActivity extends AppCompatActivity {
         //动作名称
         mAdapter.setOnAttrNameListener(new LinkageDetailListAdapter.AttrNameListener() {
             @Override
-            public void OnAttrNameListener() {
+            public void OnAttrNameListener(final int pos, final int p, final String param) {
+                final LinkageDetailBean.LinkageTaskLists linkageTaskLists = linkageTaskList.get(pos);
+                final String deviceId = linkageTaskLists.id;
+                final List<LinkageDetailBean.LinkageTaskLists.DevAttList> devAttList = linkageTaskLists.devAttList;
+                final List<LinkageDetailBean.LinkageTaskLists.DevActList> devActList = linkageTaskLists.devActList;
+                AlertDialog.Builder builder=new AlertDialog.Builder(LinkageDetailActivity.this);
+                View view=View.inflate(LinkageDetailActivity.this,R.layout.alertdialog_list,null);
+                RecyclerView rv_name=view.findViewById(R.id.rv_dialog);
+                AlertdialogListNameAdapter adapter=new AlertdialogListNameAdapter(devAttList);
+                LinearLayoutManager manager=new LinearLayoutManager(LinkageDetailActivity.this);
+                manager.setOrientation(LinearLayoutManager.VERTICAL);
+                rv_name.setLayoutManager(manager);
+                rv_name.setAdapter(adapter);
+                builder.setView(view);
+                final AlertDialog dialog=builder.create();
+                dialog.show();
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        dialog.dismiss();
+                        LinkageDetailBean.LinkageTaskLists.DevAttList devAttList1 = devAttList.get(position);
+                        int port = devAttList1.port;
+                        String deviceId = devAttList1.id;
+                        LinkageDetailBean.LinkageTaskLists.LinkageTaskList linkageTaskList = linkageTaskLists.linkageTaskList.get(p);
+                        String devActId = linkageTaskList.devActId;
+                        String real_devactid="";
+                        for (int i = 0; i < devActList.size(); i++) {
 
+                            if (devActId.equals(devActList.get(i).id)){
+                                int comNo = devActList.get(i).comNo;
+                                for (int j = 0; j < devActList.size(); j++) {
+                                    if (port==devActList.get(j).port&&comNo==devActList.get(j).comNo){
+                                        real_devactid=devActList.get(j).id;
+                                    }
+                                }
+                            }
+                        }
+                        String task_id = linkageTaskList.id;
+                        OkHttpUtils
+                                .post()
+                                .url(InterfaceManager.getInstance().getURL(UPDATELINKAGETASK))
+                                .addParams("token",token)
+                                .addParams("linkageId",linkageId)
+                                .addParams("delayTime","0")
+                                .addParams("deviceId",deviceId)
+                                .addParams("devActId",real_devactid)
+                                .addParams("param",param)
+                                .addParams("id",task_id)
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        try {
+                                            JSONObject jsonObject=new JSONObject(response);
+                                            String errcode = jsonObject.getString("errcode");
+                                            String s = EcodeValue.resultEcode(errcode);
+                                            SmartToast.show(s);
+                                            if (errcode.equals("0")){
+                                                linkageDetail();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                    }
+                });
             }
         });
         //动作属性
         mAdapter.setOnAttrAttListener(new LinkageDetailListAdapter.AttrAttListener() {
             @Override
-            public void OnAttrAttListener() {
+            public void OnAttrAttListener(final int pos, final int p,final int port) {
+                final LinkageDetailBean.LinkageTaskLists linkageTaskLists = linkageTaskList.get(pos);
+                final List<LinkageDetailBean.LinkageTaskLists.DevActList> devActList = linkageTaskLists.devActList;
+                final List<LinkageDetailBean.LinkageTaskLists.DevAttList> devAttList = linkageTaskLists.devAttList;
+                final List<LinkageDetailBean.LinkageTaskLists.DevActList> devActList_copy=new ArrayList<>();
+                for (int i = 0; i < devActList.size(); i++) {
+                    if (port==devActList.get(i).port){
+                        devActList_copy.add(devActList.get(i));
+                    }
+                }
+                AlertDialog.Builder builder=new AlertDialog.Builder(LinkageDetailActivity.this);
+                View view=View.inflate(LinkageDetailActivity.this,R.layout.alertdialog_list,null);
+                RecyclerView rv_name=view.findViewById(R.id.rv_dialog);
+                AlertdialogListAttAdapter adapter=new AlertdialogListAttAdapter(devActList_copy);
+                LinearLayoutManager manager=new LinearLayoutManager(LinkageDetailActivity.this);
+                manager.setOrientation(LinearLayoutManager.VERTICAL);
+                rv_name.setLayoutManager(manager);
+                rv_name.setAdapter(adapter);
+                builder.setView(view);
+                final AlertDialog dialog=builder.create();
+                dialog.show();
 
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        dialog.dismiss();
+                        LinkageDetailBean.LinkageTaskLists.LinkageTaskList linkageTaskList = linkageTaskLists.linkageTaskList.get(p);
+                        String param= devActList_copy.get(position).param;
+                        String real_devactid = devActList_copy.get(position).id;
+                        String task_id = linkageTaskList.id;
+                        String deviceId="";
+                        int port1 = linkageTaskList.port;
+                        for (int i = 0; i < devAttList.size(); i++) {
+                            if (port1==devAttList.get(i).port){
+                                deviceId = devAttList.get(i).id;
+                            }
+                        }
+
+                        OkHttpUtils
+                                .post()
+                                .url(InterfaceManager.getInstance().getURL(UPDATELINKAGETASK))
+                                .addParams("token",token)
+                                .addParams("linkageId",linkageId)
+                                .addParams("delayTime","0")
+                                .addParams("deviceId",deviceId)
+                                .addParams("devActId",real_devactid)
+                                .addParams("param",param)
+                                .addParams("id",task_id)
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        try {
+                                            JSONObject jsonObject=new JSONObject(response);
+                                            String errcode = jsonObject.getString("errcode");
+                                            String s = EcodeValue.resultEcode(errcode);
+                                            SmartToast.show(s);
+                                            if (errcode.equals("0")){
+                                                linkageDetail();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                    }
+                });
             }
         });
         //删除动作
@@ -320,7 +468,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
                 break;
             case R.id.tv_linkage_condition_edit:
                 //条件编辑
-                startActivity(new Intent(this, EditActionActivity.class));
+                startActivityForResult(new Intent(this, EditActionActivity.class).putExtra("linkageId", linkageId), 101);
                 break;
             case R.id.tv_condition_name:
                 //条件属性名称

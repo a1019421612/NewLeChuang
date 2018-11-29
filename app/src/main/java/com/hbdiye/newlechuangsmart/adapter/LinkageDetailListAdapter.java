@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.bean.LinkageDetailBean;
 import com.hbdiye.newlechuangsmart.bean.SceneDetailBean;
-import com.hbdiye.newlechuangsmart.view.CommentSceneView;
+import com.hbdiye.newlechuangsmart.view.CommentLinkageView;
 
 import java.util.List;
 
@@ -50,21 +50,25 @@ public class LinkageDetailListAdapter extends BaseAdapter {
         LinearLayout ll_root=view.findViewById(R.id.ll_root);
         ll_root.removeAllViews();
         List<LinkageDetailBean.LinkageTaskLists.LinkageTaskList> sceneTaskList = mList.get(i).linkageTaskList;
+        String param="";
         for (int j = 0; j < sceneTaskList.size(); j++) {
-            CommentSceneView commentView = new CommentSceneView(context);
+            CommentLinkageView commentView = new CommentLinkageView(context);
             List<LinkageDetailBean.LinkageTaskLists.DevAttList> devAttList = mList.get(i).devAttList;
             int port = sceneTaskList.get(j).port;
-            String devActId = sceneTaskList.get(j).devActId;
+            final String devActId = sceneTaskList.get(j).devActId;
+            final int port1 = sceneTaskList.get(j).port;
             for (int k = 0; k < devAttList.size(); k++) {
                 if (port==devAttList.get(k).port){
                     name = devAttList.get(k).name;
                     commentView.setTvSceneDeviceName(name);
                 }
             }
+
             List<LinkageDetailBean.LinkageTaskLists.DevActList> devActList = mList.get(i).devActList;
             for (int k = 0; k < devActList.size(); k++) {
                 String id = devActList.get(k).id;
                 if (devActId.equals(id)){
+                    param = devActList.get(k).param;
                     commentView.setTvSceneDeviceAttr(devActList.get(k).name);
                 }
             }
@@ -72,16 +76,18 @@ public class LinkageDetailListAdapter extends BaseAdapter {
             ImageView iv_del = commentView.getImageViewDel();
             TextView tv_attr_name=commentView.getTvSceneDeviceName();
             TextView tv_attr_att=commentView.getTvSceneAttr();
+            final String finalParam = param;
+            final int finalJ = j;
             tv_attr_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAttrNameListener.OnAttrNameListener();
+                    mAttrNameListener.OnAttrNameListener(i,finalJ, finalParam);
                 }
             });
             tv_attr_att.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAttrAttListener.OnAttrAttListener();
+                    mAttrAttListener.OnAttrAttListener(i,finalJ,port1);
                 }
             });
             iv_del.setOnClickListener(new View.OnClickListener() {
@@ -121,14 +127,14 @@ public class LinkageDetailListAdapter extends BaseAdapter {
         this.mListener=mListener;
     }
     public interface AttrNameListener{
-        void OnAttrNameListener();
+        void OnAttrNameListener(int k,int pos,String param);
     }
     private AttrNameListener mAttrNameListener;
     public void setOnAttrNameListener(AttrNameListener mAttrNameListener){
         this.mAttrNameListener=mAttrNameListener;
     }
     public interface AttrAttListener{
-        void OnAttrAttListener();
+        void OnAttrAttListener(int pos,int p,int port1);
     }
     private AttrAttListener mAttrAttListener;
     public void setOnAttrAttListener(AttrAttListener mAttrAttListener){
