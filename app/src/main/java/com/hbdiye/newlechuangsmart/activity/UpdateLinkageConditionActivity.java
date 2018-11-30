@@ -1,7 +1,6 @@
 package com.hbdiye.newlechuangsmart.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
-import com.hbdiye.newlechuangsmart.adapter.AddSceneDeviceAdapter;
 import com.hbdiye.newlechuangsmart.adapter.SceneActionAdapter;
 import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.DeviceListSceneBean;
@@ -28,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import okhttp3.Call;
 
 import static com.hbdiye.newlechuangsmart.global.InterfaceManager.UPDATELINKAGECONDITION;
@@ -36,7 +33,7 @@ import static com.hbdiye.newlechuangsmart.global.InterfaceManager.UPDATELINKAGEC
 /**
  * 添加条件
  */
-public class EditActionActivity extends BaseActivity {
+public class UpdateLinkageConditionActivity extends BaseActivity {
 
     @BindView(R.id.rv_scene_action_device)
     RecyclerView rvSceneActionDevice;
@@ -44,11 +41,13 @@ public class EditActionActivity extends BaseActivity {
     private List<SecneSectionBean> mList = new ArrayList<>();
     private SceneActionAdapter adapter;
     private String linkageId;
+    private String condition_id;
 
     @Override
     protected void initData() {
         token = (String) SPUtils.get(this,"token","");
         linkageId = getIntent().getStringExtra("linkageId");
+        condition_id=getIntent().getStringExtra("condition_id");
         includeAttribute();
     }
 
@@ -111,9 +110,11 @@ public class EditActionActivity extends BaseActivity {
                     String devAttId = devAttList.id;
                     if (type==2){
                         //检测器（温湿度）
-                        createJianCeQi(device_id,devAttId);
+//                        createJianCeQi(device_id,devAttId);
+                        updateCondition(device_id,devAttId);
                     }else {
-                        createJianCeQi(device_id,devAttId);
+//                        createJianCeQi(device_id,devAttId);
+                        updateCondition(device_id,devAttId);
                     }
 
                 }
@@ -160,6 +161,45 @@ public class EditActionActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 更新条件
+     * @return
+     */
+    private void updateCondition(String deviceId,String devAttId){
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(UPDATELINKAGECONDITION))
+                .addParams("token",token)
+                .addParams("linkageId",linkageId)
+                .addParams("deviceId",deviceId)
+                .addParams("devAttId",devAttId)
+                .addParams("condition","3")
+                .addParams("value","1")
+                .addParams("id",condition_id)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            String s = EcodeValue.resultEcode(errcode);
+                            SmartToast.show(s);
+                            if (errcode.equals("0")){
+                                setResult(101,new Intent());
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     @Override
     protected int getLayoutID() {

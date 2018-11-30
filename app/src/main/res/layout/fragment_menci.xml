@@ -21,6 +21,8 @@
         android:textColor="@color/gray_9999"
         />
     <TextView
+        android:id="@+id/tv_menci_zc"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正常"
@@ -36,6 +38,8 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_menci_dc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -55,6 +59,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_menci_bc"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -74,6 +80,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_menci_dl"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

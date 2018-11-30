@@ -12,6 +12,7 @@ import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanThreeFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KaiGuanTwoFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.KeRanCGQFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.MenCiFragment;
+import com.hbdiye.newlechuangsmart.devicefragment.MenSuoFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.RenTiGYFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.ScenePanelFragment;
 import com.hbdiye.newlechuangsmart.devicefragment.ScenePanelSixFragment;
@@ -103,7 +104,7 @@ public class ClassyIconByProId {
         }else if (produceId.equals("PRO003002001")){//声光报警器
             return ShengGuangBJQFragment.newInstance(id);
         }else if (produceId.equals("PRO003004001")){//智能门锁
-            return MenCiFragment.newInstance(id);
+            return MenSuoFragment.newInstance(id);
         }else if (produceId.equals("PRO003005001")){//门磁
             return MenCiFragment.newInstance(id);
         }else if (produceId.equals("PRO004001001")){//温湿度检测器
@@ -111,7 +112,7 @@ public class ClassyIconByProId {
         }else if (produceId.equals("PRO005002001")){//窗帘电机
             return DianjiFragment.newInstance(id);
         }else if (produceId.equals("PRO005001001")){//一路窗帘开关
-            return DianjiFragment.newInstance(id);
+            return ChuangLianFragment.newInstance(id);
         }else if (produceId.equals("PRO006001001")){//五孔插座
             return ChaZuoFragment.newInstance(id);
         }else if (produceId.equals("PRO003006004")){//水浸传感器

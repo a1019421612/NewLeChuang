@@ -75,6 +75,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
     private LinkageDetailListAdapter mAdapter;
     private List<LinkageDetailBean.LinkageTaskLists> list = new ArrayList<>();
     private List<LinkageDetailBean.LinkageTaskLists> linkageTaskList;
+    private LinkageDetailBean linkageDetailBean;
 
     //    private LinkageConditionAdapter adapter,mAdapter;
     @Override
@@ -106,7 +107,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LinkageDetailBean linkageDetailBean = new Gson().fromJson(response, LinkageDetailBean.class);
+                        linkageDetailBean = new Gson().fromJson(response, LinkageDetailBean.class);
                         String errcode = linkageDetailBean.errcode;
                         if (errcode.equals("0")) {
 
@@ -468,7 +469,10 @@ public class LinkageDetailActivity extends AppCompatActivity {
                 break;
             case R.id.tv_linkage_condition_edit:
                 //条件编辑
-                startActivityForResult(new Intent(this, EditActionActivity.class).putExtra("linkageId", linkageId), 101);
+                String condition_id = linkageDetailBean.linkageConditionList.get(0).linkageConditionList.get(0).id;
+                startActivityForResult(new Intent(this, UpdateLinkageConditionActivity.class)
+                        .putExtra("linkageId", linkageId)
+                        .putExtra("condition_id",condition_id), 101);
                 break;
             case R.id.tv_condition_name:
                 //条件属性名称

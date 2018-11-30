@@ -12,9 +12,10 @@
     android:layout_marginTop="50dp"
     />
     <TextView
+        android:id="@+id/tv_chuanglian_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="窗帘开关"
+        android:text="---"
         android:padding="@dimen/dp_10"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_9999"
@@ -31,6 +32,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/iv_chuanglian_open"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/kaiqi"
@@ -49,6 +51,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/iv_chuanglian_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/zanting"
@@ -67,6 +70,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/iv_chuanglian_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/guanbi"

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,11 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
-import com.hbdiye.newlechuangsmart.bean.DeviceClassyBean;
-import com.hbdiye.newlechuangsmart.bean.KaiGuanBean;
 import com.hbdiye.newlechuangsmart.bean.MenCiBean;
+import com.hbdiye.newlechuangsmart.bean.MenSuoBean;
+import com.hbdiye.newlechuangsmart.bean.MenSuoDappBean;
 import com.hbdiye.newlechuangsmart.fragment.BaseFragment;
-import com.hbdiye.newlechuangsmart.fragment.DeviceListFragment;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
-import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -35,16 +32,12 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 import okhttp3.Call;
 
 import static com.hbdiye.newlechuangsmart.global.InterfaceManager.DEVICEDETAIL;
 
-public class MenCiFragment extends BaseFragment {
+public class MenSuoFragment extends BaseFragment {
 
 //    private DeviceClassyBean.ProductList productList;
     private WebSocketConnection mConnection;
@@ -52,15 +45,17 @@ public class MenCiFragment extends BaseFragment {
     private HomeReceiver homeReceiver;
     private int value;
     private String deviceid;
-    private TextView tv_menci_name,tv_menci_zc;
-    private LinearLayout ll_menci_dc,ll_menci_bc,ll_menci_dl;
+    private TextView tv_mensuo_name,tv_kaiguan_kg;
+    private LinearLayout ll_mensuo_kg;
+    private ImageView iv_mensuo_kg;
+    private MenSuoBean menSuoBean;
 
-    public static MenCiFragment newInstance(String page) {
+    public static MenSuoFragment newInstance(String page) {
         Bundle args = new Bundle();
 
 //        args.putInt(ARGS_PAGE, page);
         args.putString("deviceid", page);
-        MenCiFragment fragment = new MenCiFragment();
+        MenSuoFragment fragment = new MenSuoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,18 +68,50 @@ public class MenCiFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_menci, container, false);
+        View view = inflater.inflate(R.layout.fragment_mensuo, container, false);
         mConnection = SingleWebSocketConnection.getInstance();
         token = (String) SPUtils.get(getActivity(),"token","");
-        tv_menci_name=view.findViewById(R.id.tv_menci_name);
-        tv_menci_zc=view.findViewById(R.id.tv_menci_zc);
-        ll_menci_dc=view.findViewById(R.id.ll_menci_dc);
-        ll_menci_bc=view.findViewById(R.id.ll_menci_bc);
-        ll_menci_dl=view.findViewById(R.id.ll_menci_dl);
+        tv_mensuo_name=view.findViewById(R.id.tv_mensuo_name);
+        ll_mensuo_kg=view.findViewById(R.id.ll_mensuo_kg);
+        iv_mensuo_kg=view.findViewById(R.id.iv_mensuo_kg);
+        tv_kaiguan_kg=view.findViewById(R.id.tv_kaiguan_kg);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
+        intentFilter.addAction("DAPP");
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
+
+        ll_mensuo_kg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<MenSuoBean.Data.DevActList> devActList = menSuoBean.data.devActList;
+                if (devActList==null||devActList.size()==0){
+                    return;
+                }
+                if (value==0){
+                    //开
+                    for (int i = 0; i < devActList.size(); i++) {
+                        int comNo = devActList.get(i).comNo;
+                        if (comNo==1){
+                            String dactid =devActList.get(i).id;
+                            String param = devActList.get(i).param;
+                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\""+param+"\"}");
+                        }
+                    }
+                }else {
+                    //关
+                    for (int i = 0; i < devActList.size(); i++) {
+                        int comNo = devActList.get(i).comNo;
+                        if (comNo==0){
+                            String dactid =devActList.get(i).id;
+                            String param = devActList.get(i).param;
+                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\""+param+"\"}");
+                        }
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -110,31 +137,12 @@ public class MenCiFragment extends BaseFragment {
                             JSONObject jsonObject=new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
                             if (errcode.equals("0")) {
-                                MenCiBean menCiBean = new Gson().fromJson(response, MenCiBean.class);
-                                String name = menCiBean.data.name;
-                                tv_menci_name.setText(name);
-                                List<MenCiBean.Data.DevAttList> devAttList = menCiBean.data.devAttList;
-                                int value = devAttList.get(0).value;
-                                if ((value&1)==0){
-                                    tv_menci_zc.setVisibility(View.VISIBLE);
-                                }else {
-                                    tv_menci_zc.setVisibility(View.GONE);
-                                }
-                                if ((value&512)==512){
-                                    ll_menci_dc.setVisibility(View.VISIBLE);
-                                }else {
-                                    ll_menci_dc.setVisibility(View.GONE);
-                                }
-                                if ((value&4)==4){
-                                    ll_menci_bc.setVisibility(View.VISIBLE);
-                                }else {
-                                    ll_menci_bc.setVisibility(View.GONE);
-                                }
-                                if ((value&10)==10){
-                                    ll_menci_dl.setVisibility(View.VISIBLE);
-                                }else {
-                                    ll_menci_dl.setVisibility(View.GONE);
-                                }
+                                menSuoBean = new Gson().fromJson(response, MenSuoBean.class);
+                                String name = menSuoBean.data.name;
+                                tv_mensuo_name.setText(name);
+                                List<MenSuoBean.Data.DevAttList> devAttList = menSuoBean.data.devAttList;
+                                value = devAttList.get(0).value;
+                                setViewByAtt(value,iv_mensuo_kg,tv_kaiguan_kg);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -142,7 +150,15 @@ public class MenCiFragment extends BaseFragment {
                     }
                 });
     }
-
+    public void setViewByAtt(int value, ImageView iv, TextView tv){
+        if (value==0){
+            iv.setImageResource(R.drawable.mohu);
+            tv.setTextColor(getResources().getColor(R.color.detail_text));
+        }else {
+            iv.setImageResource(R.drawable.kaiguan);
+            tv.setTextColor(getResources().getColor(R.color.bar_text_sel));
+        }
+    }
 //    @OnClick(R.id.ll_mc)
 //    public void onViewClicked() {
 //        if (value==0){
@@ -173,6 +189,20 @@ public class MenCiFragment extends BaseFragment {
                     e.printStackTrace();
                 }
 //                parseData(message);
+            }
+            if (action.equals("DAPP")){
+                try {
+                    JSONObject jsonObject=new JSONObject(message);
+                    String sdid = jsonObject.getString("sdid");
+                    if (sdid.equals(deviceid)){
+                        MenSuoDappBean menSuoDappBean = new Gson().fromJson(message, MenSuoDappBean.class);
+                        value = menSuoDappBean.atts.get(0).value;
+                        setViewByAtt(value,iv_mensuo_kg,tv_kaiguan_kg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }

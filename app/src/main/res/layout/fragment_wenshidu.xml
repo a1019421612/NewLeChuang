@@ -12,9 +12,10 @@
     android:layout_marginTop="50dp"
     />
     <TextView
+        android:id="@+id/tv_wenshidu_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="温湿度探测器"
+        android:text="---"
         android:padding="@dimen/dp_10"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_9999"
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -31,29 +33,10 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_wenshidu_wen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="36"
-                android:textColor="@color/bar_text_sel"
-                android:textSize="30sp"
-                android:padding="@dimen/dp_10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PM2.5"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="24℃"
+                android:text="--℃"
                 android:textColor="@color/bar_text_sel"
                 android:textSize="30sp"
                 android:padding="@dimen/dp_10"
@@ -71,9 +54,10 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_wenshidu_shi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="40.2%"
+                android:text="--%"
                 android:textColor="@color/bar_text_sel"
                 android:textSize="30sp"
                 android:padding="@dimen/dp_10"

@@ -21,9 +21,11 @@
         android:textColor="@color/gray_9999"
         />
     <TextView
+        android:id="@+id/tv_sj_zc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正常"
+        android:visibility="gone"
         android:background="@drawable/shape_blue"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_30"
@@ -36,10 +38,12 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/ll_sj_dc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="wrap_content"
@@ -55,10 +59,12 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_sj_bc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="wrap_content"
@@ -74,10 +80,12 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_sj_dl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="wrap_content"
