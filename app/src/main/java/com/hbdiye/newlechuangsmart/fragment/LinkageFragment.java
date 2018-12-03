@@ -268,4 +268,10 @@ public class LinkageFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        linkageList();
+    }
 }

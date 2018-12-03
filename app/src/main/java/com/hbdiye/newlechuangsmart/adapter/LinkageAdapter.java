@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.bean.LinkageListBean;
+import com.hbdiye.newlechuangsmart.util.IconByName;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class LinkageAdapter extends BaseQuickAdapter<LinkageListBean.LinkageList
         }else {
             Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_linkage_kg));
         }
+        Glide.with(mContext).load(IconByName.drawableByNameLinkage(item.icon)).into((ImageView)helper.getView(R.id.iv_linkage_icon));
         helper.addOnClickListener(R.id.iv_linkage_kg);
         helper.addOnClickListener(R.id.ll_linkage);
     }

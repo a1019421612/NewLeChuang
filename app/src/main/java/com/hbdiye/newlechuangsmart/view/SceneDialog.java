@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,5 +45,8 @@ public class SceneDialog extends Dialog {
     }
     public String getSceneName(){
         return applayloandailog_code_edt.getText().toString().trim();
+    }
+    public void setEditInput(){
+        applayloandailog_code_edt.setInputType(InputType.TYPE_CLASS_PHONE);
     }
 }

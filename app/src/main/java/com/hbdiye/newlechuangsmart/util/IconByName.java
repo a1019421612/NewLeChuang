@@ -92,4 +92,52 @@ public class IconByName {
         }
         return "huijia";
     }
+    public static String nameByDrawableLinkage(int name){
+        if (name==R.drawable.liandong_icon1){
+            return "liandong-icon1";
+        }else if (name==R.drawable.liandong_icon2){
+            return "liandong-icon2";
+        }else if (name==R.drawable.liandong_icon3){
+            return "liandong-icon3";
+        }else if (name==R.drawable.liandong_icon4){
+            return "liandong-icon4";
+        }else if (name==R.drawable.liandong_icon5){
+            return "liandong-icon5";
+        }else if (name==R.drawable.liandong_icon6){
+            return "liandong-icon6";
+        }else if (name==R.drawable.liandong_icon7){
+            return "liandong-icon7";
+        }else if (name==R.drawable.liandong_icon8){
+            return "liandong-icon8";
+        }else if (name==R.drawable.liandong_icon9){
+            return "liandong-icon9";
+        }else if (name==R.drawable.liandong_icon10){
+            return "liandong-icon10";
+        }
+        return "liandong-icon1";
+    }
+    public static int drawableByNameLinkage(String name){
+        if (name.equals("liandong-icon1")){
+            return R.drawable.liandong_icon1;
+        }else if (name.equals("liandong-icon2")){
+            return R.drawable.liandong_icon2;
+        }else if (name.equals("liandong-icon3")){
+            return R.drawable.liandong_icon3;
+        }else if (name.equals("liandong-icon4")){
+            return R.drawable.liandong_icon4;
+        }else if (name.equals("liandong-icon5")){
+            return R.drawable.liandong_icon5;
+        }else if (name.equals("liandong-icon6")){
+            return R.drawable.liandong_icon6;
+        }else if (name.equals("liandong-icon7")){
+            return R.drawable.liandong_icon7;
+        }else if (name.equals("liandong-icon8")){
+            return R.drawable.liandong_icon8;
+        }else if (name.equals("liandong-icon9")){
+            return R.drawable.liandong_icon9;
+        }else if (name.equals("liandong-icon10")){
+            return R.drawable.liandong_icon10;
+        }
+        return R.drawable.liandong_icon1;
+    }
 }
