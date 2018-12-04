@@ -16,11 +16,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
-import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
 import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
+import com.hbdiye.newlechuangsmart.activity.RoomListActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
@@ -60,6 +60,8 @@ public class MineFragment extends Fragment {
     LinearLayout llMineDevices;
     @BindView(R.id.rl_mine_info)
     RelativeLayout rlMineInfo;
+    @BindView(R.id.ll_mine_rooms)
+    LinearLayout llMineRooms;
     private Unbinder bind;
 
     private GetPhotoPopwindow getPhotoPopwindow;
@@ -71,7 +73,7 @@ public class MineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         bind = ButterKnife.bind(this, view);
-        token = (String) SPUtils.get(getActivity(),"token","");
+        token = (String) SPUtils.get(getActivity(), "token", "");
         personInfo();
         return view;
     }
@@ -79,7 +81,7 @@ public class MineFragment extends Fragment {
     private void personInfo() {
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.USERANDFAMILYINFO))
-                .addParams("token",token)
+                .addParams("token", token)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -91,11 +93,11 @@ public class MineFragment extends Fragment {
                     public void onResponse(String response, int id) {
                         userFamilyInfoBean = new Gson().fromJson(response, UserFamilyInfoBean.class);
                         String errcode = userFamilyInfoBean.errcode;
-                        if (errcode.equals("0")){
+                        if (errcode.equals("0")) {
                             String user_name = userFamilyInfoBean.user.name;
                             String family_name = userFamilyInfoBean.family.name;
                             tvMineName.setText(user_name);
-                            tvMineFamilyName.setText("家庭名称："+family_name);
+                            tvMineFamilyName.setText("家庭名称：" + family_name);
                         }
                     }
                 });
@@ -107,7 +109,8 @@ public class MineFragment extends Fragment {
         bind.unbind();
     }
 
-    @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us, R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info})
+    @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us,
+            R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info, R.id.ll_mine_rooms})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
@@ -120,23 +123,27 @@ public class MineFragment extends Fragment {
                 getPhotoPopwindow.showPopupWindowBottom(llParent);
                 break;
             case R.id.rl_mine_info:
-                if (userFamilyInfoBean!=null){
-                    startActivity(new Intent(getActivity(),PersonInfoActivity.class).putExtra("info",userFamilyInfoBean));
+                if (userFamilyInfoBean != null) {
+                    startActivity(new Intent(getActivity(), PersonInfoActivity.class).putExtra("info", userFamilyInfoBean));
                 }
                 break;
             case R.id.ll_mine_sys:
-                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera",false));
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false));
                 break;
             case R.id.ll_mine_family_member:
                 //家庭成员
-                startActivity(new Intent(getActivity(),FamilyMemberActivity.class));
+                startActivity(new Intent(getActivity(), FamilyMemberActivity.class));
                 break;
             case R.id.ll_mine_about_us:
 
                 break;
             case R.id.ll_mine_devices:
                 //我的设备
-                startActivity(new Intent(getActivity(),MyDeviceActivity.class));
+                startActivity(new Intent(getActivity(), MyDeviceActivity.class));
+                break;
+            case R.id.ll_mine_rooms:
+                //我的房间
+                startActivity(new Intent(getActivity(), RoomListActivity.class));
                 break;
             case R.id.ll_mine_setting:
                 //设置

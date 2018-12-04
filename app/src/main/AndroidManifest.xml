@@ -137,8 +137,10 @@
 
         <activity android:name=".activity.GateWaySeriesNumActivity" />
         <activity android:name=".activity.AddLinkageDeviceActivity" />
-        <activity android:name=".activity.EditInfoActivity"></activity>
-        <activity android:name=".activity.UpdateLinkageConditionActivity"/>
+        <activity android:name=".activity.EditInfoActivity" />
+        <activity android:name=".activity.UpdateLinkageConditionActivity" />
+        <activity android:name=".activity.RoomListActivity" />
+        <activity android:name=".activity.MonitorListActivity"></activity>
     </application>
 
 </manifest>

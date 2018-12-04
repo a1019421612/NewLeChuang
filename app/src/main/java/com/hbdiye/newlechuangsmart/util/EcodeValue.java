@@ -20,6 +20,8 @@ public class EcodeValue {
             return "服务端错误";
         }else if (code.equals("999")){
             return "协议非法";
+        }else if (code.equals("533")){
+            return "房间有设备无法删除";
         }else{
             return "操作失败";
         }

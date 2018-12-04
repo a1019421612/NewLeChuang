@@ -260,7 +260,6 @@ public class LinkageFragment extends Fragment {
                                     sceneDialog.dismiss();
                                     linkageList();
                                 }
-                                startActivity(new Intent(getActivity(), LinkageDetailActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

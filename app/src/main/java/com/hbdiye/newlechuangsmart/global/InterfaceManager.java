@@ -58,6 +58,13 @@ public class InterfaceManager {
     public static final String UPDATELINKAGETASK="UPDATELINKAGETASK";//联动更新动作
     public static final String UPDATELINKAGECONDITION="UPDATELINKAGECONDITION";//更新联动条件
     public static final String UPDATELINKAGEINFO="UPDATELINKAGEINFO";//修改联动图标和名称
+    public static final String ROOMLIST="ROOMLIST";//房间列表
+    public static final String CREATEROOM="CREATEROOM";//创建房间
+    public static final String ROOMDETAIL="ROOMDETAIL";//房间详情
+    public static final String MOVEDEVICEROOM="MOVEDEVICEROOM";//移动设备房间
+    public static final String DELROOM="DELROOM";//删除房间
+    public static final String MONITORLIST="MONITORLIST";//传感器列表
+    public static final String UPDATEINDEXMONITOR="UPDATEINDEXMONITOR";//更新首页显示传感器的显示
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -104,6 +111,13 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.UPDATELINKAGETASK,NEWBASEURL+"DYPServer/linkage/updateLinkageTask");
             urlManager.put(InterfaceManager.UPDATELINKAGECONDITION,NEWBASEURL+"DYPServer/linkage/updateLinkageCondition");
             urlManager.put(InterfaceManager.UPDATELINKAGEINFO,NEWBASEURL+"DYPServer/linkage/updateLinkageNameAndIcon");
+            urlManager.put(InterfaceManager.ROOMLIST,NEWBASEURL+"DYPServer/room/findRoomList");
+            urlManager.put(InterfaceManager.CREATEROOM,NEWBASEURL+"DYPServer/room/createRoom");
+            urlManager.put(InterfaceManager.ROOMDETAIL,NEWBASEURL+"DYPServer/device/findDeviceListByRoom");
+            urlManager.put(InterfaceManager.MOVEDEVICEROOM,NEWBASEURL+"DYPServer/device/updateDeviceRoom");
+            urlManager.put(InterfaceManager.DELROOM,NEWBASEURL+"DYPServer/room/deleteRoom");
+            urlManager.put(InterfaceManager.MONITORLIST,NEWBASEURL+"DYPServer/device/findMonitorAttributeListGroupByRoom");
+            urlManager.put(InterfaceManager.UPDATEINDEXMONITOR,NEWBASEURL+"DYPServer/index/updateIndexSensorAttribute");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

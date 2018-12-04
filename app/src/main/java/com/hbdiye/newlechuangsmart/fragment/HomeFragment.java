@@ -17,8 +17,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
@@ -30,8 +30,8 @@ import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
 import com.hbdiye.newlechuangsmart.SocketSendMessage;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
+import com.hbdiye.newlechuangsmart.activity.MonitorListActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
-import com.hbdiye.newlechuangsmart.activity.SceneDetailActivity;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
@@ -40,12 +40,14 @@ import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
 import com.hbdiye.newlechuangsmart.view.CustomViewPager;
+import com.hbdiye.newlechuangsmart.view.MyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
-import de.tavendo.autobahn.WebSocketException;
 import okhttp3.Call;
 
 import static com.hbdiye.newlechuangsmart.MyApp.finishAllActivity;
@@ -66,6 +67,8 @@ public class HomeFragment extends Fragment {
     CustomViewPager viewpager;
     @BindView(R.id.iv_message)
     ImageView ivMessage;
+    @BindView(R.id.gv_cgq_value)
+    MyGridView gvCgqValue;
     private HomeReceiver homeReceiver;
     private Unbinder bind;
     private WebSocketConnection mConnection;
@@ -81,7 +84,9 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> imageUrl = new ArrayList<>();
     private String token;
 
-    private boolean scene_flag=true;//场景是否可用点击状态
+    private boolean scene_flag = true;//场景是否可用点击状态
+    private List<HomeSceneBean.DevAttList> mList=new ArrayList<>();
+    private MyCGQadapter mAdapter;
 
     @Nullable
     @Override
@@ -100,8 +105,18 @@ public class HomeFragment extends Fragment {
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
+
         mMyadapter = new Myadapter();
         gvFragmentHome.setAdapter(mMyadapter);
+
+        mAdapter=new MyCGQadapter();
+        gvCgqValue.setAdapter(mAdapter);
+        gvCgqValue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), MonitorListActivity.class).putExtra("cur_pos",position+""));
+            }
+        });
         viewpager.setImageResources(imageUrl, mAdCycleViewListener);
         gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -109,20 +124,20 @@ public class HomeFragment extends Fragment {
                 if (position == list.size()) {
                     startActivity(new Intent(getActivity(), MoreSceneActivity.class));
                 } else {
-                    if (scene_flag){//可点击状态
-                        scene_flag=false;
+                    if (scene_flag) {//可点击状态
+                        scene_flag = false;
                         mConnection.sendTextMessage("{\"pn\":\"GOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"3\",\"sceneid\":\"" + list.get(position).id + "\"}");
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (!scene_flag){//视为发送请求10秒以后没有接受到返回信息
+                                if (!scene_flag) {//视为发送请求10秒以后没有接受到返回信息
                                     SmartToast.show("响应失效");
-                                    scene_flag=true;
+                                    scene_flag = true;
                                 }
                             }
-                        },10000);
-                    }else {//不可点击状态
+                        }, 10000);
+                    } else {//不可点击状态
                         SmartToast.show("请稍候");
                     }
                 }
@@ -150,6 +165,7 @@ public class HomeFragment extends Fragment {
                             String errcode = jsonObject.getString("errcode");
                             if (errcode.equals("0")) {
                                 HomeSceneBean homeSceneBean = new Gson().fromJson(response, HomeSceneBean.class);
+                                List<HomeSceneBean.DevAttList> devAttList = homeSceneBean.devAttList;
                                 List<HomeSceneBean.SceneList> sceneList = homeSceneBean.sceneList;
                                 if (sceneList != null && sceneList.size() > 0) {
                                     if (list.size() > 0) {
@@ -157,6 +173,13 @@ public class HomeFragment extends Fragment {
                                     }
                                     list.addAll(sceneList);
                                     mMyadapter.notifyDataSetChanged();
+                                }
+                                if (devAttList!=null&&devAttList.size()>0){
+                                    if (mList.size()>0){
+                                        mList.clear();
+                                    }
+                                    mList.addAll(devAttList);
+                                    mAdapter.notifyDataSetChanged();
                                 }
                             }
                         } catch (JSONException e) {
@@ -434,7 +457,7 @@ public class HomeFragment extends Fragment {
                     String ecode = jsonObject.getString("ecode");
                     String s = EcodeValue.resultEcode(ecode);
                     if (ecode.equals("0")) {
-                        scene_flag=true;
+                        scene_flag = true;
                         SmartToast.show("开启成功");
                     }
                 } catch (JSONException e) {
@@ -494,7 +517,65 @@ public class HomeFragment extends Fragment {
     public void onViewClicked() {
         startActivity(new Intent(getActivity(), MessageActivity.class));
     }
+    class MyCGQadapter extends BaseAdapter {
 
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.home_value_item, null);
+            TextView tv_home_value=view.findViewById(R.id.tv_home_value);
+            TextView tv_home_name=view.findViewById(R.id.tv_home_name);
+            TextView tv_home_empty=view.findViewById(R.id.tv_home_empty);
+            if (mList.size()-1>=i){
+                tv_home_empty.setVisibility(View.GONE);
+                tv_home_name.setVisibility(View.VISIBLE);
+                tv_home_value.setVisibility(View.VISIBLE);
+                tv_home_name.setText(mList.get(i).name);
+                DecimalFormat df=new DecimalFormat("0.0");
+                tv_home_value.setText(df.format((float)mList.get(i).value/100));
+            }else {
+                tv_home_value.setVisibility(View.GONE);
+                tv_home_name.setVisibility(View.GONE);
+                tv_home_empty.setVisibility(View.VISIBLE);
+            }
+//            if (mList==null||mList.size()==0){
+//                tv_home_value.setVisibility(View.GONE);
+//                tv_home_name.setVisibility(View.GONE);
+//                tv_home_empty.setVisibility(View.VISIBLE);
+//            }else {
+//
+//            }
+//            ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
+//            TextView tv_title=view.findViewById(R.id.tv_content);
+//            if (mList.size() == i) {
+//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                Glide.with(getActivity()).load(R.drawable.other).into(imageView);
+//                if (i == 7) {
+//                    imageView.setVisibility(View.GONE);
+//                }
+//            } else {
+//                Glide.with(getActivity()).load(mList.get(i).getIcon()).into(imageView);
+//                tv_title.setText(mList.get(i).getTitle());
+//            }
+
+            return view;
+        }
+    }
     class Myadapter extends BaseAdapter {
 
         @Override
