@@ -33,6 +33,7 @@ import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.activity.MonitorListActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
+import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.IconByName;
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment {
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
         initData();
-
+        personInfo();
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
@@ -467,7 +468,28 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+    private void personInfo() {
+        OkHttpUtils.post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.USERANDFAMILYINFO))
+                .addParams("token", token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        UserFamilyInfoBean userFamilyInfoBean = new Gson().fromJson(response, UserFamilyInfoBean.class);
+                        String errcode = userFamilyInfoBean.errcode;
+                        if (errcode.equals("0")) {
+                            String user_name = userFamilyInfoBean.user.name;
+                            SPUtils.put(getActivity(),"nickName",user_name);
+                        }
+                    }
+                });
+    }
     private void websocketSendBroadcase(String message, String param) {
         Intent intent = new Intent();
         intent.setAction(param);

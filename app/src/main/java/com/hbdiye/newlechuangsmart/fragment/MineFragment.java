@@ -97,6 +97,7 @@ public class MineFragment extends Fragment {
                             String user_name = userFamilyInfoBean.user.name;
                             String family_name = userFamilyInfoBean.family.name;
                             tvMineName.setText(user_name);
+                            SPUtils.put(getActivity(),"nickName",user_name);
                             tvMineFamilyName.setText("家庭名称：" + family_name);
                         }
                     }

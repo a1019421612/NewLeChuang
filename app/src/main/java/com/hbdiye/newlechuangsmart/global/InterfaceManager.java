@@ -65,6 +65,9 @@ public class InterfaceManager {
     public static final String DELROOM="DELROOM";//删除房间
     public static final String MONITORLIST="MONITORLIST";//传感器列表
     public static final String UPDATEINDEXMONITOR="UPDATEINDEXMONITOR";//更新首页显示传感器的显示
+    public static final String YILIAOREGISTER="YILIAOREGISTER";//医疗注册
+    public static final String YILIAOISREGISTER="YILIAOISREGISTER";//医疗是否注册
+    public static final String YILIAOINFO="YILIAOINFO";//医疗信息 体脂 体重 血糖等
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -118,6 +121,9 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.DELROOM,NEWBASEURL+"DYPServer/room/deleteRoom");
             urlManager.put(InterfaceManager.MONITORLIST,NEWBASEURL+"DYPServer/device/findMonitorAttributeListGroupByRoom");
             urlManager.put(InterfaceManager.UPDATEINDEXMONITOR,NEWBASEURL+"DYPServer/index/updateIndexSensorAttribute");
+            urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
+            urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");
+            urlManager.put(InterfaceManager.YILIAOINFO,"http://39.104.119.0:9999/belter/main/findRecordListByPage");
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
             urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
             urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");

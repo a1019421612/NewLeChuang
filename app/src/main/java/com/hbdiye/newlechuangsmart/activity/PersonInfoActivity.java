@@ -95,6 +95,7 @@ public class PersonInfoActivity extends BaseActivity {
                             String family_name = userFamilyInfoBean.family.name;
                             tvInfoUserName.setText(user_name);
                             tvInfoFamilyName.setText(family_name);
+                            SPUtils.put(PersonInfoActivity.this,"nickName",user_name);
                         }
                     }
                 });

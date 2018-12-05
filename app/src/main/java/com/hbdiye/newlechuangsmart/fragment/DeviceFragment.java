@@ -21,6 +21,7 @@ import com.hbdiye.newlechuangsmart.activity.AddRoomActivity;
 import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
+import com.hbdiye.newlechuangsmart.activity.HealthActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomActivity;
 import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
 import com.hbdiye.newlechuangsmart.activity.YiLiaoActivity;
@@ -35,6 +36,9 @@ import com.hbdiye.newlechuangsmart.view.MyGridView;
 import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +139,7 @@ public class DeviceFragment extends Fragment {
                     startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));
                 }else if (i==4){
                     //医疗
-                    startActivity(new Intent(getActivity(), YiLiaoActivity.class));
+                    isRegister();
                 }else if (i==2){
                     String title = mList.get(i).getTitle();
                     int icon = mList.get(i).getIcon();
@@ -155,6 +159,39 @@ public class DeviceFragment extends Fragment {
             }
         });
 
+    }
+
+    private void isRegister() {
+//        SPUtils.put(LoginActivity.this, "mobilephone", mPhone);
+        String phone= (String) SPUtils.get(getActivity(),"mobilephone","");
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.YILIAOISREGISTER))
+                .addParams("phone",phone)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                startActivity(new Intent(getActivity(), HealthActivity.class));
+//                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+                            }else {
+//                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+                                startActivity(new Intent(getActivity(), HealthActivity.class));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     @Override

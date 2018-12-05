@@ -13,19 +13,24 @@
         android:layout_height="40dp"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="年龄" />
-
-        <TextView
-            android:id="@+id/tv_yl_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="23" />
+            android:text="年龄" />
+
+        <EditText
+            android:id="@+id/et_yl_age"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/sp_14"
+            android:inputType="phone"
+            android:hint="请输入年龄"  />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,16 +48,18 @@
             android:text="性别" />
 
         <RadioGroup
+            android:id="@+id/rg_yl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/rb_nan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="男"
-                android:checked="true"
                 />
             <RadioButton
+                android:id="@+id/rb_nv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="女"
@@ -65,37 +72,49 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:layout_marginTop="1dp"
+        android:gravity="center_vertical"
         android:padding="@dimen/dp_10">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="身高" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="160cm" />
+            android:text="身高" />
+
+        <EditText
+            android:id="@+id/et_yl_cm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/sp_14"
+            android:inputType="number"
+            android:hint="请输入身高(cm)" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginTop="1dp"
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="体重" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50kg" />
+            android:text="体重" />
+
+        <EditText
+            android:id="@+id/et_yl_kg"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/sp_14"
+            android:inputType="number"
+            android:hint="请输入体重(kg)"  />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_yl_date"
@@ -107,16 +126,17 @@
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="出生日期" />
 
         <TextView
             android:id="@+id/tv_yl_data"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
             android:layout_height="wrap_content"
-            android:text="2015-06-05" />
+            android:hint="---" />
     </LinearLayout>
     <TextView
         android:id="@+id/tv_yl_register"
