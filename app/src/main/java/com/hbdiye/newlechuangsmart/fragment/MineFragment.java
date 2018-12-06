@@ -22,6 +22,7 @@ import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
 import com.hbdiye.newlechuangsmart.activity.PersonInfoActivity;
 import com.hbdiye.newlechuangsmart.activity.RoomListActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
+import com.hbdiye.newlechuangsmart.activity.TestDeviceActivity;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
@@ -97,7 +98,7 @@ public class MineFragment extends Fragment {
                             String user_name = userFamilyInfoBean.user.name;
                             String family_name = userFamilyInfoBean.family.name;
                             tvMineName.setText(user_name);
-                            SPUtils.put(getActivity(),"nickName",user_name);
+                            SPUtils.put(getActivity(), "nickName", user_name);
                             tvMineFamilyName.setText("家庭名称：" + family_name);
                         }
                     }
@@ -136,7 +137,7 @@ public class MineFragment extends Fragment {
                 startActivity(new Intent(getActivity(), FamilyMemberActivity.class));
                 break;
             case R.id.ll_mine_about_us:
-
+                startActivity(new Intent(getActivity(), TestDeviceActivity.class));
                 break;
             case R.id.ll_mine_devices:
                 //我的设备

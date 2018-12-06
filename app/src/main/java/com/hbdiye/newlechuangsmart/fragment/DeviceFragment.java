@@ -184,8 +184,8 @@ public class DeviceFragment extends Fragment {
                                 startActivity(new Intent(getActivity(), HealthActivity.class));
 //                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
                             }else {
-//                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
-                                startActivity(new Intent(getActivity(), HealthActivity.class));
+                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+//                                startActivity(new Intent(getActivity(), HealthActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

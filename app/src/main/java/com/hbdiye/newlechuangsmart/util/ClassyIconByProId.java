@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.util;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 
 import com.hbdiye.newlechuangsmart.R;
@@ -37,7 +38,7 @@ public class ClassyIconByProId {
     public static int iconNormal(String id) {
         if (id.contains("PRO001")) {//智能主机
             return R.drawable.qita_n;
-        }else if (id.contains("PRO002")) {//照明设备
+        }else if (id.contains("PRO002")) {//开关设备
             return R.drawable.zhaoming_n;
         } else if (id.contains("PRO003")){//安防设备
             return R.drawable.anfang_n;
@@ -139,7 +140,44 @@ public class ClassyIconByProId {
         }
 
     }
-
+    public static int deviceIcon(String id) {
+        if (id.equals("PRO003006006")){//一氧化碳
+            return R.drawable.dev_yiyanghuatan;
+        }else if (id.equals("PRO003002001")){//声光报警器
+            return R.drawable.dev_shengguangbaojingqi;
+        }else if (id.equals("PRO003006004")){//水浸传感器
+            return R.drawable.dev_shuijin;
+        }else if (id.equals("PRO003005001")){//门磁
+            return R.drawable.dev_menci;
+        }else if (id.equals("PRO003006007")){//震动传感器
+            return R.drawable.dev_zhendong;
+        }else if (id.equals("PRO002003001")){//三路开关
+            return R.drawable.chumokaiguan3;
+        }else if (id.equals("PRO004001001")){//温湿度
+            return R.drawable.dev_wenshidu;
+        }else if (id.equals("PRO003003001")){//紧急按钮
+            return R.drawable.dev_jijinanniu;
+        }else if (id.equals("PRO003006003")){//烟雾报警器
+            return R.drawable.dev_shuiwu;
+        }else if (id.equals("PRO003004001")){//智能门锁
+            return R.drawable.dev_zhinengmensuo;
+        }else if (id.equals("PRO009001001")){//六建
+            return R.drawable.liujian;
+        }else if (id.equals("PRO005001001")){//一路窗帘
+            return R.drawable.dev_chuanglian;
+        }else if (id.equals("PRO002002001")){//二路开关
+            return R.drawable.chumokaiguan2;
+        }else if (id.equals("PRO002001001")){//一路开关
+            return R.drawable.chumokaiguan1;
+        }else if (id.equals("PRO009001002")){//四键
+            return R.drawable.sijian;
+        }else if (id.equals("PRO003006001")){//人体感应
+            return R.drawable.dev_rentiganying;
+        }else if (id.equals("PRO006001001")){//移动插座
+            return R.drawable.dev_yidongchazuo;
+        }
+        return R.drawable.dev_jijinanniu;
+    }
     /**
      * 去重复
      *
