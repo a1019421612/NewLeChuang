@@ -12,7 +12,7 @@
     android:layout_marginTop="50dp"
     />
     <TextView
-        android:id="@+id/tv_sj_name"
+        android:id="@+id/tv_zd_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="---"
@@ -21,9 +21,11 @@
         android:textColor="@color/gray_9999"
         />
     <TextView
+        android:id="@+id/tv_zd_zc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正常"
+        android:visibility="gone"
         android:background="@drawable/shape_blue"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_30"
@@ -36,6 +38,8 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/ll_zd_dc"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -55,6 +59,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_zd_bc"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -74,6 +80,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_zd_dl"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.adapter.AddSceneDeviceAdapter;
 import com.hbdiye.newlechuangsmart.adapter.TestDeviceAdapter;
 import com.hbdiye.newlechuangsmart.bean.DappBean;
@@ -47,6 +48,7 @@ public class TestDeviceActivity extends BaseActivity {
     private List<SecneSectionBean> mList = new ArrayList<>();
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
+
     @Override
     protected void initData() {
         token = (String) SPUtils.get(this, "token", "");
@@ -95,7 +97,7 @@ public class TestDeviceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        mConnection = SingleWebSocketConnection.getInstance();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
         intentFilter.addAction("DAPP");
@@ -121,25 +123,26 @@ public class TestDeviceActivity extends BaseActivity {
                         case R.id.iv_device_left:
                             for (int i = 0; i < devAttList.size(); i++) {
                                 int value = devAttList.get(i).value;
-                                if (value==0){
+                                int port_left = devAttList.get(i).port;
+                                if (value == 0&&port_left==1) {
                                     //左开
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==1&&comNo==1){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 1 && comNo == 1) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
-                                }else {
+                                } else if (value == 1&&port_left==1) {
                                     //左关
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==1&&comNo==0){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 1 && comNo == 0) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
@@ -149,25 +152,26 @@ public class TestDeviceActivity extends BaseActivity {
                         case R.id.iv_device_middle:
                             for (int i = 0; i < devAttList.size(); i++) {
                                 int value = devAttList.get(i).value;
-                                if (value==0){
-                                    //左开
+                                int port_middle = devAttList.get(i).port;
+                                if (value == 0&&port_middle==2) {
+                                    //中开
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==2&&comNo==1){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 2 && comNo == 1) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
-                                }else {
-                                    //左关
+                                } else if ((value == 1&&port_middle==2) ){
+                                    //中关
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==2&&comNo==0){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 2 && comNo == 0) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
@@ -177,25 +181,26 @@ public class TestDeviceActivity extends BaseActivity {
                         case R.id.iv_device_right:
                             for (int i = 0; i < devAttList.size(); i++) {
                                 int value = devAttList.get(i).value;
-                                if (value==0){
-                                    //左开
+                                int port_right = devAttList.get(i).port;
+                                if (value == 0&&port_right==3) {
+                                    //右开
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==3&&comNo==1){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 3 && comNo == 1) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
-                                }else {
-                                    //左关
+                                } else if (value==1&&port_right==3){
+                                    //右关
                                     for (int j = 0; j < devActList.size(); j++) {
-                                        int port = devActList.get(i).port;
-                                        int comNo = devActList.get(i).comNo;
-                                        if (port==3&&comNo==0){
-                                            String dactid =devActList.get(i).id;
-                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\"\"}");
+                                        int port = devActList.get(j).port;
+                                        int comNo = devActList.get(j).comNo;
+                                        if (port == 3 && comNo == 0) {
+                                            String dactid = devActList.get(j).id;
+                                            mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"201\",\"sdid\":\"" + deviceid + "\",\"dactid\":\"" + dactid + "\",\"param\":\"\"}");
                                             return;
                                         }
                                     }
@@ -220,11 +225,14 @@ public class TestDeviceActivity extends BaseActivity {
                         case R.id.iv_device_cl_stop:
                             SmartToast.show("窗帘_停止");
                             break;
+                        default:
+                            break;
                     }
                 }
             }
         });
     }
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override
@@ -233,9 +241,9 @@ public class TestDeviceActivity extends BaseActivity {
             String message = intent.getStringExtra("message");
             if (action.equals("DCPP")) {
                 try {
-                    JSONObject jsonObject=new JSONObject(message);
+                    JSONObject jsonObject = new JSONObject(message);
                     String ecode = jsonObject.getString("ecode");
-                    if (!ecode.equals("0")){
+                    if (!ecode.equals("0")) {
                         String s = EcodeValue.resultEcode(ecode);
                         SmartToast.show(s);
                     }
@@ -243,9 +251,9 @@ public class TestDeviceActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 //                parseData(message);
-            }else if (action.equals("DAPP")){
+            } else if (action.equals("DAPP")) {
                 try {
-                    JSONObject jsonObject=new JSONObject(message);
+                    JSONObject jsonObject = new JSONObject(message);
                     String sdid = jsonObject.getString("sdid");
 //                    if (sdid.equals(deviceid)){
 //                        DappBean dappBean = new Gson().fromJson(message, DappBean.class);
@@ -271,6 +279,7 @@ public class TestDeviceActivity extends BaseActivity {
             }
         }
     }
+
     @Override
     protected int getLayoutID() {
         return R.layout.activity_test_device;

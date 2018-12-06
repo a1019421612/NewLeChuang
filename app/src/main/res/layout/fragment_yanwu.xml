@@ -12,14 +12,17 @@
     android:layout_marginTop="50dp"
     />
     <TextView
+        android:id="@+id/tv_yw_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="烟雾传感器"
+        android:text="---"
         android:padding="@dimen/dp_10"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_9999"
         />
     <TextView
+        android:id="@+id/tv_yw_zc"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正常"
@@ -35,6 +38,8 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_yw_dc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -54,6 +59,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_yw_bc"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -73,6 +80,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_yw_dl"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
