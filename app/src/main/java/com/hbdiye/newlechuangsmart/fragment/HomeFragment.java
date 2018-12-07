@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,10 +27,17 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.SingleWebSocketHandler;
 import com.hbdiye.newlechuangsmart.SocketSendMessage;
+import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
+import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
+import com.hbdiye.newlechuangsmart.activity.HealthActivity;
 import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import com.hbdiye.newlechuangsmart.activity.MessageActivity;
 import com.hbdiye.newlechuangsmart.activity.MonitorListActivity;
 import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
+import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
+import com.hbdiye.newlechuangsmart.activity.YiLiaoActivity;
+import com.hbdiye.newlechuangsmart.activity.ZhiNengzjActivity;
+import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
@@ -63,13 +69,15 @@ import static com.hbdiye.newlechuangsmart.MyApp.finishAllActivity;
 
 public class HomeFragment extends Fragment {
     @BindView(R.id.gv_fragment_home)
-    GridView gvFragmentHome;
+    MyGridView gvFragmentHome;
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
     @BindView(R.id.iv_message)
     ImageView ivMessage;
     @BindView(R.id.gv_cgq_value)
     MyGridView gvCgqValue;
+    @BindView(R.id.gv_common_classify)
+    MyGridView gvCommonClassify;
     private HomeReceiver homeReceiver;
     private Unbinder bind;
     private WebSocketConnection mConnection;
@@ -78,17 +86,18 @@ public class HomeFragment extends Fragment {
     private String url;
     public MyWebSocketHandler instance;
 
-    //    private List<Integer> mList = new ArrayList<>();
-//    private List<String> mList_t = new ArrayList<>();
     private List<HomeSceneBean.SceneList> list = new ArrayList<>();
     private Myadapter mMyadapter;
     private ArrayList<String> imageUrl = new ArrayList<>();
     private String token;
 
     private boolean scene_flag = true;//场景是否可用点击状态
-    private List<HomeSceneBean.DevAttList> mList=new ArrayList<>();
+    private List<HomeSceneBean.DevAttList> mList = new ArrayList<>();
     private MyCGQadapter mAdapter;
 
+    private List<CommentClassyBean> mList_classy = new ArrayList<>();
+    private MyClassyAdapter myClassyAdapter;
+    private String[] array_productId={"PRO003","PRO002","PRO001","PRO004","PRO005","PRO007","PRO006","PRO008","PRO009"};
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,24 +110,62 @@ public class HomeFragment extends Fragment {
         intentFilter.addAction("GOPP");
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
+        addData();
         initData();
         personInfo();
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
-        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
 
         mMyadapter = new Myadapter();
         gvFragmentHome.setAdapter(mMyadapter);
 
-        mAdapter=new MyCGQadapter();
+        mAdapter = new MyCGQadapter();
         gvCgqValue.setAdapter(mAdapter);
+
+        myClassyAdapter = new MyClassyAdapter();
+        gvCommonClassify.setAdapter(myClassyAdapter);
+
+        viewpager.setImageResources(imageUrl, mAdCycleViewListener);
+
+        handleClicker();
+
+        return view;
+    }
+
+    private void handleClicker() {
         gvCgqValue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), MonitorListActivity.class).putExtra("cur_pos",position+""));
+                startActivity(new Intent(getActivity(), MonitorListActivity.class).putExtra("cur_pos", position + ""));
             }
         });
-        viewpager.setImageResources(imageUrl, mAdCycleViewListener);
+        gvCommonClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i==8){
+                    startActivity(new Intent(getActivity(), CameraListActivity.class));
+                }else if (i==6){
+                    //跳转遥控中心
+                    startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));
+                }else if (i==7){
+                    //医疗
+                    isRegister();
+                }else if (i==2){
+                    String title = mList_classy.get(i).getTitle();
+                    int icon = mList_classy.get(i).getIcon();
+                    startActivity(new Intent(getActivity(), ZhiNengzjActivity.class)
+                            .putExtra("title",title)
+                            .putExtra("icon",icon)
+                            .putExtra("productId",array_productId[i]));
+                }
+                else {
+                    String title = mList_classy.get(i).getTitle();
+                    int icon = mList_classy.get(i).getIcon();
+                    startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class)
+                            .putExtra("title",title)
+                            .putExtra("icon",icon)
+                            .putExtra("productId",array_productId[i]));
+                }
+            }
+        });
         gvFragmentHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -144,7 +191,20 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        return view;
+    }
+
+    private void addData() {
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
+        imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.af);setTitle("安防");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.dengpao);setTitle("照明");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.znzj);setTitle("智能主机");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.hjjc);setTitle("环境监测");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.cl);setTitle("窗帘开关");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.zngj);setTitle("智能管家");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.jd);setTitle("家电控制");}});
+        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.ylyl);setTitle("医疗养老");}});
     }
 
     private void initData() {
@@ -175,8 +235,8 @@ public class HomeFragment extends Fragment {
                                     list.addAll(sceneList);
                                     mMyadapter.notifyDataSetChanged();
                                 }
-                                if (devAttList!=null&&devAttList.size()>0){
-                                    if (mList.size()>0){
+                                if (devAttList != null && devAttList.size() > 0) {
+                                    if (mList.size() > 0) {
                                         mList.clear();
                                     }
                                     mList.addAll(devAttList);
@@ -189,7 +249,38 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+    private void isRegister() {
+//        SPUtils.put(LoginActivity.this, "mobilephone", mPhone);
+        String phone= (String) SPUtils.get(getActivity(),"mobilephone","");
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.YILIAOISREGISTER))
+                .addParams("phone",phone)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                startActivity(new Intent(getActivity(), HealthActivity.class));
+//                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+                            }else {
+                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+//                                startActivity(new Intent(getActivity(), HealthActivity.class));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -468,6 +559,7 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
     private void personInfo() {
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.USERANDFAMILYINFO))
@@ -485,11 +577,12 @@ public class HomeFragment extends Fragment {
                         String errcode = userFamilyInfoBean.errcode;
                         if (errcode.equals("0")) {
                             String user_name = userFamilyInfoBean.user.name;
-                            SPUtils.put(getActivity(),"nickName",user_name);
+                            SPUtils.put(getActivity(), "nickName", user_name);
                         }
                     }
                 });
     }
+
     private void websocketSendBroadcase(String message, String param) {
         Intent intent = new Intent();
         intent.setAction(param);
@@ -539,6 +632,7 @@ public class HomeFragment extends Fragment {
     public void onViewClicked() {
         startActivity(new Intent(getActivity(), MessageActivity.class));
     }
+
     class MyCGQadapter extends BaseAdapter {
 
         @Override
@@ -560,17 +654,17 @@ public class HomeFragment extends Fragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.home_value_item, null);
-            TextView tv_home_value=view.findViewById(R.id.tv_home_value);
-            TextView tv_home_name=view.findViewById(R.id.tv_home_name);
-            TextView tv_home_empty=view.findViewById(R.id.tv_home_empty);
-            if (mList.size()-1>=i){
+            TextView tv_home_value = view.findViewById(R.id.tv_home_value);
+            TextView tv_home_name = view.findViewById(R.id.tv_home_name);
+            TextView tv_home_empty = view.findViewById(R.id.tv_home_empty);
+            if (mList.size() - 1 >= i) {
                 tv_home_empty.setVisibility(View.GONE);
                 tv_home_name.setVisibility(View.VISIBLE);
                 tv_home_value.setVisibility(View.VISIBLE);
                 tv_home_name.setText(mList.get(i).name);
-                DecimalFormat df=new DecimalFormat("0.0");
-                tv_home_value.setText(df.format((float)mList.get(i).value/100));
-            }else {
+                DecimalFormat df = new DecimalFormat("0.0");
+                tv_home_value.setText(df.format((float) mList.get(i).value / 100));
+            } else {
                 tv_home_value.setVisibility(View.GONE);
                 tv_home_name.setVisibility(View.GONE);
                 tv_home_empty.setVisibility(View.VISIBLE);
@@ -598,6 +692,7 @@ public class HomeFragment extends Fragment {
             return view;
         }
     }
+
     class Myadapter extends BaseAdapter {
 
         @Override
@@ -634,5 +729,41 @@ public class HomeFragment extends Fragment {
             return view;
         }
     }
+    class MyClassyAdapter extends BaseAdapter {
 
+        @Override
+        public int getCount() {
+            return mList_classy.size() + 1 == 6 ? 6 : mList_classy.size() + 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mList_classy.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.device_gv_item, null);
+            ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
+            TextView tv_title=view.findViewById(R.id.tv_content);
+            if (mList_classy.size() == i) {
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                Glide.with(getActivity()).load(R.drawable.other).into(imageView);
+                if (i == 7) {
+                    imageView.setVisibility(View.GONE);
+                }
+            } else {
+                Glide.with(getActivity()).load(mList_classy.get(i).getIcon()).into(imageView);
+                tv_title.setText(mList_classy.get(i).getTitle());
+            }
+
+            return view;
+        }
+    }
 }

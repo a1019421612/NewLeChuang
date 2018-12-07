@@ -115,24 +115,23 @@ public class ShengGuangBJQFragment extends BaseFragment implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_shengguang_guang:
-                sendInfo(3);
+                sendInfo("14000A0000");
                 break;
             case R.id.ll_shengguang_sheng:
-                sendInfo(2);
+                sendInfo("10000A0000");
                 break;
             case R.id.ll_shengguang_stop:
-                sendInfo(1);
+                sendInfo("0000000000");
                 break;
         }
     }
 
-    private void sendInfo(int pos) {
+    private void sendInfo(String vaule) {
         List<ShengGuangBjqBean.Data.DevActList> devActList = shengGuangBjqBean.data.devActList;
         for (int i = 0; i < devActList.size(); i++) {
-            int index = devActList.get(i).index;
-            if (index==pos){
+            String param = devActList.get(i).param;
+            if (vaule.equals(param)){
                 String dactid = devActList.get(i).id;
-                String param = devActList.get(i).param;
                 mConnection.sendTextMessage("{\"pn\":\"DCPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"201\",\"sdid\":\""+deviceid+"\",\"dactid\":\""+dactid+"\",\"param\":\""+param+"\"}");
             }
         }

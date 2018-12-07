@@ -10,7 +10,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:scaleType="fitXY"
-        android:src="@drawable/menci"
+
         />
     <TextView
         android:id="@+id/tv_scene_device_name"
@@ -77,21 +77,20 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/shengyinbaojing"
+            android:src="@drawable/dev_shengyinbaojing"
             />
         <ImageView
             android:id="@+id/iv_device_warn_g"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/shengguangbaojing"
+            android:src="@drawable/dev_guangbaojing"
             />
         <ImageView
             android:id="@+id/iv_device_warn_stop"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/tingzhibaojing"
+            android:src="@drawable/dev_sg_guanbi"
             />
     </LinearLayout>
     <!--窗帘开关-->
@@ -107,21 +106,20 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/guanbi"
+            android:src="@drawable/dev_guanbi"
             />
         <ImageView
             android:id="@+id/iv_device_cl_open"
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/kaiqi"
+            android:src="@drawable/dev_kaiqi"
             />
         <ImageView
             android:id="@+id/iv_device_cl_stop"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/stop"
+            android:src="@drawable/dev_zanting"
             />
     </LinearLayout>
     <!--开关-->

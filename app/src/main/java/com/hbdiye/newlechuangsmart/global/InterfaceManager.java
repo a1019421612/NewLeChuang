@@ -82,11 +82,9 @@ public class InterfaceManager {
     public static InterfaceManager getInstance() {
         if (manager == null) {
             manager = new InterfaceManager();
-
-
             urlManager.put(InterfaceManager.LOGIN, NEWBASEURL+"DYPServer/user/login");
             urlManager.put(InterfaceManager.DEVICELIST,NEWBASEURL+"DYPServer/device/findDeviceListByRoom");
-            urlManager.put(InterfaceManager.FINDDEVICELISTBYPRODUCTID,NEWBASEURL+"DYPServer/device/findDeviceListGroupByRoomByProduct");
+            urlManager.put(InterfaceManager.FINDDEVICELISTBYPRODUCTID,NEWBASEURL+"DYPServer/device/findDeviceDetailsListGroupByRoomByProduct");
             urlManager.put(InterfaceManager.PERSONINFO,NEWBASEURL+"DYPServer/user/findUser");
             urlManager.put(InterfaceManager.GETINDEXDATA,NEWBASEURL+"DYPServer/index/getIndexData");
             urlManager.put(InterfaceManager.MEMBERLIST,NEWBASEURL+"DYPServer/user/findUserList");

@@ -1,73 +1,41 @@
 package com.hbdiye.newlechuangsmart.adapter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseSectionQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.hbdiye.newlechuangsmart.R;
-import com.hbdiye.newlechuangsmart.activity.DeviceClassyActivity;
-import com.hbdiye.newlechuangsmart.activity.ZhuJiDetailActivity;
 import com.hbdiye.newlechuangsmart.bean.GateWayBean;
-import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
-import com.hbdiye.newlechuangsmart.view.MyGridView;
+import com.hbdiye.newlechuangsmart.bean.GatewaySectionBean;
+import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
+import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
 
 import java.util.List;
 
-public class ZhuJiAdapter extends BaseAdapter {
-    private Context context;
-    private List<GateWayBean.RoomList> mList;
-    private String productId;
-    private int icon;
-    private String data;
-
-    public ZhuJiAdapter(Context context, List<GateWayBean.RoomList> mList, String productId,int icon,String data) {
-        this.context = context;
-        this.mList = mList;
-        this.productId = productId;
-        this.icon=icon;
-        this.data=data;
+public class ZhuJiAdapter extends BaseSectionQuickAdapter<GatewaySectionBean, BaseViewHolder> {
+    public ZhuJiAdapter(int layoutResId, int sectionHeadResId, List<GatewaySectionBean> data) {
+        super(layoutResId, sectionHeadResId, data);
     }
 
     @Override
-    public int getCount() {
-        return mList.size();
+    protected void convertHead(BaseViewHolder helper, GatewaySectionBean item) {
+        helper.setText(R.id.tv_addscene_item, item.header);
     }
 
     @Override
-    public Object getItem(int i) {
-        return mList.get(i);
-    }
+    protected void convert(BaseViewHolder helper, GatewaySectionBean item) {
+        GateWayBean.RoomList.GatewayList content = (GateWayBean.RoomList.GatewayList) item.t;
+        String productId = content.productId;
+//        ll_device_kg  ll_device_warning  ll_device_jcq（温湿度） ll_device_cgq (水浸) ll_device_cl(窗帘)
+            //其他 场景
+            helper.setGone(R.id.ll_device_cl, false);
+            helper.setGone(R.id.ll_device_kg, false);
+            helper.setGone(R.id.ll_device_warning, false);
+            helper.setGone(R.id.ll_device_cgq, false);
+            helper.setGone(R.id.ll_device_jcq, false);
+        helper.setText(R.id.tv_scene_device_name, content.name);
+        Glide.with(mContext).load(ClassyIconByProId.deviceIcon(content.productId)).into((ImageView) helper.getView(R.id.iv_device_icon));
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(R.layout.choice_device_item, null);
-        MyGridView myGridView = view.findViewById(R.id.mlv_condition);
-        TextView tv_name = view.findViewById(R.id.tv_condition_name);
-        final String name = mList.get(i).name;
-        tv_name.setText(name);
-        final List<GateWayBean.RoomList.GatewayList> deviceList = mList.get(i).gatewayList;
-        ChoiceZhujiItemAdapter adapter = new ChoiceZhujiItemAdapter(context, deviceList,icon);
-        myGridView.setAdapter(adapter);
-        myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                context.startActivity(new Intent(context, ZhuJiDetailActivity.class)
-                        .putExtra("data", data)
-                        .putExtra("roomId", deviceList.get(i).roomId)
-                        .putExtra("productId", deviceList.get(i).productId)
-                        .putExtra("deviceId",deviceList.get(i).id));
-            }
-        });
-        return view;
     }
 }

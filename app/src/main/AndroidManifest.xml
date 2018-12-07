@@ -141,7 +141,6 @@
         <activity android:name=".activity.UpdateLinkageConditionActivity" />
         <activity android:name=".activity.RoomListActivity" />
         <activity android:name=".activity.MonitorListActivity" />
-        <activity android:name=".activity.TestDeviceActivity"></activity>
     </application>
 
 </manifest>

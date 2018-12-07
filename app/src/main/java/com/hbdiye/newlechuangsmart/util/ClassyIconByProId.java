@@ -175,6 +175,9 @@ public class ClassyIconByProId {
             return R.drawable.dev_rentiganying;
         }else if (id.equals("PRO006001001")){//移动插座
             return R.drawable.dev_yidongchazuo;
+        }else if (id.equals("PRO001001002")){
+            //主机
+            return R.drawable.znzj;
         }
         return R.drawable.dev_jijinanniu;
     }
