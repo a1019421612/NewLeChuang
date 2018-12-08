@@ -4,22 +4,29 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/yidongchazuo"
-    android:layout_marginTop="50dp"
-    />
-    <TextView
-        android:id="@+id/tv_chazuo_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="---"
-        android:padding="@dimen/dp_10"
+        android:layout_height="300dp"
+        android:background="@drawable/fragment_bg"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_9999"
-        />
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/detail_yidongchazuo"
+            android:layout_marginTop="50dp"
+            />
+        <TextView
+            android:id="@+id/tv_chazuo_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:padding="@dimen/dp_10"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_cz"
         android:layout_width="wrap_content"

@@ -1,37 +1,41 @@
 package com.hbdiye.newlechuangsmart.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.FragmentDetailPagerAdapter;
-import com.hbdiye.newlechuangsmart.bean.DeviceClassyBean;
 import com.hbdiye.newlechuangsmart.bean.GateWayBean;
-import com.hbdiye.newlechuangsmart.bean.RoomDeviceListBean;
 import com.hbdiye.newlechuangsmart.devicefragment.WangGuanFragment;
-import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ZhuJiDetailActivity extends BaseActivity {
+public class ZhuJiDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.viewpager_detail_device)
     ViewPager viewpagerDetailDevice;
     @BindView(R.id.viewGroup)
     LinearLayout mGroup;
+    @BindView(R.id.iv_zj_back)
+    ImageView ivZjBack;
+    @BindView(R.id.tv_zj_title)
+    TextView tvZjTitle;
     private List<Fragment> mList_fragment = new ArrayList<>();
-    private List<String> mList_position=new ArrayList<>();
+    private List<String> mList_position = new ArrayList<>();
     FragmentDetailPagerAdapter fragmentDetailPagerAdapter;
 
 
@@ -44,25 +48,24 @@ public class ZhuJiDetailActivity extends BaseActivity {
      */
     private ImageView mImageView = null;
     private String productId;
-    private int flag=-1;
+    private int flag = -1;
     private String deviceId;
-    private String data="";
+    private String data = "";
 
     @Override
-    protected void initData() {
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_zhu_ji_detail);
+        ButterKnife.bind(this);
+        initView();
     }
 
-    @Override
-    protected String getTitleName() {
-        return "智能主机";
-    }
 
-    @Override
     protected void initView() {
+        tvZjTitle.setText("智能主机");
         data = getIntent().getStringExtra("data");
         deviceId = getIntent().getStringExtra("deviceId");
-        if (TextUtils.isEmpty(data)){
+        if (TextUtils.isEmpty(data)) {
             return;
         }
         GateWayBean roomDeviceListBean = new Gson().fromJson(data, GateWayBean.class);
@@ -73,7 +76,7 @@ public class ZhuJiDetailActivity extends BaseActivity {
                 String deviceid = deviceList.get(j).id;
                 String name = deviceList.get(j).name;
                 String mac = deviceList.get(j).mac;
-                mList_fragment.add(WangGuanFragment.newInstance(deviceid,name,mac));
+                mList_fragment.add(WangGuanFragment.newInstance(deviceid, name, mac));
                 mList_position.add(deviceList.get(j).id);
             }
         }
@@ -84,22 +87,18 @@ public class ZhuJiDetailActivity extends BaseActivity {
 //                mList_position.add(productList.get(i).id);
 //        }
         for (int i = 0; i < mList_position.size(); i++) {
-            if (mList_position.get(i).equals(this.deviceId)){
-                flag=i;
+            if (mList_position.get(i).equals(this.deviceId)) {
+                flag = i;
             }
         }
         fragmentDetailPagerAdapter = new FragmentDetailPagerAdapter(getSupportFragmentManager(), this, mList_fragment);
         viewpagerDetailDevice.setAdapter(fragmentDetailPagerAdapter);
-        if (flag!=-1){
+        if (flag != -1) {
             viewpagerDetailDevice.setCurrentItem(flag);
         }
         viewPagerIndicator();
     }
 
-    @Override
-    protected int getLayoutID() {
-        return R.layout.activity_zhu_ji_detail;
-    }
     /**
      * 添加指示图片
      */
@@ -111,7 +110,7 @@ public class ZhuJiDetailActivity extends BaseActivity {
             mImageView = new ImageView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mImageView.setLayoutParams(params);
-            params.leftMargin=30;
+            params.leftMargin = 30;
             mImageViews[i] = mImageView;
             if (i == flag) {
                 mImageViews[i].setBackgroundResource(R.mipmap.banner_dian_focus);
@@ -144,5 +143,10 @@ public class ZhuJiDetailActivity extends BaseActivity {
             public void onPageScrollStateChanged(int index) {
             }
         });
+    }
+
+    @OnClick(R.id.iv_zj_back)
+    public void onViewClicked() {
+        finish();
     }
 }

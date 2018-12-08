@@ -5,22 +5,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/dianji"
-    android:layout_marginTop="50dp"
-    />
-    <TextView
-        android:id="@+id/tv_dj_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="---"
-        android:padding="@dimen/dp_10"
+        android:layout_height="300dp"
+        android:background="@drawable/fragment_bg"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_9999"
-        />
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/detail_dianji"
+            android:layout_marginTop="50dp"
+            />
+        <TextView
+            android:id="@+id/tv_dj_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:padding="@dimen/dp_10"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/bar_text_sel"
+            android:textColor="@color/textdetail"
             android:layout_gravity="bottom"
             android:text="关"
             />
@@ -45,7 +51,7 @@
             app:ssb_min="0"
             app:ssb_progress="200.0"
             app:ssb_show_sign="true"
-            app:ssb_second_track_color="@color/bar_text_sel"
+            app:ssb_second_track_color="@color/textdetail"
             app:ssb_track_size="4dp"/>
         <!--<com.zhouyou.view.seekbar.SignSeekBar-->
             <!--android:id="@+id/seek_bar"-->
@@ -69,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/bar_text_sel"
+            android:textColor="@color/textdetail"
             android:layout_gravity="bottom"
             android:text="开"
             />
@@ -94,6 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="开启"
                 />
         </LinearLayout>
@@ -112,6 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="暂停"
                 />
         </LinearLayout>
@@ -130,6 +138,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="关闭"
                 />
         </LinearLayout>

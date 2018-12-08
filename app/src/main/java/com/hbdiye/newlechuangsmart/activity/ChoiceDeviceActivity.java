@@ -52,6 +52,7 @@ public class ChoiceDeviceActivity extends BaseActivity {
     private List<SecneSectionBean> mList = new ArrayList<>();
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
+    private String all_data;
 
     @Override
     protected void initData() {
@@ -61,6 +62,67 @@ public class ChoiceDeviceActivity extends BaseActivity {
 
         tvBaseTitle.setText(title);
         roomAndDevice();
+        deviceList();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SecneSectionBean secneSectionBean = mList.get(position);
+                boolean ishead = secneSectionBean.isIshead();
+                DeviceList deviceList = secneSectionBean.t;
+                if (!ishead) {
+                    String productId = deviceList.productId;
+                    String roomId = deviceList.roomId;
+//                    SmartToast.show();
+                    startActivity(new Intent(ChoiceDeviceActivity.this, DeviceDetailActivity.class)
+                            .putExtra("productId", productId)
+                            .putExtra("all_data", all_data)
+                            .putExtra("roomId", roomId));
+                }
+            }
+        });
+    }
+
+    private void deviceList() {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.ALLDEVICELIST))
+                .addParams("token", token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+
+                        DeviceListSceneBean deviceListSceneBean = new Gson().fromJson(response, DeviceListSceneBean.class);
+                        String errcode = deviceListSceneBean.errcode;
+                        List<DeviceListSceneBean.RoomList> roomList = deviceListSceneBean.roomList;
+                        if (errcode.equals("0")) {
+                            all_data = response;
+
+                        }
+//                            if (mList.size()>0){
+//                                mList.clear();
+//                            }
+//                            for (int i = 0; i < roomList.size(); i++) {
+//                                DeviceListSceneBean.RoomList roomList1 = roomList.get(i);
+//                                SecneSectionBean secneSectionBean = new SecneSectionBean(true, roomList1.name);
+//                                secneSectionBean.setIshead(true);
+//                                secneSectionBean.setTitle(roomList1.name);
+//                                mList.add(secneSectionBean);
+//                                for (int j = 0; j < roomList1.deviceList.size(); j++) {
+//                                    DeviceList deviceList = roomList1.deviceList.get(j);
+//                                    mList.add(new SecneSectionBean(deviceList));
+//                                }
+//                            }
+//                            adapter.notifyDataSetChanged();
+//                        }
+                    }
+                });
     }
 
     private void roomAndDevice() {
@@ -129,6 +191,10 @@ public class ChoiceDeviceActivity extends BaseActivity {
         rvChoiceDevice.setLayoutManager(manager);
         adapter = new DeviceListAdapter(R.layout.test_device_item, R.layout.add_scene_device_header, mList);
         rvChoiceDevice.setAdapter(adapter);
+        handlerClicker();
+    }
+
+    private void handlerClicker() {
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -329,7 +395,7 @@ public class ChoiceDeviceActivity extends BaseActivity {
     protected int getLayoutID() {
         return R.layout.activity_choice_device;
     }
-    
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override

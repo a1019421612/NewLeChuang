@@ -4,21 +4,27 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/liujian"
-    android:layout_marginTop="50dp"
-    />
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="场景面板"
-        android:padding="@dimen/dp_10"
+        android:layout_height="300dp"
+        android:background="@drawable/fragment_bg"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_9999"
-        />
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/detail_liujianchangjingmianban"
+            android:layout_marginTop="50dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="场景面板"
+            android:padding="@dimen/dp_10"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/fragment_bg"
-    tools:context=".fragment.DeviceListFragment">
+    tools:context=".activity.DeviceDetailActivity">
     <LinearLayout
-        android:id="@+id/toolbar_ll"
+        android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:gravity="center_vertical"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/iv_zj_back"
+                android:id="@+id/iv_device_detail_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@mipmap/back"
@@ -25,31 +25,33 @@
                 android:paddingRight="10dp"
                 />
             <TextView
-                android:id="@+id/tv_zj_title"
+                android:id="@+id/tv_device_detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="---"
-                android:textColor="@color/white"
+                android:text="房间"
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
+                android:textColor="@color/white"
                 android:textSize="@dimen/size_20"
+                android:drawableRight="@drawable/down"
+                android:drawablePadding="@dimen/dp_10"
                 />
         </RelativeLayout>
     </LinearLayout>
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager_detail_device"
+        android:id="@+id/vp_device_detail"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     </android.support.v4.view.ViewPager>
     <LinearLayout
         android:id="@+id/viewGroup"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingBottom="5dp" />

@@ -4,22 +4,28 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/wangguan"
-    android:layout_marginTop="50dp"
-    />
-    <TextView
-        android:id="@+id/tv_gateway_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="---"
-        android:padding="@dimen/dp_10"
+        android:layout_height="300dp"
+        android:background="@drawable/fragment_bg"
         android:gravity="center_horizontal"
-        android:textColor="@color/gray_9999"
-        />
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/detail_wangguan"
+            android:layout_marginTop="50dp"
+            />
+        <TextView
+            android:id="@+id/tv_gateway_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:padding="@dimen/dp_10"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,12 +41,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/kaoshiruwang_lan"
+                android:src="@drawable/detail_kaishiruwang"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="开始入网"
                 />
         </LinearLayout>
@@ -54,12 +61,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tiaoshiruwang"
+                android:src="@drawable/detail_tiaoshiruwang"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="调试入网"
                 />
         </LinearLayout>
@@ -73,12 +81,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tingzhiruwang"
+                android:src="@drawable/detail_tingzhiruwang"
                 android:padding="@dimen/dp_10"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textdetail"
                 android:text="停止入网"
                 />
         </LinearLayout>
