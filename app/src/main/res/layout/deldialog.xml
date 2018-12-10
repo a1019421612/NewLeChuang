@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginBottom="40dp"
-        android:text="是否删除两键开关？"
+        android:text="---"
         />
 </RelativeLayout>

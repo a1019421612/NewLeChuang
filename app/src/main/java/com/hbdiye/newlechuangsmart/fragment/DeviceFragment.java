@@ -19,6 +19,8 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
+import com.hbdiye.newlechuangsmart.activity.ChoiceDeviceActivity;
+import com.hbdiye.newlechuangsmart.activity.DeviceDetailActivity;
 import com.hbdiye.newlechuangsmart.adapter.DeviceListAdapter;
 import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.DeviceListSceneBean;
@@ -66,6 +68,7 @@ public class DeviceFragment extends Fragment {
     private List<SecneSectionBean> mList = new ArrayList<>();
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
+    private String all_data;
 
     @Nullable
     @Override
@@ -85,6 +88,22 @@ public class DeviceFragment extends Fragment {
         rvDevice.setLayoutManager(manager);
         adapter = new DeviceListAdapter(R.layout.test_device_item, R.layout.add_scene_device_header, mList);
         rvDevice.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SecneSectionBean secneSectionBean = mList.get(position);
+                boolean ishead = secneSectionBean.isIshead();
+                if (!ishead) {
+                    DeviceList deviceList = secneSectionBean.t;
+                    String productId = deviceList.productId;
+                    String roomId = deviceList.roomId;
+                    startActivity(new Intent(getActivity(), DeviceDetailActivity.class)
+                            .putExtra("productId", productId)
+                            .putExtra("all_data", all_data)
+                            .putExtra("roomId", roomId));
+                }
+            }
+        });
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -325,6 +344,7 @@ public class DeviceFragment extends Fragment {
                         String errcode = deviceListSceneBean.errcode;
                         List<DeviceListSceneBean.RoomList> roomList = deviceListSceneBean.roomList;
                         if (errcode.equals("0")) {
+                            all_data=response;
                             if (mList.size()>0){
                                 mList.clear();
                             }

@@ -54,11 +54,12 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:text="当前版本"/>
         <TextView
+            android:id="@+id/tv_setting_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="V1.0"/>
+            android:text="---"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_exit"

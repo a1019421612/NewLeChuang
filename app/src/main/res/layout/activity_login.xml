@@ -50,7 +50,6 @@
                 android:maxLines="1"
                 android:textColor="#555555"
                 android:textColorHint="#cccccc"
-                android:text="15200020002"
                 android:textSize="14sp" />
 
 
@@ -86,7 +85,6 @@
                     android:maxLines="1"
                     android:textColor="#555555"
                     android:textColorHint="#cccccc"
-                    android:text="123"
                     android:textSize="14sp" />
             </LinearLayout>
             <RelativeLayout

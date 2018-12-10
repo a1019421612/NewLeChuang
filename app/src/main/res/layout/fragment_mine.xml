@@ -158,14 +158,14 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/gywm"
+                        android:src="@drawable/wodeshebei"
                         />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:drawableRight="@drawable/ic_right"
-                        android:text="所有设备"/>
+                        android:text="我的设备"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_mine_rooms"
@@ -180,7 +180,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/gywm"
+                        android:src="@drawable/wodefangjian"
                         />
                     <TextView
                         android:layout_width="match_parent"

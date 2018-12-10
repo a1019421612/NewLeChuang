@@ -1,6 +1,9 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,6 +25,8 @@ public class SettingActivity extends BaseActivity {
     LinearLayout llSettingVersion;
     @BindView(R.id.tv_exit)
     TextView tvExit;
+    @BindView(R.id.tv_setting_version)
+    TextView tvSettingVersion;
 
     @Override
     protected void initData() {
@@ -35,7 +40,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        String versionName = getVersionName(this);
+        tvSettingVersion.setText("V"+versionName);
     }
 
     @Override
@@ -47,7 +53,7 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_setting_reset_psw:
-                startActivity(new Intent(this,ResetPswActivity.class));
+                startActivity(new Intent(this, ResetPswActivity.class));
                 break;
             case R.id.ll_setting_yj:
                 break;
@@ -56,5 +62,18 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_exit:
                 break;
         }
+    }
+
+    public String getVersionName(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo;
+        String versionName = "";
+        try {
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 }
