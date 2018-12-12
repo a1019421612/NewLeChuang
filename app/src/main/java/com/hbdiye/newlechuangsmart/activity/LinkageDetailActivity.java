@@ -594,7 +594,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
                 sceneDialog.setEditInput();
                 break;
             case R.id.tv_linkage_add_task:
-                startActivity(new Intent(this, AddLinkageDeviceActivity.class).putExtra("linkageId", linkageId));
+                startActivityForResult(new Intent(this, AddLinkageDeviceActivity.class).putExtra("linkageId", linkageId),99);
                 break;
         }
     }
@@ -876,7 +876,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
 
-            if (requestCode == 101) {
+            if (requestCode == 101||requestCode==99) {
                 linkageDetail();
             }
         }

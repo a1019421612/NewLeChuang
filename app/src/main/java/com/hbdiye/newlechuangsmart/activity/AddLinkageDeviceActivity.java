@@ -1,5 +1,6 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -90,7 +91,8 @@ public class AddLinkageDeviceActivity extends BaseActivity {
                                         String s = EcodeValue.resultEcode(errcode);
                                         SmartToast.show(s);
                                         if (errcode.equals("0")){
-
+                                            setResult(99,new Intent());
+                                            finish();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();

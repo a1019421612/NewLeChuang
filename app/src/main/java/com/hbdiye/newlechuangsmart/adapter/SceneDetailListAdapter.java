@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.EditActionActivity;
 import com.hbdiye.newlechuangsmart.bean.ConditionPop;
 import com.hbdiye.newlechuangsmart.bean.SceneDetailBean;
+import com.hbdiye.newlechuangsmart.util.ClassyIconByProId;
 import com.hbdiye.newlechuangsmart.view.CommentSceneView;
 import com.hbdiye.newlechuangsmart.view.CommentView;
 import com.hbdiye.newlechuangsmart.view.ConditionPopwindow;
@@ -52,6 +54,7 @@ public class SceneDetailListAdapter extends BaseAdapter {
         view=LayoutInflater.from(context).inflate(R.layout.scene_device_header,null);
         TextView tv_name=view.findViewById(R.id.tv_scene_device_item);
         TextView tv_edit=view.findViewById(R.id.tv_scene_device_edit);
+        ImageView imageView=view.findViewById(R.id.iv_scene_detail_icon);
 //        ListView listView=view.findViewById(R.id.mlv_condition);
         LinearLayout ll_root=view.findViewById(R.id.ll_root);
         ll_root.removeAllViews();
@@ -123,6 +126,7 @@ public class SceneDetailListAdapter extends BaseAdapter {
             });
         }
         tv_name.setText(mList.get(i).name);
+        Glide.with(context).load(ClassyIconByProId.deviceIcon(mList.get(i).productId)).into(imageView);
         return view;
     }
 
