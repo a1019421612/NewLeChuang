@@ -97,10 +97,12 @@ public class DeviceFragment extends Fragment {
                     DeviceList deviceList = secneSectionBean.t;
                     String productId = deviceList.productId;
                     String roomId = deviceList.roomId;
+                    String deviceId=deviceList.id;
                     startActivity(new Intent(getActivity(), DeviceDetailActivity.class)
                             .putExtra("productId", productId)
                             .putExtra("all_data", all_data)
-                            .putExtra("roomId", roomId));
+                            .putExtra("roomId", roomId)
+                            .putExtra("deviceId",deviceId));
                 }
             }
         });

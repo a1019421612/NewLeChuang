@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
-                android:text="我的联动"
+                android:text="联动"
                 android:gravity="center"
                 android:textSize="@dimen/size_16"
                 />

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +47,7 @@ import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
 import com.hbdiye.newlechuangsmart.view.CustomViewPager;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
+import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -78,6 +78,8 @@ public class HomeFragment extends Fragment {
     MyGridView gvCgqValue;
     @BindView(R.id.gv_common_classify)
     MyGridView gvCommonClassify;
+    @BindView(R.id.iv_home_sys)
+    ImageView ivHomeSys;
     private HomeReceiver homeReceiver;
     private Unbinder bind;
     private WebSocketConnection mConnection;
@@ -97,7 +99,8 @@ public class HomeFragment extends Fragment {
 
     private List<CommentClassyBean> mList_classy = new ArrayList<>();
     private MyClassyAdapter myClassyAdapter;
-    private String[] array_productId={"PRO003","PRO002","PRO001","PRO004","PRO005","PRO007","PRO006","PRO008","PRO009"};
+    private String[] array_productId = {"PRO003", "PRO002", "PRO001", "PRO004", "PRO005", "PRO007", "PRO006", "PRO008", "PRO009"};
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -140,29 +143,28 @@ public class HomeFragment extends Fragment {
         gvCommonClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i==8){
+                if (i == 8) {
                     startActivity(new Intent(getActivity(), CameraListActivity.class));
-                }else if (i==6){
+                } else if (i == 6) {
                     //跳转遥控中心
-                    startActivity(new Intent(getActivity(),YaoKongCenterActivity.class).putExtra("productId",array_productId[i]));
-                }else if (i==7){
+                    startActivity(new Intent(getActivity(), YaoKongCenterActivity.class).putExtra("productId", array_productId[i]));
+                } else if (i == 7) {
                     //医疗
                     isRegister();
-                }else if (i==2){
+                } else if (i == 2) {
                     String title = mList_classy.get(i).getTitle();
                     int icon = mList_classy.get(i).getIcon();
                     startActivity(new Intent(getActivity(), ZhiNengzjActivity.class)
-                            .putExtra("title",title)
-                            .putExtra("icon",icon)
-                            .putExtra("productId",array_productId[i]));
-                }
-                else {
+                            .putExtra("title", title)
+                            .putExtra("icon", icon)
+                            .putExtra("productId", array_productId[i]));
+                } else {
                     String title = mList_classy.get(i).getTitle();
                     int icon = mList_classy.get(i).getIcon();
-                    startActivity(new Intent(getActivity(),ChoiceDeviceActivity.class)
-                            .putExtra("title",title)
-                            .putExtra("icon",icon)
-                            .putExtra("productId",array_productId[i]));
+                    startActivity(new Intent(getActivity(), ChoiceDeviceActivity.class)
+                            .putExtra("title", title)
+                            .putExtra("icon", icon)
+                            .putExtra("productId", array_productId[i]));
                 }
             }
         });
@@ -197,14 +199,38 @@ public class HomeFragment extends Fragment {
         imageUrl.add("http://www.wuyueapp.com/wuyueTest//api/img/show?id=5b694a0b00be4526acf029da");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b6949ff00be4526acf029d8");
         imageUrl.add("http://www.wuyueapp.com/wuyueTest/api/img/show?id=5b69499a00be4526acf029d4");
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.af);setTitle("安防");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.dengpao);setTitle("照明");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.znzj);setTitle("智能主机");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.hjjc);setTitle("环境监测");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.cl);setTitle("窗帘开关");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.zngj);setTitle("智能管家");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.jd);setTitle("家电控制");}});
-        mList_classy.add(new CommentClassyBean(){{setIcon(R.drawable.ylyl);setTitle("医疗养老");}});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.af);
+            setTitle("安防");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.dengpao);
+            setTitle("照明");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.znzj);
+            setTitle("智能主机");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.hjjc);
+            setTitle("环境监测");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.cl);
+            setTitle("窗帘开关");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.zngj);
+            setTitle("智能管家");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.jd);
+            setTitle("家电控制");
+        }});
+        mList_classy.add(new CommentClassyBean() {{
+            setIcon(R.drawable.ylyl);
+            setTitle("医疗养老");
+        }});
     }
 
     private void initData() {
@@ -249,13 +275,14 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+
     private void isRegister() {
 //        SPUtils.put(LoginActivity.this, "mobilephone", mPhone);
-        String phone= (String) SPUtils.get(getActivity(),"mobilephone","");
+        String phone = (String) SPUtils.get(getActivity(), "mobilephone", "");
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.YILIAOISREGISTER))
-                .addParams("phone",phone)
+                .addParams("phone", phone)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -266,13 +293,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onResponse(String response, int id) {
                         try {
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
-                            if (errcode.equals("0")){
+                            if (errcode.equals("0")) {
                                 startActivity(new Intent(getActivity(), HealthActivity.class));
 //                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
-                            }else {
-                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
+                            } else {
+                                startActivity(new Intent(getActivity(), YiLiaoActivity.class));
 //                                startActivity(new Intent(getActivity(), HealthActivity.class));
                             }
                         } catch (JSONException e) {
@@ -281,6 +308,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -537,6 +565,18 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @OnClick({R.id.iv_message, R.id.iv_home_sys})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_message:
+                startActivity(new Intent(getActivity(), MessageActivity.class));
+                break;
+            case R.id.iv_home_sys:
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false));
+                break;
+        }
+    }
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override
@@ -628,10 +668,10 @@ public class HomeFragment extends Fragment {
 //        mConnection.disconnect();
     }
 
-    @OnClick(R.id.iv_message)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity(), MessageActivity.class));
-    }
+//    @OnClick(R.id.iv_message)
+//    public void onViewClicked() {
+//        startActivity(new Intent(getActivity(), MessageActivity.class));
+//    }
 
     class MyCGQadapter extends BaseAdapter {
 
@@ -729,6 +769,7 @@ public class HomeFragment extends Fragment {
             return view;
         }
     }
+
     class MyClassyAdapter extends BaseAdapter {
 
         @Override
@@ -751,7 +792,7 @@ public class HomeFragment extends Fragment {
 
             view = LayoutInflater.from(getActivity()).inflate(R.layout.device_gv_item, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item);
-            TextView tv_title=view.findViewById(R.id.tv_content);
+            TextView tv_title = view.findViewById(R.id.tv_content);
             if (mList_classy.size() == i) {
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(getActivity()).load(R.drawable.other).into(imageView);

@@ -17,7 +17,7 @@
             android:layout_marginTop="50dp"
             />
         <TextView
-            android:id="@+id/tv_sj_name"
+            android:id="@+id/tv_kr_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="---"
@@ -26,6 +26,8 @@
             android:textColor="@color/white"
             />
         <TextView
+            android:id="@+id/tv_kr_zc"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="正常"
@@ -43,6 +45,8 @@
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="horizontal">
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_kr_dc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -62,6 +66,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_kr_bc"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -81,6 +87,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_kr_dl"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

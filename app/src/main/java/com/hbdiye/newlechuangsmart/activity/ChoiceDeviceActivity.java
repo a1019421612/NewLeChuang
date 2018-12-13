@@ -72,11 +72,13 @@ public class ChoiceDeviceActivity extends BaseActivity {
                 if (!ishead) {
                     String productId = deviceList.productId;
                     String roomId = deviceList.roomId;
+                    String id = deviceList.id;
 //                    SmartToast.show();
                     startActivity(new Intent(ChoiceDeviceActivity.this, DeviceDetailActivity.class)
                             .putExtra("productId", productId)
                             .putExtra("all_data", all_data)
-                            .putExtra("roomId", roomId));
+                            .putExtra("roomId", roomId)
+                            .putExtra("deviceId", id));
                 }
             }
         });

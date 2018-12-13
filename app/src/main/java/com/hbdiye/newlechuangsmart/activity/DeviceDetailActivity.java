@@ -56,6 +56,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     private String productId;
     private String all_data;
+    private String deviceId;
     private List<DeviceListSceneBean.RoomList> roomList;
     private String roomId;
     private List<Fragment> mList_fragment = new ArrayList<>();
@@ -72,6 +73,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         productId = getIntent().getStringExtra("productId");
         all_data = getIntent().getStringExtra("all_data");
         roomId = getIntent().getStringExtra("roomId");
+        deviceId=getIntent().getStringExtra("deviceId");
         handleData();
     }
 
@@ -92,7 +94,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         List<DeviceList> deviceList = roomList.get(0).deviceList;
         for (int i = 0; i < deviceList.size(); i++) {
             String deviceid = deviceList.get(i).id;
-            if (productId.equals(deviceList.get(i).productId)) {
+            if (productId.equals(deviceList.get(i).productId)&&deviceId.equals(deviceid)) {
                 mList_fragment.add(0, ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
             } else {
                 mList_fragment.add(ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
@@ -115,7 +117,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
             mImageView = new ImageView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mImageView.setLayoutParams(params);
-            params.leftMargin = 30;
+            params.leftMargin = 10;
             mImageViews[i] = mImageView;
 //            if (flag != -1) {
 //                if (i == flag) {
