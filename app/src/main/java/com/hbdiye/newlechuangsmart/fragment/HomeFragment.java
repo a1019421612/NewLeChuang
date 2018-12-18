@@ -572,7 +572,8 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.iv_home_sys:
-                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false));
+                //flag为true时跳转扫描界面为加入家庭功能为false时为加入网关
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false).putExtra("flag",false));
                 break;
         }
     }

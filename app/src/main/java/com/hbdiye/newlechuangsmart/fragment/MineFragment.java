@@ -117,7 +117,7 @@ public class MineFragment extends Fragment {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
                 //二维码图片
-                startActivity(new Intent(getActivity(), MyErCodeActivity.class));
+                startActivity(new Intent(getActivity(), MyErCodeActivity.class).putExtra("familyId",userFamilyInfoBean.user.familyId));
                 break;
             case R.id.profile_image:
                 //头像
@@ -130,7 +130,8 @@ public class MineFragment extends Fragment {
                 }
                 break;
             case R.id.ll_mine_sys:
-                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false));
+                //flag为true时跳转扫描界面为加入家庭功能为false时为加入网关
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false).putExtra("flag",true));
                 break;
             case R.id.ll_mine_family_member:
                 //家庭成员

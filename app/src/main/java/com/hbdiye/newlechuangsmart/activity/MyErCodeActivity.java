@@ -16,12 +16,14 @@ public class MyErCodeActivity extends BaseActivity {
 
     @BindView(R.id.iv_myercode)
     ImageView ivMyercode;
+    private String familyId;
 
     @Override
     protected void initData() {
+        familyId = getIntent().getStringExtra("familyId");
 //        Bitmap qrCode= EncodingHandler.createQRCode("123", DensityUtils.dp2px(this, 300),DensityUtils.dp2px(this, 300),null);
         try {
-            Bitmap qrCode1 = EncodingHandler.createQRCode("123", DensityUtils.dp2px(this, 800));
+            Bitmap qrCode1 = EncodingHandler.createQRCode(familyId, DensityUtils.dp2px(this, 800));
             ivMyercode.setImageBitmap(qrCode1);
         } catch (WriterException e) {
             e.printStackTrace();

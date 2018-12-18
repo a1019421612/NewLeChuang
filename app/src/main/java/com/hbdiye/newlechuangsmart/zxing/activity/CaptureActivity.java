@@ -39,6 +39,8 @@ import com.google.zxing.qrcode.QRCodeReader;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.GateWaySeriesNumActivity;
 import com.hbdiye.newlechuangsmart.activity.SeriesNumSearchActivity;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.zxing.camera.CameraManager;
 import com.hbdiye.newlechuangsmart.zxing.decoding.CaptureActivityHandler;
 import com.hbdiye.newlechuangsmart.zxing.decoding.InactivityTimer;
@@ -49,10 +51,14 @@ import com.videogo.exception.ExtraException;
 import com.videogo.util.ConnectionDetector;
 import com.videogo.util.LocalValidate;
 import com.videogo.util.LogUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import okhttp3.Call;
 
 
 /**
@@ -87,6 +93,9 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
     private String mSerialVeryCodeStr = "";
     private String deviceType = "";
     private String TAG="CaptureActivity";
+    private boolean flag;  //flag为true时跳转扫描界面为加入家庭功能为false时为加入网关
+    private String token;
+
     /**
      * Called when the activity is first created.
      */
@@ -96,6 +105,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         setContentView(R.layout.activity_scanner);
         //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
         isCamera = getIntent().getBooleanExtra("camera", false);
+        token = (String) SPUtils.get(this,"token","");
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_content);
         iv_base_back=findViewById(R.id.iv_base_back);
@@ -112,13 +122,21 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                 }
             });
         }else {
-            iv_base_right.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(CaptureActivity.this, GateWaySeriesNumActivity.class);
-                    CaptureActivity.this.startActivity(intent);
-                }
-            });
+            flag = getIntent().getBooleanExtra("flag", true);
+            if (flag){
+                //扫码加入家庭
+                iv_base_right.setVisibility(View.INVISIBLE);
+            }else {
+                //扫码添加网关
+                iv_base_right.setVisibility(View.VISIBLE);
+                iv_base_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(CaptureActivity.this, GateWaySeriesNumActivity.class);
+                        CaptureActivity.this.startActivity(intent);
+                    }
+                });
+            }
         }
         iv_base_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,12 +341,18 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                 Intent resultIntent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString(INTENT_EXTRA_KEY_QR_SCAN, resultString);
-
-//            SmartToast.show(resultString);
-                Intent intent=new Intent();
-                intent.putExtra("erCode",resultString);
-                setResult(4,intent);
-                finish();
+                if (flag){
+                    //扫码加入家庭
+                    joinFamily(resultString);
+                }else {
+                    //扫码添加网关
+                    Intent intent = new Intent(CaptureActivity.this, GateWaySeriesNumActivity.class);
+                    CaptureActivity.this.startActivity(intent);
+                }
+//                Intent intent=new Intent();
+//                intent.putExtra("erCode",resultString);
+//                setResult(4,intent);
+//                finish();
             }
 //            startActivity(new Intent(this, ScanCodeResultActivity.class).putExtra("result",resultString));
 
@@ -341,6 +365,27 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         }
 
     }
+
+    private void joinFamily(String resultString) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.JOINFAMILY))
+                .addParams("token",token)
+                .addParams("familyId",resultString)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
+    }
+
     private void handleString(String resultString) {
         // 初始化数据
         mSerialNoStr = "";

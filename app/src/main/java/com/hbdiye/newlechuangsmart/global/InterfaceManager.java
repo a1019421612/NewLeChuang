@@ -21,7 +21,6 @@ public class InterfaceManager {
     public static final String DELIRDEVICE = "DELIRDEVICE";//删除红外设备
     public static final String SENDCODE = "SENDCODE";//控制红外设备
 
-
     public static final String HOSTURL = "";
     public static final String BASEURL = "http://www.thingtill.com/Home/ThreeIr/";
     public static final String HWREGISTER_URL = BASEURL + "reg";
@@ -75,6 +74,7 @@ public class InterfaceManager {
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
     public static final String UPDATENICKNAME="UPDATENICKNAME";//修改昵称
+    public static final String JOINFAMILY="JOINFAMILY";//加入家庭
 //    ===============================================================
 
 
@@ -125,6 +125,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.ALLDEVICELIST,NEWBASEURL+"DYPServer/device/findDeviceDetailsListGroupByRoom");
             urlManager.put(InterfaceManager.MYDEVICES,NEWBASEURL+"DYPServer/device/findDeviceList");
             urlManager.put(InterfaceManager.DEVICESCENEDETAILS,NEWBASEURL+"DYPServer/scene/findDeviceSceneDetails");
+            urlManager.put(InterfaceManager.JOINFAMILY,NEWBASEURL+"DYPServer/user/joinFamily");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");
