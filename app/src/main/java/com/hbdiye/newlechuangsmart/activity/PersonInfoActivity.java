@@ -52,6 +52,10 @@ public class PersonInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
+
+
+
     }
 
     @Override
