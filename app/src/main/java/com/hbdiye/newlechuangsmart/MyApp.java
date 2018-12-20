@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.iflytek.cloud.SpeechUtility;
 import com.videogo.openapi.EZOpenSDK;
 
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class MyApp extends Application{
         EZOpenSDK.enableP2P(false);
         /** * APP_KEY请替换成自己申请的 */
         EZOpenSDK.initLib(this, APPKEY);
+        SpeechUtility.createUtility(this, "appid=5c19fe0b");
     }
     /**
      * @param activity 作用说明 ：添加一个activity到管理里

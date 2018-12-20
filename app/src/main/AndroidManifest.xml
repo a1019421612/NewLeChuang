@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     //热点配网扫描wifi需要使用
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".MyApp"
@@ -141,7 +142,8 @@
         <activity android:name=".activity.UpdateLinkageConditionActivity" />
         <activity android:name=".activity.RoomListActivity" />
         <activity android:name=".activity.MonitorListActivity" />
-        <activity android:name=".activity.DeviceDetailActivity"></activity>
+        <activity android:name=".activity.DeviceDetailActivity" />
+        <activity android:name=".activity.VoiceActivity"></activity>
     </application>
 
 </manifest>

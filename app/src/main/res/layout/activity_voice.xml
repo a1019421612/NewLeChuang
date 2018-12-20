@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.VoiceActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_voice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/iv_voice_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/play_talk" />
+    <ImageView
+        android:id="@+id/iv_voice"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="@dimen/dp_30"
+        android:src="@drawable/ease_record_animate_01"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="#5F000000"
+        />
+</RelativeLayout>

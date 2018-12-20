@@ -68,4 +68,6 @@ dependencies {
     implementation files('libs/jmdns-3.4.1.jar')
     implementation 'com.github.yiwent:ShiftyTextview:1.1.0'
     implementation 'com.carmelo:keeplive:1.0.0'
+    compile files('libs/Msc.jar')
+    compile files('libs/Sunflower.jar')
 }
