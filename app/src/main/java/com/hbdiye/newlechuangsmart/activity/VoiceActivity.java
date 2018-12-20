@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.MainActivity;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.adapter.VoiceAdapter;
+import com.hbdiye.newlechuangsmart.bean.VoiceListBean;
 import com.hbdiye.newlechuangsmart.util.JsonParser;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -32,6 +35,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +62,9 @@ public class VoiceActivity extends BaseActivity {
     // 引擎类型
     private String mEngineType = SpeechConstant.TYPE_CLOUD;
 
+    private List<VoiceListBean> list=new ArrayList<>();
+    private VoiceAdapter adapter;
+
     @Override
     protected void initData() {
 
@@ -69,6 +77,11 @@ public class VoiceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvVoice.setLayoutManager(manager);
+        adapter=new VoiceAdapter(list);
+        rvVoice.setAdapter(adapter);
         initImageVoice();
         // 初始化识别无UI识别对象
         // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
@@ -80,6 +93,7 @@ public class VoiceActivity extends BaseActivity {
     protected int getLayoutID() {
         return R.layout.activity_voice;
     }
+
     /**
      * 初始化监听器。
      */
@@ -93,6 +107,7 @@ public class VoiceActivity extends BaseActivity {
             }
         }
     };
+
     public void onViewClicked() {
         iv_voice_record.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -116,6 +131,7 @@ public class VoiceActivity extends BaseActivity {
             }
         });
     }
+
     private void initImageVoice() {
         micImages = new Drawable[]{getResources().getDrawable(R.drawable.ease_record_animate_01),
                 getResources().getDrawable(R.drawable.ease_record_animate_02),
@@ -130,8 +146,12 @@ public class VoiceActivity extends BaseActivity {
                 getResources().getDrawable(R.drawable.ease_record_animate_11),
                 getResources().getDrawable(R.drawable.ease_record_animate_12),
                 getResources().getDrawable(R.drawable.ease_record_animate_13),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),};
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14)};
     }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -159,59 +179,6 @@ public class VoiceActivity extends BaseActivity {
             }
         }
     };
-    private void startVoice() {
-        iv_voice.setVisibility(View.VISIBLE);
-        try {
-            if (recorder != null) {
-                recorder.release();
-                recorder = null;
-            }
-            String dir = Environment.getExternalStorageDirectory() + "/recorder_audios";
-            File file = new File(dir);
-            if (!file.exists()) {
-                file.mkdir();
-            }
-
-            recorder = new MediaRecorder();
-            String fileName = "aaa.amr";
-            File files = new File(dir, fileName);
-            recorder.setOutputFile(files.getAbsolutePath());
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//            recorder.setAudioChannels(1); // MONO
-//            recorder.setAudioSamplingRate(8000); // 8000Hz
-//            recorder.setAudioEncodingBitRate(64); // seems if chang
-
-//            voiceFileName = getVoiceFileName(EMClient.getInstance().getCurrentUser());
-//            voiceFilePath = PathUtil.getInstance().getVoicePath() + "/" + voiceFileName;
-
-            recorder.prepare();
-            recorder.start();
-            isRecording = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isRecording) {
-                        android.os.Message msg = new android.os.Message();
-                        msg.what = recorder.getMaxAmplitude() * 13 / 0x7FFF;
-                        mHandler.sendMessage(msg);
-                        SystemClock.sleep(100);
-                    }
-                } catch (Exception e) {
-                    // from the crash report website, found one NPE crash from
-                    // one android 4.0.4 htc phone
-                    // maybe handler is null for some reason
-//                    EMLog.e("voice", e.toString());
-                }
-            }
-        }).start();
-    }
     /**
      * 听写监听器。
      */
@@ -221,17 +188,19 @@ public class VoiceActivity extends BaseActivity {
         public void onBeginOfSpeech() {
             // 此回调表示：sdk内部录音机已经准备好了，用户可以开始语音输入
 //            SmartToast.show("开始说话");
-            startVoice();
+            iv_voice.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onError(SpeechError error) {
             // Tips：
             // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
+            mIat.stopListening();
+            isRecording=false;
             iv_voice.setVisibility(View.GONE);
-            if (error.getErrorCode()==10118){
+            if (error.getErrorCode() == 10118) {
                 SmartToast.show("您没有说话");
-            }else {
+            } else {
                 SmartToast.show(error.getPlainDescription(true));
             }
         }
@@ -240,6 +209,9 @@ public class VoiceActivity extends BaseActivity {
         public void onEndOfSpeech() {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
 //            SmartToast.show("结束说话");
+            mIat.stopListening();
+            isRecording=false;
+            iv_voice.setVisibility(View.GONE);
         }
 
         @Override
@@ -252,6 +224,12 @@ public class VoiceActivity extends BaseActivity {
         public void onVolumeChanged(int volume, byte[] data) {
 //            showTip("当前正在说话，音量大小：" + volume);
             Log.d(TAG, "返回音频数据：" + data.length);
+            isRecording = true;
+            if (isRecording) {
+                android.os.Message msg = new android.os.Message();
+                msg.what = volume / 2;
+                mHandler.sendMessage(msg);
+            }
         }
 
         @Override
@@ -264,6 +242,7 @@ public class VoiceActivity extends BaseActivity {
             //	}
         }
     };
+
     private void printResult(RecognizerResult results) {
         String text = JsonParser.parseIatResult(results.getResultString());
 
@@ -276,9 +255,19 @@ public class VoiceActivity extends BaseActivity {
             e.printStackTrace();
         }
         if (!TextUtils.isEmpty(text)) {
-            SmartToast.show("翻译" + text);
+            VoiceListBean voiceListBean=new VoiceListBean();
+            voiceListBean.isleft=false;
+            voiceListBean.msg=text;
+            VoiceListBean left=new VoiceListBean();
+            left.isleft=true;
+            left.msg=text;
+            list.add(voiceListBean);
+            list.add(left);
+            adapter.notifyDataSetChanged();
+//            SmartToast.show("翻译" + text);
         }
     }
+
     /**
      * 参数设置
      *

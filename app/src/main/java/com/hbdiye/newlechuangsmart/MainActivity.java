@@ -133,7 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getResources().getDrawable(R.drawable.ease_record_animate_11),
                 getResources().getDrawable(R.drawable.ease_record_animate_12),
                 getResources().getDrawable(R.drawable.ease_record_animate_13),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),};
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14),
+                getResources().getDrawable(R.drawable.ease_record_animate_14)};
     }
 
     private boolean flag_voice = false;
@@ -222,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onBeginOfSpeech() {
             // 此回调表示：sdk内部录音机已经准备好了，用户可以开始语音输入
 //            SmartToast.show("开始说话");
-//            startVoice();
             iv_voice.setVisibility(View.VISIBLE);
         }
 
@@ -230,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onError(SpeechError error) {
             // Tips：
             // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
+            mIat.stopListening();
+            isRecording=false;
             iv_voice.setVisibility(View.GONE);
             if (error.getErrorCode()==10118){
                 SmartToast.show("您没有说话");
@@ -241,7 +245,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onEndOfSpeech() {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
-            SmartToast.show("结束说话");
+//            SmartToast.show("结束说话");
+            mIat.stopListening();
+            isRecording=false;
+            iv_voice.setVisibility(View.GONE);
         }
 
         @Override
@@ -253,26 +260,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onVolumeChanged(final int volume, byte[] data) {
 //            showTip("当前正在说话，音量大小：" + volume);
-            isRecording=true;
+            isRecording = true;
             Log.d(TAG, "返回音频数据：" + data.length+"当前正在说话，音量大小：" + volume);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        while (isRecording) {
-                            android.os.Message msg = new android.os.Message();
-                            msg.what = volume/10;
-                            mHandler.sendMessage(msg);
-                            SystemClock.sleep(100);
-                        }
-                    } catch (Exception e) {
-                        // from the crash report website, found one NPE crash from
-                        // one android 4.0.4 htc phone
-                        // maybe handler is null for some reason
-//                    EMLog.e("voice", e.toString());
-                    }
-                }
-            }).start();
+            if (isRecording) {
+                android.os.Message msg = new android.os.Message();
+                msg.what = volume/2;
+                mHandler.sendMessage(msg);
+            }
         }
 
         @Override
@@ -287,60 +281,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     private boolean isRecording = false;
 
-    private void startVoice() {
-        iv_voice.setVisibility(View.VISIBLE);
-        try {
-            if (recorder != null) {
-                recorder.release();
-                recorder = null;
-            }
-            String dir = Environment.getExternalStorageDirectory() + "/recorder_audios";
-            File file = new File(dir);
-            if (!file.exists()) {
-                file.mkdir();
-            }
-
-            recorder = new MediaRecorder();
-            String fileName = "aaa.amr";
-            File files = new File(dir, fileName);
-            recorder.setOutputFile(files.getAbsolutePath());
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//            recorder.setAudioChannels(1); // MONO
-//            recorder.setAudioSamplingRate(8000); // 8000Hz
-//            recorder.setAudioEncodingBitRate(64); // seems if chang
-
-//            voiceFileName = getVoiceFileName(EMClient.getInstance().getCurrentUser());
-//            voiceFilePath = PathUtil.getInstance().getVoicePath() + "/" + voiceFileName;
-
-            recorder.prepare();
-            recorder.start();
-            isRecording = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isRecording) {
-                        android.os.Message msg = new android.os.Message();
-                        msg.what = recorder.getMaxAmplitude() * 13 / 0x7FFF;
-                        mHandler.sendMessage(msg);
-                        SystemClock.sleep(100);
-                    }
-                } catch (Exception e) {
-                    // from the crash report website, found one NPE crash from
-                    // one android 4.0.4 htc phone
-                    // maybe handler is null for some reason
-//                    EMLog.e("voice", e.toString());
-                }
-            }
-        }).start();
-    }
-
     private void printResult(RecognizerResult results) {
         String text = JsonParser.parseIatResult(results.getResultString());
 
@@ -353,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         if (!TextUtils.isEmpty(text)) {
-            SmartToast.show("翻译" + text);
+            SmartToast.show(text);
         }
     }
 
@@ -410,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //mIat.setParameter("view_tips_plain","false");
 
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
-        mIat.setParameter(SpeechConstant.VAD_BOS, "40000");
+        mIat.setParameter(SpeechConstant.VAD_BOS, "10000");
 
         // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
         mIat.setParameter(SpeechConstant.VAD_EOS, "10000");
