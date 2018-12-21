@@ -38,14 +38,14 @@
                 android:src="@drawable/tab_me"
                  />
 
-
+<!--android:text="15200020002"-->
             <EditText
                 android:id="@+id/phoneEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="手机号"
-                android:text="15200020002"
+                android:text="18833113150"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:maxLines="1"

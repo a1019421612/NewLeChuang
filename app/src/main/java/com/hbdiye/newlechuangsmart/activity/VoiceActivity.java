@@ -1,5 +1,9 @@
 package com.hbdiye.newlechuangsmart.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -17,10 +21,14 @@ import android.widget.ImageView;
 
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.MainActivity;
+import com.hbdiye.newlechuangsmart.MyWebSocketHandler;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
 import com.hbdiye.newlechuangsmart.adapter.VoiceAdapter;
 import com.hbdiye.newlechuangsmart.bean.VoiceListBean;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.JsonParser;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -41,6 +49,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.tavendo.autobahn.WebSocketConnection;
 
 public class VoiceActivity extends BaseActivity {
 
@@ -65,6 +74,12 @@ public class VoiceActivity extends BaseActivity {
     private List<VoiceListBean> list=new ArrayList<>();
     private VoiceAdapter adapter;
 
+
+    private WebSocketConnection mConnection;
+    public MyWebSocketHandler instance;
+    private HomeReceiver homeReceiver;
+    private String token;
+
     @Override
     protected void initData() {
 
@@ -77,6 +92,14 @@ public class VoiceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        token = (String) SPUtils.get(this, "token", "");
+//        initWebSocket();
+        mConnection = SingleWebSocketConnection.getInstance();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("GOPP");
+        intentFilter.addAction("CSPP");
+        homeReceiver = new HomeReceiver();
+        registerReceiver(homeReceiver, intentFilter);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvVoice.setLayoutManager(manager);
@@ -93,7 +116,33 @@ public class VoiceActivity extends BaseActivity {
     protected int getLayoutID() {
         return R.layout.activity_voice;
     }
+    class HomeReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String message = intent.getStringExtra("message");
+            if (action.equals("CSPP")){
+                try {
+                    JSONObject jsonObject=new JSONObject(message);
+                    String ecode = jsonObject.getString("ecode");
+                    if (ecode.equals("0")){
+                        String msg = jsonObject.getString("msg");
+                        VoiceListBean left=new VoiceListBean();
+                        left.isleft=true;
+                        left.msg=msg;
+                        list.add(left);
+                        adapter.notifyDataSetChanged();
+                    }else {
+                        String s = EcodeValue.resultEcode(ecode);
+                        SmartToast.show(s);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     /**
      * 初始化监听器。
      */
@@ -147,9 +196,26 @@ public class VoiceActivity extends BaseActivity {
                 getResources().getDrawable(R.drawable.ease_record_animate_12),
                 getResources().getDrawable(R.drawable.ease_record_animate_13),
                 getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14)};
+                getResources().getDrawable(R.drawable.ease_record_animate_15),
+                getResources().getDrawable(R.drawable.ease_record_animate_16),
+                getResources().getDrawable(R.drawable.ease_record_animate_17),
+                getResources().getDrawable(R.drawable.ease_record_animate_18),
+                getResources().getDrawable(R.drawable.ease_record_animate_19),
+                getResources().getDrawable(R.drawable.ease_record_animate_20),
+                getResources().getDrawable(R.drawable.ease_record_animate_21),
+                getResources().getDrawable(R.drawable.ease_record_animate_22),
+                getResources().getDrawable(R.drawable.ease_record_animate_23),
+                getResources().getDrawable(R.drawable.ease_record_animate_24),
+                getResources().getDrawable(R.drawable.ease_record_animate_25),
+                getResources().getDrawable(R.drawable.ease_record_animate_26),
+                getResources().getDrawable(R.drawable.ease_record_animate_27),
+                getResources().getDrawable(R.drawable.ease_record_animate_28),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+
+        };
     }
 
     private Handler mHandler = new Handler() {
@@ -227,7 +293,7 @@ public class VoiceActivity extends BaseActivity {
             isRecording = true;
             if (isRecording) {
                 android.os.Message msg = new android.os.Message();
-                msg.what = volume / 2;
+                msg.what = volume;
                 mHandler.sendMessage(msg);
             }
         }
@@ -255,14 +321,11 @@ public class VoiceActivity extends BaseActivity {
             e.printStackTrace();
         }
         if (!TextUtils.isEmpty(text)) {
+            mConnection.sendTextMessage("{\"pn\":\"CSPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"905\",\"msg\":\""+text+"\"}");
             VoiceListBean voiceListBean=new VoiceListBean();
             voiceListBean.isleft=false;
             voiceListBean.msg=text;
-            VoiceListBean left=new VoiceListBean();
-            left.isleft=true;
-            left.msg=text;
             list.add(voiceListBean);
-            list.add(left);
             adapter.notifyDataSetChanged();
 //            SmartToast.show("翻译" + text);
         }
@@ -311,6 +374,7 @@ public class VoiceActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(homeReceiver);
         if (null != mIat) {
             // 退出时释放连接
             mIat.cancel();

@@ -16,6 +16,7 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.MainActivity;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.RegexUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -133,8 +134,8 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {
-                                String data = jsonObject.getString("errmsg");
-                                SmartToast.show(data);
+                                String s = EcodeValue.resultEcode(result+"");
+                                SmartToast.show(s);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

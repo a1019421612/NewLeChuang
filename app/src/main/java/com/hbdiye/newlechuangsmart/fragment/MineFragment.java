@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
@@ -24,11 +25,16 @@ import com.hbdiye.newlechuangsmart.activity.RoomListActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
+import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.view.GetPhotoPopwindow;
 import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -162,42 +168,68 @@ public class MineFragment extends Fragment {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.civ_head1:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_01).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("ic_head_01");
                     break;
                 case R.id.civ_head2:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_02).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("ic_head_02");
                     break;
                 case R.id.civ_head3:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_03).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head3");
                     break;
                 case R.id.civ_head4:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_04).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head4");
                     break;
                 case R.id.civ_head5:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_05).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head5");
                     break;
                 case R.id.civ_head6:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_06).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head6");
                     break;
                 case R.id.civ_head7:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_07).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head7");
                     break;
                 case R.id.civ_head8:
-                    Glide.with(getActivity()).load(R.drawable.ic_head_08).into(profileImage);
-                    getPhotoPopwindow.dismiss();
+                    updatePhoto("civ_head8");
                     break;
                 default:
                     break;
             }
         }
     };
+
+    private void updatePhoto(final String icon) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.UPDATEICON))
+                .addParams("token",token)
+                .addParams("icon",icon)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                if ( getPhotoPopwindow!=null){
+                                    getPhotoPopwindow.dismiss();
+                                }
+                                Glide.with(getActivity()).load( IconByName.photoByName(icon)).into(profileImage);
+                            }else {
+                                String s = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onResume() {

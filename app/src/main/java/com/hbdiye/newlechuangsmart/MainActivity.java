@@ -134,9 +134,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getResources().getDrawable(R.drawable.ease_record_animate_12),
                 getResources().getDrawable(R.drawable.ease_record_animate_13),
                 getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14),
-                getResources().getDrawable(R.drawable.ease_record_animate_14)};
+                getResources().getDrawable(R.drawable.ease_record_animate_15),
+                getResources().getDrawable(R.drawable.ease_record_animate_16),
+                getResources().getDrawable(R.drawable.ease_record_animate_17),
+                getResources().getDrawable(R.drawable.ease_record_animate_18),
+                getResources().getDrawable(R.drawable.ease_record_animate_19),
+                getResources().getDrawable(R.drawable.ease_record_animate_20),
+                getResources().getDrawable(R.drawable.ease_record_animate_21),
+                getResources().getDrawable(R.drawable.ease_record_animate_22),
+                getResources().getDrawable(R.drawable.ease_record_animate_23),
+                getResources().getDrawable(R.drawable.ease_record_animate_24),
+                getResources().getDrawable(R.drawable.ease_record_animate_25),
+                getResources().getDrawable(R.drawable.ease_record_animate_26),
+                getResources().getDrawable(R.drawable.ease_record_animate_27),
+                getResources().getDrawable(R.drawable.ease_record_animate_28),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+                getResources().getDrawable(R.drawable.ease_record_animate_29),
+
+        };
     }
 
     private boolean flag_voice = false;
@@ -264,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "返回音频数据：" + data.length+"当前正在说话，音量大小：" + volume);
             if (isRecording) {
                 android.os.Message msg = new android.os.Message();
-                msg.what = volume/2;
+                msg.what = volume;
                 mHandler.sendMessage(msg);
             }
         }
@@ -293,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         if (!TextUtils.isEmpty(text)) {
-            SmartToast.show(text);
+            homeFragment.voiceHelper(text);
         }
     }
 
@@ -506,4 +523,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mIat.destroy();
         }
     }
+
 }

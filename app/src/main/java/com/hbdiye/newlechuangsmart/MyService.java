@@ -91,6 +91,10 @@ public class MyService extends Service {
                     //删除联动
                     websocketSendBroadcase(message, "LDTP");
                 }
+                if (message.contains("\"pn\":\"CSPP\"")){
+                    //CSPP
+                    websocketSendBroadcase(message, "CSPP");
+                }
 //                if (message.contains("\"pn\":\"LATP\"")) {
 //                    //LATPSPUtils.put(this,"isTrigger",true);
 //                    boolean isTrigger = (boolean) SPUtils.get(getActivity(), "isTrigger", false);

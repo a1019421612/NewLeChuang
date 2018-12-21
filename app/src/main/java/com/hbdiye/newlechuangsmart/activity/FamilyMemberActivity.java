@@ -14,6 +14,7 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.adapter.FamilyMemberAdapter;
 import com.hbdiye.newlechuangsmart.bean.FamilyMemberBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -127,6 +128,9 @@ public class FamilyMemberActivity extends BaseActivity {
                             if (errcode.equals("0")){
                                 SmartToast.show("操作成功");
                                 memberList();
+                            }else {
+                                String s = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -178,7 +178,7 @@
                             android:background="#ffffff"
                             android:focusable="false"
                             android:scaleType="centerInside"
-                            android:src="@drawable/play_talk" />
+                            android:src="@drawable/yuyin" />
                         <!--android:src="@drawable/tab_contact_list"-->
 
                     </RelativeLayout>

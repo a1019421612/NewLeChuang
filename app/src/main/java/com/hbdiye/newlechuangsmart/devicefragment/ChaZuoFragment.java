@@ -33,6 +33,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.tavendo.autobahn.WebSocketConnection;
 
+/**
+ * 插座界面
+ */
 public class ChaZuoFragment extends BaseFragment {
 
     @BindView(R.id.iv_cz)

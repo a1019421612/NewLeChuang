@@ -70,6 +70,8 @@ public class InterfaceManager {
     public static final String ALLDEVICELIST="ALLDEVICELIST";//首页所有设备列表
     public static final String MYDEVICES="MYDEVICES";//我的设备
     public static final String DEVICESCENEDETAILS="DEVICESCENEDETAILS";//六建场景，四键场景
+    public static final String RESETPSW="RESETPSW";//修改密码
+    public static final String UPDATEICON="UPDATEICON";//修改头像
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -126,15 +128,17 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.MYDEVICES,NEWBASEURL+"DYPServer/device/findDeviceList");
             urlManager.put(InterfaceManager.DEVICESCENEDETAILS,NEWBASEURL+"DYPServer/scene/findDeviceSceneDetails");
             urlManager.put(InterfaceManager.JOINFAMILY,NEWBASEURL+"DYPServer/user/joinFamily");
+            urlManager.put(InterfaceManager.RESETPSW,NEWBASEURL+"DYPServer/user/updateUserPasswordByToken");
+            urlManager.put(InterfaceManager.UPDATEICON,NEWBASEURL+"DYPServer/user/updateUserIcon");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");
             urlManager.put(InterfaceManager.YILIAOINFO,"http://39.104.119.0:9999/belter/main/findRecordListByPage");
 
 //            urlManager.put(InterfaceManager.LOGIN, "http://39.104.119.0/SmartHome-java-user/user/login");
-            urlManager.put(InterfaceManager.REGISTER, "http://39.104.119.0:80/SmartHome-java-user/user/register");
-            urlManager.put(InterfaceManager.GETVAILCODE, "http://39.104.119.0:80/SmartHome-java-user/user/getValidateCode");
-            urlManager.put(InterfaceManager.FORGETPSW, "http://39.104.119.0:80/SmartHome-java-user/user/resetPassword");
+            urlManager.put(InterfaceManager.REGISTER, NEWBASEURL+"DYPServer/user/register");
+            urlManager.put(InterfaceManager.GETVAILCODE, NEWBASEURL+"DYPServer/user/sendIdentifyingCode");
+            urlManager.put(InterfaceManager.FORGETPSW, NEWBASEURL+"DYPServer/user/updateUserPassword");
             urlManager.put(InterfaceManager.HWREGISTER, HWREGISTER_URL);
             urlManager.put(InterfaceManager.HWGETREMOTE, BASEURL + "get_remote");
             urlManager.put(InterfaceManager.ADDREMOTE, BASEURL + "add_remote");

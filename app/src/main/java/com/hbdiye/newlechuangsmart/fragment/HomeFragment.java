@@ -111,6 +111,7 @@ public class HomeFragment extends Fragment {
         mConnection = SingleWebSocketConnection.getInstance();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("GOPP");
+        intentFilter.addAction("CSPP");
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
         addData();
@@ -597,6 +598,20 @@ public class HomeFragment extends Fragment {
                     e.printStackTrace();
                 }
 //                parseData(message);
+            }else if (action.equals("CSPP")){
+                try {
+                    JSONObject jsonObject=new JSONObject(message);
+                    String ecode = jsonObject.getString("ecode");
+                    if (ecode.equals("0")){
+                        String msg = jsonObject.getString("msg");
+                        SmartToast.show(msg);
+                    }else {
+                        String s = EcodeValue.resultEcode(ecode);
+                        SmartToast.show(s);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -807,5 +822,9 @@ public class HomeFragment extends Fragment {
 
             return view;
         }
+    }
+    public void voiceHelper(String msg){
+//        "{\"pn\":\"CSPP\",\"pt\":\"T\",\"pid\":\"%@\",\"token\":\"%@\",\"oper\":\"905\",\"msg\":\"%@\"}"
+        mConnection.sendTextMessage("{\"pn\":\"CSPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"905\",\"msg\":\""+msg+"\"}");
     }
 }

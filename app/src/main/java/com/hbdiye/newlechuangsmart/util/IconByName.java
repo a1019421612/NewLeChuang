@@ -168,4 +168,25 @@ public class IconByName {
         }
         return R.drawable.zhuwo;
     }
+    public static int photoByName(String icon){
+        if (icon.equals("ic_head_01")){
+            return R.drawable.ic_head_01;
+        }else if (icon.equals("ic_head_02")){
+            return R.drawable.ic_head_02;
+        }else if (icon.equals("ic_head_03")){
+            return R.drawable.ic_head_03;
+        }else if (icon.equals("ic_head_04")){
+            return R.drawable.ic_head_04;
+        }else if (icon.equals("ic_head_05")){
+            return R.drawable.ic_head_05;
+        }else if (icon.equals("ic_head_06")){
+            return R.drawable.ic_head_06;
+        }else if (icon.equals("ic_head_07")){
+            return R.drawable.ic_head_07;
+        }else if (icon.equals("ic_head_08")){
+            return R.drawable.ic_head_08;
+        }else {
+            return R.drawable.ic_head_01;
+        }
+    }
 }

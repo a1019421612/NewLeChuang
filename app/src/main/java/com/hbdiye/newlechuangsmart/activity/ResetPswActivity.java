@@ -14,7 +14,11 @@ import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.MyApp;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.SingleWebSocketConnection;
+import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +26,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.tavendo.autobahn.WebSocketConnection;
+import okhttp3.Call;
 
 public class ResetPswActivity extends BaseActivity {
     @BindView(R.id.et_old_psw)
@@ -36,6 +41,8 @@ public class ResetPswActivity extends BaseActivity {
     private HomeReceiver homeReceiver;
     private String mobilephone;
     private String password;
+    private String token;
+
     @Override
     protected void initData() {
         mobilephone = (String) SPUtils.get(this, "mobilephone", "");
@@ -54,7 +61,7 @@ public class ResetPswActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        token = (String) SPUtils.get(this,"token","");
     }
 
     @Override
@@ -81,11 +88,45 @@ public class ResetPswActivity extends BaseActivity {
             return;
         }
         if (password.equals(oldpsw)){
-            mConnection.sendTextMessage("{\"pn\":\"UUITP\",\"fieldType\":\"pwd\",\"value\":\""+enterpsw+"\"}");
+           resetPsw(newpsw);
         }else {
             SmartToast.show("旧密码错误，请重新输入");
         }
     }
+
+    private void resetPsw(String psw) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.RESETPSW))
+                .addParams("token",token)
+                .addParams("password",psw)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                SmartToast.show("修改成功");
+                                MyApp.finishAllActivity();
+                                startActivity(new Intent(ResetPswActivity.this,LoginActivity.class));
+                            }else {
+                                String s = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override

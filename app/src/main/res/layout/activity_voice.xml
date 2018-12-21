@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/play_talk" />
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/yuyin" />
     <ImageView
         android:id="@+id/iv_voice"
         android:layout_width="150dp"

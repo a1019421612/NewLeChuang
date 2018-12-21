@@ -115,11 +115,11 @@ public class RegisterActivity extends BaseActivity {
     private void registerUser(String mPhone, String mPassword, String mCode) {
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.REGISTER))
-                .addParams("mobilephone", mPhone)
+                .addParams("phone", mPhone)
                 .addParams("password", mPassword)
-                .addParams("confirmPassword", mPassword)
                 .addParams("code", mCode)
                 .addParams("name", mPhone)
+                .addParams("icon","ic_head_02")
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -151,8 +151,7 @@ public class RegisterActivity extends BaseActivity {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.GETVAILCODE))
-                .addParams("mobilephone", mPhone)
-                .addParams("type", "1")
+                .addParams("phone", mPhone)
                 .build()
                 .execute(new StringCallback() {
                     @Override

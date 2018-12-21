@@ -112,7 +112,7 @@ public class ForgetPasswordActivityActivity extends BaseActivity {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.FORGETPSW))
-                .addParams("mobilephone",phone)
+                .addParams("phone",phone)
                 .addParams("code",code)
                 .addParams("password",psw)
                 .build()
@@ -164,8 +164,7 @@ public class ForgetPasswordActivityActivity extends BaseActivity {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.GETVAILCODE))
-                .addParams("mobilephone",mPhone)
-                .addParams("type","2")
+                .addParams("phone",mPhone)
                 .build()
                 .execute(new StringCallback() {
                     @Override
