@@ -35,6 +35,7 @@ import com.hbdiye.newlechuangsmart.fragment.HomeFragment;
 import com.hbdiye.newlechuangsmart.fragment.LinkageFragment;
 import com.hbdiye.newlechuangsmart.fragment.MineFragment;
 import com.hbdiye.newlechuangsmart.util.JsonParser;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -45,6 +46,8 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.sunflower.FlowerCollector;
+import com.lib.smartlib.HopeLoginBusiness;
+import com.lib.smartlib.callback.ILoginCallback;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initStatusBar();
         initImageVoice();
+//        loginHope();
         // 初始化识别无UI识别对象
         // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
         mIat = SpeechRecognizer.createRecognizer(MainActivity.this, mInitListener);
@@ -117,6 +121,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         changeTextViewColor();
         changeSelectedTabState(0);
         showFragment(0);
+    }
+
+    private void loginHope() {
+        HopeLoginBusiness.getInstance().openLogin("123456", "13712344321", new ILoginCallback() {
+            @Override
+            public void onSuccess(String success) {
+                Log.d("HopeSDK","success:" + success);
+                try {
+                    JSONObject jsonObject=new JSONObject(success);
+                    int code = jsonObject.getInt("code");
+                    if (code==10000){
+                        JSONObject object = jsonObject.getJSONObject("object");
+                        String tokenId = object.getString("tokenId");
+                        SPUtils.put(MainActivity.this,"HopeSDK",tokenId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d("HopeSDK", "error:" + error);
+            }
+        });
     }
 
     private void initImageVoice() {

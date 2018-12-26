@@ -144,6 +144,16 @@
         <activity android:name=".activity.MonitorListActivity" />
         <activity android:name=".activity.DeviceDetailActivity" />
         <activity android:name=".activity.VoiceActivity"></activity>
+        <activity android:name=".music.MainActivity"/>
+        <activity android:name=".music.LoginActivity"/>
+        <activity android:name=".music.DeviceActivity"/>
+        <activity android:name=".music.UserActivity"/>
+        <activity android:name=".music.MusicActivity"/>
+        <activity android:name=".music.ControlActivity"/>
+        <activity android:name=".music.PlaylistActivity"/>
+        <activity android:name=".music.SceneActivity"/>
+        <activity android:name=".music.PartitionActivity"/>
+        <service android:name="com.lib.smartlib.tcp.MinaTcpService"/>
     </application>
 
 </manifest>

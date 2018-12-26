@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hbdiye.newlechuangsmart.MyApp;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,9 @@ public class SettingActivity extends BaseActivity {
             case R.id.ll_setting_version:
                 break;
             case R.id.tv_exit:
+                SPUtils.clear(this);
+                MyApp.finishAllActivity();
+                startActivity(new Intent(this,LoginActivity.class));
                 break;
         }
     }

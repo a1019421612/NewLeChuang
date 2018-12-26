@@ -25,6 +25,7 @@ import com.hbdiye.newlechuangsmart.activity.RoomListActivity;
 import com.hbdiye.newlechuangsmart.activity.SettingActivity;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.music.MainActivity;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
@@ -66,6 +67,8 @@ public class MineFragment extends Fragment {
     LinearLayout llMineDevices;
     @BindView(R.id.rl_mine_info)
     RelativeLayout rlMineInfo;
+    @BindView(R.id.ll_mine_music)
+    LinearLayout rlMineMusic;
     @BindView(R.id.ll_mine_rooms)
     LinearLayout llMineRooms;
     private Unbinder bind;
@@ -118,12 +121,12 @@ public class MineFragment extends Fragment {
     }
 
     @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us,
-            R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info, R.id.ll_mine_rooms})
+            R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info, R.id.ll_mine_rooms, R.id.ll_mine_music})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
                 //二维码图片
-                startActivity(new Intent(getActivity(), MyErCodeActivity.class).putExtra("familyId",userFamilyInfoBean.user.familyId));
+                startActivity(new Intent(getActivity(), MyErCodeActivity.class).putExtra("familyId", userFamilyInfoBean.user.familyId));
                 break;
             case R.id.profile_image:
                 //头像
@@ -137,7 +140,7 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.ll_mine_sys:
                 //flag为true时跳转扫描界面为加入家庭功能为false时为加入网关
-                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false).putExtra("flag",true));
+                startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("camera", false).putExtra("flag", true));
                 break;
             case R.id.ll_mine_family_member:
                 //家庭成员
@@ -157,6 +160,10 @@ public class MineFragment extends Fragment {
             case R.id.ll_mine_setting:
                 //设置
                 startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.ll_mine_music:
+                //背景音乐
+                startActivity(new Intent(getActivity(), com.hbdiye.newlechuangsmart.music.MainActivity.class));
                 break;
             default:
                 break;
@@ -201,8 +208,8 @@ public class MineFragment extends Fragment {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.UPDATEICON))
-                .addParams("token",token)
-                .addParams("icon",icon)
+                .addParams("token", token)
+                .addParams("icon", icon)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -213,14 +220,14 @@ public class MineFragment extends Fragment {
                     @Override
                     public void onResponse(String response, int id) {
                         try {
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
-                            if (errcode.equals("0")){
-                                if ( getPhotoPopwindow!=null){
+                            if (errcode.equals("0")) {
+                                if (getPhotoPopwindow != null) {
                                     getPhotoPopwindow.dismiss();
                                 }
-                                Glide.with(getActivity()).load( IconByName.photoByName(icon)).into(profileImage);
-                            }else {
+                                Glide.with(getActivity()).load(IconByName.photoByName(icon)).into(profileImage);
+                            } else {
                                 String s = EcodeValue.resultEcode(errcode);
                                 SmartToast.show(s);
                             }

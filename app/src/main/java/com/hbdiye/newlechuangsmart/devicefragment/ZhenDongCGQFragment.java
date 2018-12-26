@@ -98,6 +98,9 @@ public class ZhenDongCGQFragment extends BaseFragment {
                                 String name = zdBean.data.name;
                                 tv_zd_name.setText(name);
                                 List<MenCiBean.Data.DevAttList> devAttList = zdBean.data.devAttList;
+                                if (devAttList.size()==0){
+                                    return;
+                                }
                                 int value = devAttList.get(0).value;
                                 if ((value&1)==0){
                                     tv_zd_zc.setVisibility(View.VISIBLE);
