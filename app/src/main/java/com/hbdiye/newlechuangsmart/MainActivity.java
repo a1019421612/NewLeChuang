@@ -552,5 +552,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mIat.destroy();
         }
     }
+    //记录用户首次点击返回键的时间
+    private long firstTime = 0;
 
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000) {
+            SmartToast.show( "再按一次退出程序");
+            firstTime = secondTime;
+        } else {
+            System.exit(0);
+        }
+    }
 }

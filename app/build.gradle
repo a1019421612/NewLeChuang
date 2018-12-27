@@ -7,8 +7,16 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 4
-        versionName "4.0"
+        versionName "4.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        debug {
+            storeFile file('newlechuang.jks')
+            storePassword "123456"
+            keyAlias "newlechuang"
+            keyPassword "123456"
+        }
     }
     buildTypes {
         release {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_down_four_corners"
+    android:orientation="vertical" 
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="软件更新"
+        android:textColor="@color/app_theme_color"
+        android:textSize="20sp" >
+    </TextView>
+
+    <ProgressBar
+        android:id="@+id/update_progress"
+        style="@style/tallerBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:progressDrawable="@drawable/progress" />
+
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/app_list_four_corners"
+        android:clickable="true"
+        android:gravity="center"
+        android:text=" 取 消 "
+        android:textColor="@color/app_theme_color"
+        android:textSize="16sp" />
+
+</LinearLayout>

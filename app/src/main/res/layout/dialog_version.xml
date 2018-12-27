@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_login"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/dialog_white">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="软件更新"
+            android:textColor="@color/app_theme_color"
+            android:textSize="20sp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="1dp"
+            android:lineSpacingMultiplier="1.5"
+            android:gravity="center"
+            android:text="下载更新"
+            android:textColor="@color/black"
+            android:textSize="15sp" >
+        </TextView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#9e9e9e"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="更新"
+                android:visibility="visible"
+                android:textColor="@color/app_theme_color"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#9e9e9e"/>
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="稍后"
+                android:textColor="@color/app_theme_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_below="@+id/ll" >-->
+        <!--</TextView>-->
+    </LinearLayout>
+</LinearLayout>

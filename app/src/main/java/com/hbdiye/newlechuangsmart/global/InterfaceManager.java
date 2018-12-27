@@ -77,6 +77,7 @@ public class InterfaceManager {
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
     public static final String UPDATENICKNAME="UPDATENICKNAME";//修改昵称
     public static final String JOINFAMILY="JOINFAMILY";//加入家庭
+    public static final String UPDATEVERSION="UPDATEVERSION";//版本更新
 //    ===============================================================
 
 
@@ -130,6 +131,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.JOINFAMILY,NEWBASEURL+"DYPServer/user/joinFamily");
             urlManager.put(InterfaceManager.RESETPSW,NEWBASEURL+"DYPServer/user/updateUserPasswordByToken");
             urlManager.put(InterfaceManager.UPDATEICON,NEWBASEURL+"DYPServer/user/updateUserIcon");
+            urlManager.put(InterfaceManager.UPDATEVERSION,NEWBASEURL+"DYPServer/common/findVersionByClassify?classify=1");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");

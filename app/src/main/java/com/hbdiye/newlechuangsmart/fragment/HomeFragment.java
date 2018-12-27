@@ -45,6 +45,7 @@ import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.PicUtils;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.StringUtil;
+import com.hbdiye.newlechuangsmart.util.VersionUpdataUtils;
 import com.hbdiye.newlechuangsmart.view.CustomViewPager;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
 import com.hbdiye.newlechuangsmart.zxing.activity.CaptureActivity;
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
         addData();
         initData();
         personInfo();
-
+        versionUpdata();
         mMyadapter = new Myadapter();
         gvFragmentHome.setAdapter(mMyadapter);
 
@@ -132,6 +133,10 @@ public class HomeFragment extends Fragment {
         handleClicker();
 
         return view;
+    }
+
+    private void versionUpdata() {
+        VersionUpdataUtils versionUpdataUtils = new VersionUpdataUtils(getActivity(), getActivity(), 2);
     }
 
     private void handleClicker() {

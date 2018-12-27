@@ -64,6 +64,12 @@ public class LoginActivity extends BaseActivity {
     protected void initView() {
         titleBarLL.setVisibility(View.GONE);
         ivBaseBack.setVisibility(View.INVISIBLE);
+        String uaername= (String) SPUtils.get(LoginActivity.this, "mobilephone", "");
+        String psw= (String) SPUtils.get(LoginActivity.this, "password","");
+        if (!TextUtils.isEmpty(uaername)&&!TextUtils.isEmpty(psw)){
+            phoneEditText.setText(uaername);
+            passwordEditText.setText(psw);
+        }
     }
 
     @Override

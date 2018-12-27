@@ -29,77 +29,87 @@ public class DeviceListAdapter extends BaseSectionQuickAdapter<SecneSectionBean,
 //        ll_device_kg  ll_device_warning  ll_device_jcq（温湿度） ll_device_cgq (水浸) ll_device_cl(窗帘)
         if (productId.contains("PRO002")) {
             //开关类
-            helper.setGone(R.id.ll_device_kg, true);
-            helper.setGone(R.id.ll_device_warning, false);
-            helper.setGone(R.id.ll_device_jcq, false);
-            helper.setGone(R.id.ll_device_cgq, false);
-            helper.setGone(R.id.ll_device_cl, false);
-            List<DeviceList.DevAttList> devAttList = content.devAttList;
-            if (devAttList.size() == 1) {
-                //一路开关
-                helper.setGone(R.id.iv_device_left, true);
-                helper.setGone(R.id.iv_device_middle, false);
-                helper.setGone(R.id.iv_device_right, false);
-                int value = devAttList.get(0).value;
-                if (value == 0) {
-                    Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
-                } else {
-                    Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
-                }
-            } else if (devAttList.size() == 2) {
-                //二路开关
-                helper.setGone(R.id.iv_device_left, true);
-                helper.setGone(R.id.iv_device_middle, true);
-                helper.setGone(R.id.iv_device_right, false);
-                for (int i = 0; i < devAttList.size(); i++) {
-                    int port = devAttList.get(i).port;
-                    if (port == 1) {
-                        int value = devAttList.get(i).value;
-                        if (value == 0) {
-                            Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
-                        } else {
-                            Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
-                        }
-                    } else if (port == 2) {
-                        int value = devAttList.get(i).value;
-                        if (value == 0) {
-                            Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_middle));
-                        } else {
-                            Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_middle));
+
+            if (productId.contains("PRO002030")){
+                helper.setGone(R.id.ll_device_kg, false);
+                helper.setGone(R.id.ll_device_warning, false);
+                helper.setGone(R.id.ll_device_jcq, false);
+                helper.setGone(R.id.ll_device_cgq, false);
+                helper.setGone(R.id.ll_device_cl, false);
+            }else {
+                helper.setGone(R.id.ll_device_kg, true);
+                helper.setGone(R.id.ll_device_warning, false);
+                helper.setGone(R.id.ll_device_jcq, false);
+                helper.setGone(R.id.ll_device_cgq, false);
+                helper.setGone(R.id.ll_device_cl, false);
+                List<DeviceList.DevAttList> devAttList = content.devAttList;
+                if (devAttList.size() == 1) {
+                    //一路开关
+                    helper.setGone(R.id.iv_device_left, true);
+                    helper.setGone(R.id.iv_device_middle, false);
+                    helper.setGone(R.id.iv_device_right, false);
+                    int value = devAttList.get(0).value;
+                    if (value == 0) {
+                        Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
+                    } else {
+                        Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
+                    }
+                } else if (devAttList.size() == 2) {
+                    //二路开关
+                    helper.setGone(R.id.iv_device_left, true);
+                    helper.setGone(R.id.iv_device_middle, true);
+                    helper.setGone(R.id.iv_device_right, false);
+                    for (int i = 0; i < devAttList.size(); i++) {
+                        int port = devAttList.get(i).port;
+                        if (port == 1) {
+                            int value = devAttList.get(i).value;
+                            if (value == 0) {
+                                Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
+                            } else {
+                                Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
+                            }
+                        } else if (port == 2) {
+                            int value = devAttList.get(i).value;
+                            if (value == 0) {
+                                Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_middle));
+                            } else {
+                                Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_middle));
+                            }
                         }
                     }
-                }
-            } else if (devAttList.size() == 3) {
-                //三路开关
-                helper.setGone(R.id.iv_device_left, true);
-                helper.setGone(R.id.iv_device_middle, true);
-                helper.setGone(R.id.iv_device_right, true);
-                for (int i = 0; i < devAttList.size(); i++) {
-                    int port = devAttList.get(i).port;
-                    if (port == 1) {
-                        int value = devAttList.get(i).value;
-                        if (value == 0) {
-                            Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
-                        } else {
-                            Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
-                        }
-                    } else if (port == 2) {
-                        int value = devAttList.get(i).value;
-                        if (value == 0) {
-                            Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_middle));
-                        } else {
-                            Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_middle));
-                        }
-                    } else if (port == 3) {
-                        int value = devAttList.get(i).value;
-                        if (value == 0) {
-                            Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_right));
-                        } else {
-                            Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_right));
+                } else if (devAttList.size() == 3) {
+                    //三路开关
+                    helper.setGone(R.id.iv_device_left, true);
+                    helper.setGone(R.id.iv_device_middle, true);
+                    helper.setGone(R.id.iv_device_right, true);
+                    for (int i = 0; i < devAttList.size(); i++) {
+                        int port = devAttList.get(i).port;
+                        if (port == 1) {
+                            int value = devAttList.get(i).value;
+                            if (value == 0) {
+                                Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_left));
+                            } else {
+                                Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_left));
+                            }
+                        } else if (port == 2) {
+                            int value = devAttList.get(i).value;
+                            if (value == 0) {
+                                Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_middle));
+                            } else {
+                                Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_middle));
+                            }
+                        } else if (port == 3) {
+                            int value = devAttList.get(i).value;
+                            if (value == 0) {
+                                Glide.with(mContext).load(R.drawable.guan).into((ImageView) helper.getView(R.id.iv_device_right));
+                            } else {
+                                Glide.with(mContext).load(R.drawable.kai).into((ImageView) helper.getView(R.id.iv_device_right));
+                            }
                         }
                     }
                 }
             }
+
 
         } else if (productId.contains("PRO003")) {
 //            安防设备 水浸传感器等
@@ -188,6 +198,13 @@ public class DeviceListAdapter extends BaseSectionQuickAdapter<SecneSectionBean,
             helper.setGone(R.id.ll_device_jcq, false);
         } else if (productId.contains("PRO009")) {
             //其他 场景
+            helper.setGone(R.id.ll_device_cl, false);
+            helper.setGone(R.id.ll_device_kg, false);
+            helper.setGone(R.id.ll_device_warning, false);
+            helper.setGone(R.id.ll_device_cgq, false);
+            helper.setGone(R.id.ll_device_jcq, false);
+        }else if (productId.contains("PRO001")){
+            //红外发射器
             helper.setGone(R.id.ll_device_cl, false);
             helper.setGone(R.id.ll_device_kg, false);
             helper.setGone(R.id.ll_device_warning, false);

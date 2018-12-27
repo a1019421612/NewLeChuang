@@ -19,6 +19,7 @@
     <color name="color_red">#3F51B5</color>
     <color name="color_green">#0f0</color>
     <color name="comment_bg">#F4F4F4</color>
+    <color name="app_theme_color">#ff5647</color>
     <!-- QRCode scanner color end -->
     <item name="subscribe_item_text_color_normal" type="color">@color/default_text</item>
 
