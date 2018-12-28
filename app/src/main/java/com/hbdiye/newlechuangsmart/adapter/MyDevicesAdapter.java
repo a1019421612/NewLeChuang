@@ -22,12 +22,15 @@ public class MyDevicesAdapter extends BaseQuickAdapter<MyDevicesBean.DeviceList,
     protected void convert(BaseViewHolder helper, MyDevicesBean.DeviceList item) {
         if (isShow){
             helper.setGone(R.id.ll_mydevice_item_del,false);
+            helper.setGone(R.id.tv_device_ed_name,false);
         }else {
             helper.setGone(R.id.ll_mydevice_item_del,true);
+            helper.setGone(R.id.tv_device_ed_name,true);
         }
         helper.setText(R.id.tv_scene_device_name, item.name);
         Glide.with(mContext).load(ClassyIconByProId.deviceIcon(item.productId)).into((ImageView) helper.getView(R.id.iv_device_icon));
         helper.addOnClickListener(R.id.ll_mydevice_item_del);
+        helper.addOnClickListener(R.id.tv_device_ed_name);
     }
     public void deviceStatusChange(boolean status){
         isShow=status;

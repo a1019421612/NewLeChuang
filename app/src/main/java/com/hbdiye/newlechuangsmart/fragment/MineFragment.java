@@ -163,7 +163,7 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.ll_mine_music:
                 //背景音乐
-                startActivity(new Intent(getActivity(), com.hbdiye.newlechuangsmart.music.MainActivity.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
             default:
                 break;

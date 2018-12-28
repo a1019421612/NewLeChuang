@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,6 +22,7 @@ import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.view.DelDialog;
+import com.hbdiye.newlechuangsmart.view.SceneDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -36,6 +38,7 @@ import de.tavendo.autobahn.WebSocketConnection;
 import okhttp3.Call;
 
 import static com.hbdiye.newlechuangsmart.global.InterfaceManager.MYDEVICES;
+import static com.hbdiye.newlechuangsmart.global.InterfaceManager.UPDATEDEVICENAME;
 
 public class MyDeviceActivity extends BaseActivity {
     @BindView(R.id.rv_my_devices)
@@ -50,6 +53,8 @@ public class MyDeviceActivity extends BaseActivity {
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
     private DelDialog delDialog;
+    private SceneDialog sceneDialog;
+    private String editName_device_id;
 
     @Override
     protected void initData() {
@@ -97,20 +102,76 @@ public class MyDeviceActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
                 switch (view.getId()) {
                     case R.id.ll_mydevice_item_del:
-                        delDialog=new DelDialog(MyDeviceActivity.this, R.style.MyDialogStyle, new View.OnClickListener() {
+                        delDialog = new DelDialog(MyDeviceActivity.this, R.style.MyDialogStyle, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 String id = mList.get(position).id;
 //                        "{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\"%@\",\"token\":\"%@\",\"oper\":\"102\",\"sdid\":\"%@\"}"
-                                mConnection.sendTextMessage("{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\""+token+"\",\"token\":\""+token+"\",\"oper\":\"102\",\"sdid\":\""+id+"\"}");
+                                mConnection.sendTextMessage("{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"102\",\"sdid\":\"" + id + "\"}");
                                 delDialog.dismiss();
                             }
                         }, "是否删除设备？");
                         delDialog.show();
                         break;
+                    case R.id.tv_device_ed_name:
+                        editName_device_id = mList.get(position).id;
+                        sceneDialog = new SceneDialog(MyDeviceActivity.this, R.style.MyDialogStyle, edit_name_clicker, "设备名称");
+                        sceneDialog.show();
+                        break;
                 }
             }
         });
+    }
+    private View.OnClickListener edit_name_clicker = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.app_cancle_tv:
+                    sceneDialog.dismiss();
+                    break;
+                case R.id.app_sure_tv:
+                    String linkageName = sceneDialog.getSceneName();
+                    if (!TextUtils.isEmpty(linkageName)) {
+                        updateDeviceName(linkageName);
+                    }
+                    break;
+            }
+        }
+    };
+
+    private void updateDeviceName(String linkageName) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(UPDATEDEVICENAME))
+                .addParams("token",token)
+                .addParams("deviceId",editName_device_id)
+                .addParams("name",linkageName)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            String s = EcodeValue.resultEcode(errcode);
+                            SmartToast.show(s);
+                            if (errcode.equals("0")){
+                                if (sceneDialog!=null){
+                                    sceneDialog.dismiss();
+                                }
+                                deviceList();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
     @Override
@@ -158,7 +219,7 @@ public class MyDeviceActivity extends BaseActivity {
                     if (!ecode.equals("0")) {
                         String s = EcodeValue.resultEcode(ecode);
                         SmartToast.show(s);
-                    }else {
+                    } else {
                         deviceList();
                     }
                 } catch (JSONException e) {

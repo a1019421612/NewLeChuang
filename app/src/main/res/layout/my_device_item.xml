@@ -27,11 +27,21 @@
         />
     <TextView
         android:id="@+id/tv_scene_device_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="---"
         android:layout_marginLeft="@dimen/dp_10"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|left"
         />
-
+    <TextView
+        android:id="@+id/tv_device_ed_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="编辑"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/white"
+        android:background="#FF9800"
+        />
 </LinearLayout>
