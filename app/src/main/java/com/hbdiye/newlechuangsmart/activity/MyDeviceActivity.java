@@ -114,14 +114,17 @@ public class MyDeviceActivity extends BaseActivity {
                         delDialog.show();
                         break;
                     case R.id.tv_device_ed_name:
-                        editName_device_id = mList.get(position).id;
-                        sceneDialog = new SceneDialog(MyDeviceActivity.this, R.style.MyDialogStyle, edit_name_clicker, "设备名称");
-                        sceneDialog.show();
+                        startActivity(new Intent(MyDeviceActivity.this, EditDeviceNameActivity.class)
+                                .putExtra("data", mList.get(position)));
+//                        editName_device_id = mList.get(position).id;
+//                        sceneDialog = new SceneDialog(MyDeviceActivity.this, R.style.MyDialogStyle, edit_name_clicker, "设备名称");
+//                        sceneDialog.show();
                         break;
                 }
             }
         });
     }
+
     private View.OnClickListener edit_name_clicker = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -143,9 +146,9 @@ public class MyDeviceActivity extends BaseActivity {
         OkHttpUtils
                 .post()
                 .url(InterfaceManager.getInstance().getURL(UPDATEDEVICENAME))
-                .addParams("token",token)
-                .addParams("deviceId",editName_device_id)
-                .addParams("name",linkageName)
+                .addParams("token", token)
+                .addParams("deviceId", editName_device_id)
+                .addParams("name", linkageName)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -156,12 +159,12 @@ public class MyDeviceActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response, int id) {
                         try {
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
                             String s = EcodeValue.resultEcode(errcode);
                             SmartToast.show(s);
-                            if (errcode.equals("0")){
-                                if (sceneDialog!=null){
+                            if (errcode.equals("0")) {
+                                if (sceneDialog != null) {
                                     sceneDialog.dismiss();
                                 }
                                 deviceList();
@@ -204,6 +207,12 @@ public class MyDeviceActivity extends BaseActivity {
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        deviceList();
     }
 
     class HomeReceiver extends BroadcastReceiver {

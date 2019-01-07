@@ -80,8 +80,8 @@ public class VersionUpdataUtils {
      */
     private String filename = "lc.apk";
     private String noticeMessage = "";
-    private String file_path = Environment.getExternalStorageDirectory()
-            + "/download/";
+    private String file_path = Environment.getExternalStorageDirectory() + "/download/";
+    //    private String file_path ;
     private Context context;
     /* 是否取消更新 */
     private boolean cancelUpdate = false;
@@ -100,6 +100,7 @@ public class VersionUpdataUtils {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private Activity activity = null;
+
     public VersionUpdataUtils(Context context, Activity activity, int ftype) {
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -110,6 +111,7 @@ public class VersionUpdataUtils {
             SmartToast.show("请打开网络连接");
             return;
         }
+//        file_path= context.getCacheDir()+ "/download/";
         requestCheckUpdateJson();
     }
 //    /**
@@ -143,6 +145,7 @@ public class VersionUpdataUtils {
 //        }
 //        myHandler.sendMessage(msg);
 //    }
+
     /**
      * 弹出提示版本更新
      *
@@ -164,7 +167,7 @@ public class VersionUpdataUtils {
 //        if (Compulsory == 1) {
 //            tv_cancle.setText("关闭");
 //        } else {
-            tv_cancle.setText("取消");
+        tv_cancle.setText("取消");
 //        }
         tv_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +177,7 @@ public class VersionUpdataUtils {
                 int permission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);//sd卡读写权限
                 if (permission != PackageManager.PERMISSION_GRANTED) {//没有授权
                     ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);//进行授权
-                }else{
+                } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         boolean haveInstallPermission;
                         haveInstallPermission = context.getPackageManager().canRequestPackageInstalls();
@@ -202,7 +205,7 @@ public class VersionUpdataUtils {
 //                    noticeDialog.dismiss();
 //                    exit();
 //                } else {
-                    noticeDialog.dismiss();
+                noticeDialog.dismiss();
 //                }
             }
         });
@@ -301,13 +304,19 @@ public class VersionUpdataUtils {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 haveInstallPermission = context.getPackageManager().canRequestPackageInstalls();
                                 if (haveInstallPermission) {
-                                    installApk();//安装apk
+//                                    myHandler.postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+                                            installApk();//安装apk
+//                                        }
+//                                    },2000);
+
                                 } else {
                                     openQuanxian();
 //                                    SafePreference.save(context,"isCloseUp",false);
                                 }
                             } else {
-                            installApk();//安装apk
+                                installApk();//安装apk
                             }
                         }
                     }
@@ -345,7 +354,7 @@ public class VersionUpdataUtils {
     private void startInstallPermissionSettingActivity() {
 //注意这个是8.0新API
         Uri packageURI = Uri.parse("package:" + context.getPackageName());
-        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
         activity.startActivityForResult(intent, 10086);
     }
 
@@ -359,7 +368,9 @@ public class VersionUpdataUtils {
             return;
         }
         // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
+        final Intent i = new Intent(Intent.ACTION_VIEW);
+
+//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (Build.VERSION.SDK_INT >= 24) { //判读版本是否在7.0以上
             //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
@@ -425,9 +436,9 @@ public class VersionUpdataUtils {
                     @Override
                     public void onResponse(String response, int id) {
                         VersionBean versionBean = new Gson().fromJson(response, VersionBean.class);
-                        if (versionBean.errcode.equals("0")){
-                            noticeMessage= versionBean.data.content;
-                            apkURL=versionBean.data.download;
+                        if (versionBean.errcode.equals("0")) {
+                            noticeMessage = versionBean.data.content;
+                            apkURL = versionBean.data.download;
                             String version = versionBean.data.version;
                             String nowVersionName = getNowVersion();
                             String[] version_local = nowVersionName.trim().split("\\.");
@@ -437,7 +448,7 @@ public class VersionUpdataUtils {
                                 String local = version_local[i];
                                 int i1 = Integer.parseInt(net);
                                 int i2 = Integer.parseInt(local);
-                                if (i1>i2){
+                                if (i1 > i2) {
                                     Message msg = new Message();
                                     msg.what = 8001;
                                     myHandler.sendMessage(msg);

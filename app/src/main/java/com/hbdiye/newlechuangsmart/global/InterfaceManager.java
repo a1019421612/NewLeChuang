@@ -79,6 +79,7 @@ public class InterfaceManager {
     public static final String JOINFAMILY="JOINFAMILY";//加入家庭
     public static final String UPDATEVERSION="UPDATEVERSION";//版本更新
     public static final String UPDATEDEVICENAME="UPDATEDEVICENAME";//修改设备名称
+    public static final String UPDATEDEVICEATTNAME="UPDATEDEVICEATTNAME";//修改属性名称
 //    ===============================================================
 
 
@@ -134,6 +135,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.UPDATEICON,NEWBASEURL+"DYPServer/user/updateUserIcon");
             urlManager.put(InterfaceManager.UPDATEVERSION,NEWBASEURL+"DYPServer/common/findVersionByClassify?classify=1");
             urlManager.put(InterfaceManager.UPDATEDEVICENAME,NEWBASEURL+"DYPServer/device/updateDeviceName");
+            urlManager.put(InterfaceManager.UPDATEDEVICEATTNAME,NEWBASEURL+"DYPServer/device/updateDeviceAttributeName");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");

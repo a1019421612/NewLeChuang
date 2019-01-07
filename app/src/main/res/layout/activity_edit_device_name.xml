@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.EditDeviceNameActivity">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="更改设备名称"
+    android:padding="@dimen/dp_10"
+    />
+    <TextView
+        android:id="@+id/tv_et_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="---"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_10"
+        android:background="@color/white"
+        />
+    <LinearLayout
+        android:id="@+id/ll_et_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="更改属性名称"
+            android:padding="@dimen/dp_10"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_et_attr_name"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</LinearLayout>
