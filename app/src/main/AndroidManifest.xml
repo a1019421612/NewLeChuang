@@ -172,6 +172,12 @@
         </provider>
 
         <activity android:name=".activity.EditDeviceNameActivity"></activity>
+        <activity android:name=".hwactivity.ConverterListActivity" android:launchMode="singleTask"/>
+        <activity android:name=".hwactivity.SelectDeviceActivity"/>
+        <activity android:name=".hwactivity.ChooseBrandActivity"/>
+        <activity android:name=".hwactivity.AddRemoteControlActivity"/>
+        <activity android:name=".hwactivity.EditRemoteControlActivity"/>
+        <activity android:name=".hwactivity.SelectSetTopBoxActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:paddingLeft="16sp"
+    android:paddingRight="16sp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="15dp"
+        android:text="遥控器名称:"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_empty_ccc"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:textSize="16sp"
+        tools:text="电视遥控器" />
+
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/shape_qian_blue_circle_corner"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</LinearLayout>

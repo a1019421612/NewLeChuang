@@ -65,4 +65,13 @@
         <attr name="cltextSize" format="dimension"/>
         <attr name="cltextColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="waveSideBar">
+        <attr name="textColors" format="color|reference"/>
+        <attr name="backgroundColor" format="color|reference"/>
+        <attr name="chooseTextColor" format="color|reference"/>
+        <attr name="textSizes" format="dimension"/>
+        <attr name="hintTextSize" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="circleRadius" format="dimension"/>
+    </declare-styleable>
 </resources>

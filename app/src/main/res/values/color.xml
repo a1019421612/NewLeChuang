@@ -2,6 +2,7 @@
 <resources>
 
     <!-- common -->
+    <color name="qian_blue">#398ADC</color>
     <color name="mode_bg">#88000000</color>
     <color name="black_bg">#000000</color>
     <color name="shadow">#80000000</color>
@@ -134,5 +135,7 @@
     <color name="opensdk_cameralist_bg">#f0f0f1</color>
     <color name="on_off_text_selector">#3ea6ef</color>
 <color name="grouplayout_item_bg_sel">#f3f4f5</color>
-    
+    <color name="text_color">#444444</color>
+    <color name="qian_gray">#8D8D8D</color>
+
 </resources>

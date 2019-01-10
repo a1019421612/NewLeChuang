@@ -26,6 +26,7 @@ import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.DeviceListSceneBean;
 import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.hwactivity.ConverterListActivity;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -98,11 +99,15 @@ public class DeviceFragment extends Fragment {
                     String productId = deviceList.productId;
                     String roomId = deviceList.roomId;
                     String deviceId=deviceList.id;
-                    startActivity(new Intent(getActivity(), DeviceDetailActivity.class)
-                            .putExtra("productId", productId)
-                            .putExtra("all_data", all_data)
-                            .putExtra("roomId", roomId)
-                            .putExtra("deviceId",deviceId));
+                    if (!productId.contains("PRO006")){
+                        startActivity(new Intent(getActivity(), DeviceDetailActivity.class)
+                                .putExtra("productId", productId)
+                                .putExtra("all_data", all_data)
+                                .putExtra("roomId", roomId)
+                                .putExtra("deviceId",deviceId));
+                    }else {
+                        startActivity(new Intent(getActivity(), ConverterListActivity.class).putExtra("hwbDeviceId",deviceId).putExtra("name",deviceList.name));
+                    }
                 }
             }
         });

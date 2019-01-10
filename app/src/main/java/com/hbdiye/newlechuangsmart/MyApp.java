@@ -12,6 +12,7 @@ import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.iflytek.cloud.SpeechUtility;
 import com.lib.smartlib.HopeSDK;
 import com.videogo.openapi.EZOpenSDK;
+import com.xzcysoft.wnzhikonglibrary.WNZKConfigure;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -41,6 +42,7 @@ public class MyApp extends Application{
         SpeechUtility.createUtility(this, "appid=5c19fe0b");
         HopeSDK.init(this,"888920151595646976","750837261197414400","B8BD721418194C09B2F193C7689453F1");
         HopeSDK.setDebug(false);
+        WNZKConfigure.init("1",getApplicationContext());
     }
     /**
      * @param activity 作用说明 ：添加一个activity到管理里
