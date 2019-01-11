@@ -74,4 +74,9 @@
         <attr name="radius" format="dimension"/>
         <attr name="circleRadius" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="ItemSettingView">
+        <attr name="left_drawable" format="reference|integer" />
+        <attr name="title_text" format="string" />
+        <attr name="dec_text" format="string" />
+    </declare-styleable>
 </resources>

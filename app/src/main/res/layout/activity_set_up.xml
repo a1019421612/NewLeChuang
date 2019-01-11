@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/zhendong"
+            app:title_text="按键震动" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/suoping"
+            app:title_text="锁屏时也想显示遥控面板">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="15dp"
+                android:background="@null"
+                android:src="@mipmap/kaiguan_kai" />
+        </com.hbdiye.newlechuangsmart.view.ItemSettingView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/fuwuxinxi"
+            app:title_text="服务信息" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:id="@+id/sv_edit_control"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/bianji"
+            app:title_text="编辑遥控器" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:id="@+id/sv_delete_control"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/shanchu"
+            app:title_text="删除" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/zhiding"
+            app:title_text="首页置顶" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:dec_text="分享后,附近的人也可以添加和使用这个遥控器"
+            app:left_drawable="@mipmap/fenxiang"
+            app:title_text="分享" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:dec_text="如果遥控不好用,可以修复一下"
+            app:left_drawable="@mipmap/anjianxiufu"
+            app:title_text="案例修复" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:dec_text="如果遥控器不好用,向我们发送一下"
+            app:left_drawable="@mipmap/wentifankui"
+            app:title_text="问题反馈" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/chongxinpipei"
+            app:title_text="重新匹配" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.hbdiye.newlechuangsmart.view.ItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:left_drawable="@mipmap/kuaijiejian"
+            app:title_text="添加桌面到快捷方式" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

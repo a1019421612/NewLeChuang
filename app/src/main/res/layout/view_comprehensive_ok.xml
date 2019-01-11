@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:layout_centerInParent="true"
+    android:background="@drawable/shape_ccc_circle_nocorner">
+
+    <ImageView
+        android:id="@+id/iv_xiangshang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:src="@mipmap/xiangshang" />
+
+
+    <ImageView
+        android:id="@+id/iv_xiangxia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:src="@mipmap/xiangxia" />
+
+    <ImageView
+        android:id="@+id/iv_xiangzuo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:src="@mipmap/xiangzuo" />
+
+
+    <ImageView
+        android:id="@+id/iv_xiangyou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:src="@mipmap/xiangyou" />
+
+    <TextView
+        android:id="@+id/tv_ok"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_empty_ccc_circle_nocorner"
+        android:gravity="center"
+        android:text="OK"
+        android:textColor="@color/text_color"
+        android:textSize="18sp" />
+</RelativeLayout>

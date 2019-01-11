@@ -73,7 +73,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         productId = getIntent().getStringExtra("productId");
         all_data = getIntent().getStringExtra("all_data");
         roomId = getIntent().getStringExtra("roomId");
-        deviceId=getIntent().getStringExtra("deviceId");
+        deviceId = getIntent().getStringExtra("deviceId");
         handleData();
     }
 
@@ -94,7 +94,12 @@ public class DeviceDetailActivity extends AppCompatActivity {
         List<DeviceList> deviceList = roomList.get(0).deviceList;
         for (int i = 0; i < deviceList.size(); i++) {
             String deviceid = deviceList.get(i).id;
-            if (productId.equals(deviceList.get(i).productId)&&deviceId.equals(deviceid)) {
+            for (int j = 0; j < deviceList.size(); j++) {
+                if (deviceList.get(j).productId.contains("PRO006")){
+                    deviceList.remove(j);
+                }
+            }
+            if (productId.equals(deviceList.get(i).productId) && deviceId.equals(deviceid)) {
                 mList_fragment.add(0, ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
             } else {
                 mList_fragment.add(ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
@@ -168,7 +173,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
                 break;
             case R.id.tv_device_detail_title:
                 View view_room = getLayoutInflater().inflate(R.layout.room_list, null);
-                popupWindow = new PopupWindow(view_room, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(view_room, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 RecyclerView rv_room = view_room.findViewById(R.id.rv_room_list);
                 LinearLayoutManager manager = new LinearLayoutManager(this);
                 manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -183,16 +188,18 @@ public class DeviceDetailActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         tvDeviceDetailTitle.setText(roomList.get(position).name);
-                        roomId=roomList.get(position).id;
+                        roomId = roomList.get(position).id;
                         List<DeviceList> deviceList = roomList.get(position).deviceList;
                         vpDeviceDetail.removeAllViews();
                         mList_fragment.clear();
                         for (int i = 0; i < deviceList.size(); i++) {
                             String deviceid = deviceList.get(i).id;
-                            mList_fragment.add(ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
+                            if (!deviceList.get(i).productId.contains("PRO006")) {
+                                mList_fragment.add(ClassyIconByProId.fragmentById(deviceList.get(i).productId, deviceid));
+                            }
                         }
                         viewPagerIndicator();
-                        fragmentDetailPagerAdapter=new FragmentDetailPagerAdapter(getSupportFragmentManager(),DeviceDetailActivity.this,mList_fragment);
+                        fragmentDetailPagerAdapter = new FragmentDetailPagerAdapter(getSupportFragmentManager(), DeviceDetailActivity.this, mList_fragment);
                         vpDeviceDetail.setAdapter(fragmentDetailPagerAdapter);
                         vpDeviceDetail.setCurrentItem(0);
                         popupWindow.dismiss();

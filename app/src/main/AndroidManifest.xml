@@ -178,6 +178,22 @@
         <activity android:name=".hwactivity.AddRemoteControlActivity"/>
         <activity android:name=".hwactivity.EditRemoteControlActivity"/>
         <activity android:name=".hwactivity.SelectSetTopBoxActivity"/>
+        <activity android:name=".hwactivity.EditConverterActivity"/>
+        <activity android:name=".hwactivity.SelectStudyActivity"/>
+        <activity android:name=".hwactivity.StudyControlActivity"/>
+        <activity android:name=".hwactivity.SetTopBoxActivity"/>
+        <activity android:name=".hwactivity.SetUpActivity"/>
+        <activity android:name=".hwactivity.TVRemoteControlActivity"/>
+        <activity android:name=".hwactivity.BoxActivity"/>
+        <activity android:name=".hwactivity.DVDActivity"/>
+        <activity android:name=".hwactivity.AirConditionerActivity"/>
+        <activity android:name=".hwactivity.ProjectorActivity"/>
+        <activity android:name=".hwactivity.PublicRemoteControlActivity"/>
+        <activity android:name=".hwactivity.FanRemoteControlActivity"/>
+        <activity android:name=".hwactivity.SingleReflexActivity"/>
+        <activity android:name=".hwactivity.BulbRemoteControlActivity"/>
+        <activity android:name=".hwactivity.AirCleanerActivity"/>
+        <activity android:name=".hwactivity.HeaterActivity"/>
     </application>
 
 </manifest>

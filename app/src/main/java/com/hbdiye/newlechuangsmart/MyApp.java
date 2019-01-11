@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.coder.zzq.smartshow.toast.SmartToast;
@@ -139,5 +140,10 @@ public class MyApp extends Application{
     //返回
     public static Context getContextObject(){
         return context;
+    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 }
