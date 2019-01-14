@@ -1,19 +1,24 @@
 package com.hbdiye.newlechuangsmart;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-
+import android.view.WindowManager;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.hbdiye.newlechuangsmart.activity.LoginActivity;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 
@@ -93,7 +98,28 @@ public class MyService extends Service {
                 }
                 if (message.contains("\"pn\":\"CSPP\"")){
                     //CSPP
-                    websocketSendBroadcase(message, "CSPP");
+                    try {
+                        JSONObject jsonObject=new JSONObject(message);
+                        String oper = jsonObject.getString("oper");
+                        String msg = jsonObject.getString("msg");
+                        if (oper.equals("907")){
+                            AlertDialog dialog=new AlertDialog.Builder(MyService.this)
+                                    .setMessage(msg)
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            MyApp.finishAllActivity();
+                                            startActivity(new Intent(MyService.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK ));
+                                        }
+                                    }).create();
+                            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                            dialog.show();
+                        }else {
+                            websocketSendBroadcase(message, "CSPP");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 //                if (message.contains("\"pn\":\"LATP\"")) {
 //                    //LATPSPUtils.put(this,"isTrigger",true);

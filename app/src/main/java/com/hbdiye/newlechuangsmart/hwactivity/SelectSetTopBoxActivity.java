@@ -18,6 +18,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
@@ -52,13 +56,28 @@ public class SelectSetTopBoxActivity extends HwBaseActivity {
     private List<LocationBean.SpList> mSpList = new ArrayList<>();
     private SelectSetTopBoxAdapter selectSetTopBoxAdapter;
 
+    public LocationClient mLocationClient = null;
+    private MyLocationListener myListener = new MyLocationListener();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_set_top_box);
         ButterKnife.bind(this);
+        mLocationClient = new LocationClient(getApplicationContext());
+        //声明LocationClient类
+        LocationClientOption option = new LocationClientOption();
+
+        option.setIsNeedAddress(true);
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
+
+        mLocationClient.setLocOption(option);
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+        mLocationClient.start();
         initView();
-        initData();
+//        initData();
     }
 
     private void initData() {
@@ -220,7 +239,43 @@ public class SelectSetTopBoxActivity extends HwBaseActivity {
 
     }
 
+    public class MyLocationListener extends BDAbstractLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location){
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取地址相关的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
 
+            String addr = location.getAddrStr();    //获取详细地址信息
+            String country = location.getCountry();    //获取国家
+            String province = location.getProvince();    //获取省份
+            String city = location.getCity();    //获取城市
+            String district = location.getDistrict();    //获取区县
+            String street = location.getStreet();    //获取街道信息
+            Log.e("baidu",addr+province+city);
+            WNZKConfigure.findSpListByProvince(city, new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    LocationBean locationBean = new Gson().fromJson(response, LocationBean.class);
+                    if (getResultCode(locationBean.errcode)) {
+                        List<LocationBean.SpList> spList = locationBean.spList;
+                        if (mSpList.size()>0){
+                            mSpList.clear();
+                        }
+                        mSpList.addAll(spList);
+                        selectSetTopBoxAdapter.notifyDataSetChanged();
+
+//                        locationManager.removeUpdates(locationListener);
+                    }
+                }
+            });
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
