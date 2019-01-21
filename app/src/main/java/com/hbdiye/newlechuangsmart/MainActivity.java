@@ -243,11 +243,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case MotionEvent.ACTION_DOWN:
                         flag_voice = true;
                         cur_time = System.currentTimeMillis();
-                        mHandler.sendEmptyMessageDelayed(100, 1000);
+                        mHandler.sendEmptyMessageDelayed(100, 100);
                         break;
                     case MotionEvent.ACTION_UP:
                         long up_time = System.currentTimeMillis();
-                        if (up_time - cur_time > 1000) {
+                        if (up_time - cur_time > 100) {
                             mIat.stopListening();
                             isRecording=false;
                             iv_voice.setVisibility(View.GONE);
