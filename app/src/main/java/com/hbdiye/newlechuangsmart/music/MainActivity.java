@@ -8,17 +8,34 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.BaseActivity;
 import com.hbdiye.newlechuangsmart.music.factory.TcpRequestFactory;
 import com.lib.smartlib.HopeLoginBusiness;
 import com.lib.smartlib.HopeSDK;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends BaseActivity{
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music_main);
+    protected void initData() {
+
     }
-   public void login(View view) {
+
+    @Override
+    protected String getTitleName() {
+        return "音乐";
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_music_main;
+    }
+
+    public void login(View view) {
         startActivity(new Intent(this,LoginActivity.class));
     }
         public void device(View View) {

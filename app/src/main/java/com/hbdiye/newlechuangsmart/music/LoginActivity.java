@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.BaseActivity;
 import com.lib.smartlib.HopeLoginBusiness;
 import com.lib.smartlib.callback.ILoginCallback;
 
@@ -20,15 +21,24 @@ import com.lib.smartlib.callback.ILoginCallback;
  * 邮箱：42747487@qq.com
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     EditText userIdEdit,userAccountEdit;
     TextView loginStatus;
     Button login,logout;
     private Toast toast;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music_login);
+    protected void initData() {
+
+    }
+
+    @Override
+    protected String getTitleName() {
+        return "登录";
+    }
+
+    @Override
+    protected void initView() {
         toast = Toast.makeText(this,"", Toast.LENGTH_SHORT);
         userIdEdit = findViewById(R.id.userId);
         userAccountEdit = findViewById(R.id.userAccount);
@@ -36,8 +46,13 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         logout = findViewById(R.id.logout);
         userIdEdit.setText("123456");
-        userAccountEdit.setText("13712344321");
+        userAccountEdit.setText("15556928882");
         setLoginStatus(HopeLoginBusiness.getInstance().isLogin());
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_music_login;
     }
 
     public void login(View view){

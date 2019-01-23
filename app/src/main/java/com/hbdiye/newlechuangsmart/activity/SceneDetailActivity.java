@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -60,7 +61,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
     private String sceneId = "";
     private String token;
 
-    private MyListView mlv_scene;
+    private ListView mlv_scene;
     private SceneDetailListAdapter mAdapter;
     private List<SceneDetailBean.SceneTaskList> list = new ArrayList<>();
     private LinkageAddIconPopwindow popwindow;

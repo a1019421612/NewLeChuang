@@ -102,7 +102,7 @@
                     />
             </LinearLayout>
         </RelativeLayout>
-        <com.hbdiye.newlechuangsmart.view.MyListView
+        <ListView
             android:id="@+id/mlv_scene"
             android:layout_below="@+id/rl_head1"
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
             android:background="@color/white"
             android:listSelector="@android:color/transparent">
 
-        </com.hbdiye.newlechuangsmart.view.MyListView>
+        </ListView>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_scene_detail"
             android:layout_below="@+id/rl_head1"

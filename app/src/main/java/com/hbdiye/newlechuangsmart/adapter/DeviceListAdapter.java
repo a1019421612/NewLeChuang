@@ -196,7 +196,14 @@ public class DeviceListAdapter extends BaseSectionQuickAdapter<SecneSectionBean,
             helper.setGone(R.id.ll_device_warning, false);
             helper.setGone(R.id.ll_device_cgq, false);
             helper.setGone(R.id.ll_device_jcq, false);
-        } else if (productId.contains("PRO009")) {
+        } else if (productId.contains("PRO006")) {
+            //其他 场景
+            helper.setGone(R.id.ll_device_cl, false);
+            helper.setGone(R.id.ll_device_kg, false);
+            helper.setGone(R.id.ll_device_warning, false);
+            helper.setGone(R.id.ll_device_cgq, false);
+            helper.setGone(R.id.ll_device_jcq, false);
+        }else if (productId.contains("PRO009")) {
             //其他 场景
             helper.setGone(R.id.ll_device_cl, false);
             helper.setGone(R.id.ll_device_kg, false);
@@ -205,6 +212,12 @@ public class DeviceListAdapter extends BaseSectionQuickAdapter<SecneSectionBean,
             helper.setGone(R.id.ll_device_jcq, false);
         }else if (productId.contains("PRO001")){
             //红外发射器
+            helper.setGone(R.id.ll_device_cl, false);
+            helper.setGone(R.id.ll_device_kg, false);
+            helper.setGone(R.id.ll_device_warning, false);
+            helper.setGone(R.id.ll_device_cgq, false);
+            helper.setGone(R.id.ll_device_jcq, false);
+        }else{
             helper.setGone(R.id.ll_device_cl, false);
             helper.setGone(R.id.ll_device_kg, false);
             helper.setGone(R.id.ll_device_warning, false);

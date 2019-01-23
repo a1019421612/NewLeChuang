@@ -35,7 +35,8 @@ public class DeviceActivity extends AppCompatActivity {
     }
 
     public void bind(View view){
-        String param = HttpRequestFactory.deviceBinding(HopeLoginBusiness.getInstance().getToken(),"HOPE","6299201702","A7","HOPE-A7","_test",753396045774098432L);
+        String param = HttpRequestFactory.deviceBinding(HopeLoginBusiness.getInstance().getToken(),"HOPE",
+                "6299201702","A7","HOPE-A7","_test",753396045774098432L);
 
         HopeSDK.getInstance().httpSend("/hopeApi/device/binding", param, new HttpCallback() {
             @Override
