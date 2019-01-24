@@ -62,6 +62,20 @@
             android:text="---"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_zhuxiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="注销"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:padding="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_20"
+        android:background="@drawable/btn_login_shape"
+
+        />
+    <TextView
         android:id="@+id/tv_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,7 +85,8 @@
         android:layout_gravity="center_horizontal"
         android:textSize="18sp"
         android:padding="@dimen/dp_10"
-        android:layout_margin="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:background="@drawable/btn_login_shape"
 
         />

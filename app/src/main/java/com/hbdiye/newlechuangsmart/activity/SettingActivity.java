@@ -29,6 +29,8 @@ public class SettingActivity extends BaseActivity {
     TextView tvExit;
     @BindView(R.id.tv_setting_version)
     TextView tvSettingVersion;
+    @BindView(R.id.tv_zhuxiao)
+    TextView tvZhuxiao;
 
     @Override
     protected void initData() {
@@ -43,7 +45,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void initView() {
         String versionName = getVersionName(this);
-        tvSettingVersion.setText("V"+versionName);
+        tvSettingVersion.setText("V" + versionName);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class SettingActivity extends BaseActivity {
         return R.layout.activity_setting;
     }
 
-    @OnClick({R.id.ll_setting_reset_psw, R.id.ll_setting_yj, R.id.ll_setting_version, R.id.tv_exit})
+    @OnClick({R.id.ll_setting_reset_psw, R.id.ll_setting_yj, R.id.ll_setting_version, R.id.tv_exit, R.id.tv_zhuxiao})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_setting_reset_psw:
@@ -62,9 +64,12 @@ public class SettingActivity extends BaseActivity {
             case R.id.ll_setting_version:
                 break;
             case R.id.tv_exit:
+                MyApp.appExit();
+                break;
+            case R.id.tv_zhuxiao:
                 SPUtils.clear(this);
                 MyApp.finishAllActivity();
-                startActivity(new Intent(this,LoginActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
     }
@@ -80,5 +85,12 @@ public class SettingActivity extends BaseActivity {
             e.printStackTrace();
         }
         return versionName;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

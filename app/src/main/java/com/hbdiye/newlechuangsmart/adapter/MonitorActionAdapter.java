@@ -32,5 +32,6 @@ public class MonitorActionAdapter extends BaseSectionQuickAdapter<MonitorSection
         String format = df.format((float) content.value / 100);
         helper.setText(R.id.tv_scene_action,format);
         helper.setText(R.id.tv_scene_device_name,content.name);
+        helper.setText(R.id.tv_scene_device_attr_name,content.deviceName);
     }
 }

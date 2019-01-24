@@ -19,6 +19,7 @@ import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -436,6 +437,7 @@ public class VersionUpdataUtils {
                     @Override
                     public void onResponse(String response, int id) {
                         VersionBean versionBean = new Gson().fromJson(response, VersionBean.class);
+                        Log.e("version",response);
                         if (versionBean.errcode.equals("0")) {
                             noticeMessage = versionBean.data.content;
                             apkURL = versionBean.data.download;

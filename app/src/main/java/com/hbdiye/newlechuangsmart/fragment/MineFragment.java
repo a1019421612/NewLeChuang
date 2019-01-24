@@ -105,7 +105,7 @@ public class MineFragment extends Fragment {
                         if (errcode.equals("0")) {
                             String user_name = userFamilyInfoBean.user.name;
                             String family_name = userFamilyInfoBean.family.name;
-                            String phone = userFamilyInfoBean.family.phone;
+                            String phone = userFamilyInfoBean.user.phone;
                             tvMineName.setText(user_name);
                             SPUtils.put(getActivity(), "nickName", user_name);
                             tvMineFamilyPhone.setText(phone);

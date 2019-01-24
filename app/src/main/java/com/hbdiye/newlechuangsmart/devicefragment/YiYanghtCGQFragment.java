@@ -41,8 +41,9 @@ public class YiYanghtCGQFragment extends BaseFragment {
     private HomeReceiver homeReceiver;
     private int value;
     private String deviceid;
-    private TextView tv_co_name,tv_co_zc;
+    private TextView tv_co_name,tv_co_zc,tv_co_cancel;
     private LinearLayout ll_co_dc,ll_co_bc,ll_co_dl;
+    private List<MenCiBean.Data.DevAttList> devAttList;
 
 
     public static YiYanghtCGQFragment newInstance(String page) {
@@ -71,14 +72,53 @@ public class YiYanghtCGQFragment extends BaseFragment {
         ll_co_dc=view.findViewById(R.id.ll_co_dc);
         ll_co_bc=view.findViewById(R.id.ll_co_bc);
         ll_co_dl=view.findViewById(R.id.ll_co_dl);
+        tv_co_cancel=view.findViewById(R.id.tv_co_cancel);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
+        tv_co_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = devAttList.get(0).id;
+                OkHttpUtils
+                        .post()
+                        .url(InterfaceManager.getInstance().getURL(InterfaceManager.CANCELWARNING))
+                        .addParams("token",token)
+                        .addParams("devAttId",id)
+                        .addParams("value","0")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                try {
+                                    JSONObject jsonObject=new JSONObject(response);
+                                    String errcode = jsonObject.getString("errcode");
+                                    if (errcode.equals("0")){
+                                        String s = EcodeValue.resultEcode(errcode);
+                                        SmartToast.show(s);
+                                        deviceStatus();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            }
+        });
         return view;
     }
     @Override
     protected void onFragmentFirstVisible() {
+        deviceStatus();
+    }
+
+    private void deviceStatus() {
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(DEVICEDETAIL))
                 .addParams("token",token)
@@ -101,12 +141,13 @@ public class YiYanghtCGQFragment extends BaseFragment {
                                 MenCiBean coBean = new Gson().fromJson(response, MenCiBean.class);
                                 String name = coBean.data.name;
                                 tv_co_name.setText(name);
-                                List<MenCiBean.Data.DevAttList> devAttList = coBean.data.devAttList;
+                                devAttList = coBean.data.devAttList;
                                 int value = devAttList.get(0).value;
                                 if (value==1){
                                     tv_co_zc.setVisibility(View.VISIBLE);
                                     tv_co_zc.setText("一氧化碳有感应");
                                     tv_co_zc.setTextColor(Color.RED);
+                                    tv_co_cancel.setVisibility(View.VISIBLE);
                                 }else if (value==0){
                                     tv_co_zc.setVisibility(View.VISIBLE);
                                 }else if (value==521){
@@ -147,6 +188,7 @@ public class YiYanghtCGQFragment extends BaseFragment {
                     }
                 });
     }
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override

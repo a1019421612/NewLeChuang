@@ -32,6 +32,7 @@ public class MyApp extends Application{
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
+        registerActivityListener();
         SmartToast.plainToast(this);
         //摄像头
         /** * sdk日志开关，正式发布需要去掉 */
@@ -79,7 +80,13 @@ public class MyApp extends Application{
      */
     public  static void appExit() {
         try {
-            finishAllActivity();
+            if (mActivitys == null) {
+                return;
+            }
+            for (Activity activity : mActivitys) {
+                activity.finish();
+            }
+            mActivitys.clear();
         } catch (Exception e) {
         }
     }

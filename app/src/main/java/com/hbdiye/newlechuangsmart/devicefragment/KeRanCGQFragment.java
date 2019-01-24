@@ -38,8 +38,10 @@ public class KeRanCGQFragment extends BaseFragment {
     private String deviceid;
     private String token;
     private HomeReceiver homeReceiver;
-    private TextView tv_kr_name,tv_kr_zc;
+    private TextView tv_kr_name,tv_kr_zc,tv_kr_cancel;
     private LinearLayout ll_kr_dc,ll_kr_bc,ll_kr_dl;
+    private List<MenCiBean.Data.DevAttList> devAttList;
+
     public static KeRanCGQFragment newInstance(String page) {
         Bundle args = new Bundle();
 
@@ -65,14 +67,53 @@ public class KeRanCGQFragment extends BaseFragment {
         ll_kr_dc=view.findViewById(R.id.ll_kr_dc);
         ll_kr_bc=view.findViewById(R.id.ll_kr_bc);
         ll_kr_dl=view.findViewById(R.id.ll_kr_dl);
+        tv_kr_cancel=view.findViewById(R.id.tv_kr_cancel);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("DCPP");
         homeReceiver = new HomeReceiver();
         getActivity().registerReceiver(homeReceiver, intentFilter);
+        tv_kr_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = devAttList.get(0).id;
+                OkHttpUtils
+                        .post()
+                        .url(InterfaceManager.getInstance().getURL(InterfaceManager.CANCELWARNING))
+                        .addParams("token",token)
+                        .addParams("devAttId",id)
+                        .addParams("value","0")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                try {
+                                    JSONObject jsonObject=new JSONObject(response);
+                                    String errcode = jsonObject.getString("errcode");
+                                    if (errcode.equals("0")){
+                                        String s = EcodeValue.resultEcode(errcode);
+                                        SmartToast.show(s);
+                                        deviceStatus();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            }
+        });
         return view;
     }
     @Override
     protected void onFragmentFirstVisible() {
+        deviceStatus();
+    }
+
+    private void deviceStatus() {
         OkHttpUtils.post()
                 .url(InterfaceManager.getInstance().getURL(DEVICEDETAIL))
                 .addParams("token", token)
@@ -93,7 +134,7 @@ public class KeRanCGQFragment extends BaseFragment {
                                 MenCiBean coBean = new Gson().fromJson(response, MenCiBean.class);
                                 String name = coBean.data.name;
                                 tv_kr_name.setText(name);
-                                List<MenCiBean.Data.DevAttList> devAttList = coBean.data.devAttList;
+                                devAttList = coBean.data.devAttList;
                                 int value = devAttList.get(0).value;
                                 if (value==1){
                                     tv_kr_zc.setVisibility(View.VISIBLE);
@@ -139,6 +180,7 @@ public class KeRanCGQFragment extends BaseFragment {
                     }
                 });
     }
+
     class HomeReceiver extends BroadcastReceiver {
 
         @Override

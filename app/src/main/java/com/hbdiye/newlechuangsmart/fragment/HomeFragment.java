@@ -153,7 +153,12 @@ public class HomeFragment extends Fragment {
                     startActivity(new Intent(getActivity(), CameraListActivity.class));
                 } else if (i == 6) {
                     //跳转遥控中心
-                    startActivity(new Intent(getActivity(), YaoKongCenterActivity.class).putExtra("productId", array_productId[i]));
+                    String title = mList_classy.get(i).getTitle();
+                    int icon = mList_classy.get(i).getIcon();
+                    startActivity(new Intent(getActivity(), ChoiceDeviceActivity.class)
+                            .putExtra("title", title)
+                            .putExtra("icon", icon)
+                            .putExtra("productId", array_productId[i]));
                 } else if (i == 7) {
                     //医疗
                     isRegister();
@@ -718,16 +723,20 @@ public class HomeFragment extends Fragment {
             TextView tv_home_value = view.findViewById(R.id.tv_home_value);
             TextView tv_home_name = view.findViewById(R.id.tv_home_name);
             TextView tv_home_empty = view.findViewById(R.id.tv_home_empty);
+            TextView tv_home_attr_name=view.findViewById(R.id.tv_home_attr_name);
             if (mList.size() - 1 >= i) {
                 tv_home_empty.setVisibility(View.GONE);
                 tv_home_name.setVisibility(View.VISIBLE);
                 tv_home_value.setVisibility(View.VISIBLE);
+                tv_home_attr_name.setVisibility(View.VISIBLE);
                 tv_home_name.setText(mList.get(i).name);
+                tv_home_attr_name.setText(mList.get(i).deviceName);
                 DecimalFormat df = new DecimalFormat("0.0");
                 tv_home_value.setText(df.format((float) mList.get(i).value / 100));
             } else {
                 tv_home_value.setVisibility(View.GONE);
                 tv_home_name.setVisibility(View.GONE);
+                tv_home_attr_name.setVisibility(View.GONE);
                 tv_home_empty.setVisibility(View.VISIBLE);
             }
 //            if (mList==null||mList.size()==0){

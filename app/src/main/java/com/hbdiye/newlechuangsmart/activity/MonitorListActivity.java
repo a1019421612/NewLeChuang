@@ -75,8 +75,10 @@ public class MonitorListActivity extends BaseActivity {
                                 monitorSectionBean.setTitle(name);
                                 mList.add(monitorSectionBean);
                                 for (int j = 0; j < roomList1.devAttList.size(); j++) {
-                                    MonitorBean.RoomList.DevAttList devAttList = roomList1.devAttList.get(j);
-                                    mList.add(new MonitorSectionBean(devAttList));
+                                    if (!roomList1.devAttList.get(j).name.equals("电压")&&!roomList1.devAttList.get(j).name.equals("电量")){
+                                        MonitorBean.RoomList.DevAttList devAttList = roomList1.devAttList.get(j);
+                                        mList.add(new MonitorSectionBean(devAttList));
+                                    }
                                 }
                             }
                             adapter.notifyDataSetChanged();
@@ -93,7 +95,7 @@ public class MonitorListActivity extends BaseActivity {
     @Override
     protected void initView() {
         rvMonitor.setLayoutManager(new GridLayoutManager(this, 3));
-        adapter = new MonitorActionAdapter(R.layout.action_scene_device_item, R.layout.add_scene_device_header, mList);
+        adapter = new MonitorActionAdapter(R.layout.action_monitor_device_item, R.layout.add_scene_device_header, mList);
         rvMonitor.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
