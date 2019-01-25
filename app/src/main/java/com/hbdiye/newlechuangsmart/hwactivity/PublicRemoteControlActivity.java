@@ -116,7 +116,7 @@ public class PublicRemoteControlActivity extends HwBaseActivity {
     private void setHongWai(String pulse) {
         OkHttpUtils.post().url("http://39.104.119.0:8808/SmartHome/infrared/sentInfraredCode")
                 .addParams("token", SharedpreUtils.getString(getApplicationContext(), "token", ""))
-                .addParams("deviceId", "HW2")
+                .addParams("deviceId", hwbId)
                 .addParams("pulse", pulse)
                 .build().execute(new StringCallback() {
             @Override

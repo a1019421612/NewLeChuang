@@ -36,6 +36,7 @@ import com.hbdiye.newlechuangsmart.activity.MoreSceneActivity;
 import com.hbdiye.newlechuangsmart.activity.YaoKongCenterActivity;
 import com.hbdiye.newlechuangsmart.activity.YiLiaoActivity;
 import com.hbdiye.newlechuangsmart.activity.ZhiNengzjActivity;
+import com.hbdiye.newlechuangsmart.activity.ZngjActivity;
 import com.hbdiye.newlechuangsmart.bean.CommentClassyBean;
 import com.hbdiye.newlechuangsmart.bean.HomeSceneBean;
 import com.hbdiye.newlechuangsmart.bean.UserFamilyInfoBean;
@@ -151,7 +152,9 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 8) {
                     startActivity(new Intent(getActivity(), CameraListActivity.class));
-                } else if (i == 6) {
+                } else if (i==5){
+                    startActivity(new Intent(getActivity(), ZngjActivity.class));
+                }else if (i == 6) {
                     //跳转遥控中心
                     String title = mList_classy.get(i).getTitle();
                     int icon = mList_classy.get(i).getIcon();

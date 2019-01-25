@@ -19,6 +19,7 @@ import com.hbdiye.newlechuangsmart.bean.DeviceList;
 import com.hbdiye.newlechuangsmart.bean.DeviceListSceneBean;
 import com.hbdiye.newlechuangsmart.bean.SecneSectionBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.hwactivity.ConverterListActivity;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -74,11 +75,15 @@ public class ChoiceDeviceActivity extends BaseActivity {
                     String roomId = deviceList.roomId;
                     String id = deviceList.id;
 //                    SmartToast.show();
-                    startActivity(new Intent(ChoiceDeviceActivity.this, DeviceDetailActivity.class)
-                            .putExtra("productId", productId)
-                            .putExtra("all_data", all_data)
-                            .putExtra("roomId", roomId)
-                            .putExtra("deviceId", id));
+                    if (productId.contains("PRO006")){
+                        startActivity(new Intent(ChoiceDeviceActivity.this, ConverterListActivity.class).putExtra("hwbDeviceId",id).putExtra("name",deviceList.name));
+                    }else {
+                        startActivity(new Intent(ChoiceDeviceActivity.this, DeviceDetailActivity.class)
+                                .putExtra("productId", productId)
+                                .putExtra("all_data", all_data)
+                                .putExtra("roomId", roomId)
+                                .putExtra("deviceId", id));
+                    }
                 }
             }
         });

@@ -64,7 +64,7 @@ public class PersonInfoActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_info_user_name:
-                startActivityForResult(new Intent(this, EditInfoActivity.class), 105);
+                startActivityForResult(new Intent(this, EditInfoActivity.class).putExtra("name",tvInfoUserName.getText().toString()), 105);
                 break;
             case R.id.tv_info_family_name:
                 break;

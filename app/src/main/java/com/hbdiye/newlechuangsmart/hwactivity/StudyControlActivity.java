@@ -38,6 +38,7 @@ public class StudyControlActivity extends HwBaseActivity {
     private String ceshiPulse = "";
     private String fkey;
     private String rid;
+    private String deviceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class StudyControlActivity extends HwBaseActivity {
     }
 
     private void initView() {
+        deviceId=getIntent().getStringExtra("deviceId");
         setTitle("学习遥控");
         SelectStudyBean selectStudyBean =
                 (SelectStudyBean) getIntent().getSerializableExtra("selectStudyBean");
@@ -75,7 +77,7 @@ public class StudyControlActivity extends HwBaseActivity {
 
         OkHttpUtils.post().url("http://39.104.119.0:8808/SmartHome/infrared/studyInfraredCode")
                 .addParams("token", SharedpreUtils.getString(getApplicationContext(), "token", ""))
-                .addParams("deviceId", "HW2")
+                .addParams("deviceId",deviceId)
                 .addParams("fkey", fkey)
                 .addParams("port", "1")
                 .addParams("rid", rid)
@@ -129,7 +131,7 @@ public class StudyControlActivity extends HwBaseActivity {
     private void setHongWai(String pulse) {
         OkHttpUtils.post().url("http://39.104.119.0:8808/SmartHome/infrared/sentInfraredCode")
                 .addParams("token", SharedpreUtils.getString(getApplicationContext(), "token", ""))
-                .addParams("deviceId", "HW2")
+                .addParams("deviceId", deviceId)
                 .addParams("pulse", pulse)
                 .build().execute(new StringCallback() {
             @Override

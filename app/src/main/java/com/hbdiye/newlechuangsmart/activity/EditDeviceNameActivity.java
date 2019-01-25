@@ -168,7 +168,7 @@ public class EditDeviceNameActivity extends BaseActivity {
 
     @OnClick(R.id.tv_et_device_name)
     public void onViewClicked() {
-        sceneDialog = new SceneDialog(this, R.style.MyDialogStyle, edit_name_clicker, "设备名称");
+        sceneDialog = new SceneDialog(this, R.style.MyDialogStyle, edit_name_clicker, "设备名称",data.name);
         sceneDialog.show();
     }
     private View.OnClickListener edit_name_clicker = new View.OnClickListener() {

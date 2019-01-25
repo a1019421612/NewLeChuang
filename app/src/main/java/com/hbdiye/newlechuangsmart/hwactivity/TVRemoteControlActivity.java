@@ -13,6 +13,7 @@ import com.hbdiye.newlechuangsmart.adapter.RemoteConTrolAdapter;
 import com.hbdiye.newlechuangsmart.bean.DeviceBean;
 import com.hbdiye.newlechuangsmart.bean.EditRemoteControlBean;
 import com.hbdiye.newlechuangsmart.util.AppUtils;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.SharedpreUtils;
 import com.hbdiye.newlechuangsmart.view.MyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -168,10 +169,11 @@ public class TVRemoteControlActivity extends HwBaseActivity {
     }
 
     private void setHongWai(String pulse) {
+//        String token  = (String) SPUtils.get(getApplicationContext(), "token", "");
         String token = SharedpreUtils.getString(getApplicationContext(), "token", "");
         OkHttpUtils.post().url("http://39.104.119.0:8808/SmartHome/infrared/sentInfraredCode")
                 .addParams("token", token)
-                .addParams("deviceId", "HW2")
+                .addParams("deviceId", hwbId)
                 .addParams("pulse", pulse)
                 .build().execute(new StringCallback() {
             @Override

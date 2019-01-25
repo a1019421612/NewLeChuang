@@ -72,6 +72,8 @@ public class InterfaceManager {
     public static final String DEVICESCENEDETAILS="DEVICESCENEDETAILS";//六建场景，四键场景
     public static final String RESETPSW="RESETPSW";//修改密码
     public static final String UPDATEICON="UPDATEICON";//修改头像
+    public static final String ZNGJLIST="ZNGJLIST";//机器人列表
+    public static final String BINDROBOT="BINDROBOT";//绑定机器人
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -138,6 +140,8 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.UPDATEDEVICENAME,NEWBASEURL+"DYPServer/device/updateDeviceName");
             urlManager.put(InterfaceManager.UPDATEDEVICEATTNAME,NEWBASEURL+"DYPServer/device/updateDeviceAttributeName");
             urlManager.put(InterfaceManager.CANCELWARNING,NEWBASEURL+"DYPServer/device/updateDeviceAttributeValue");
+            urlManager.put(InterfaceManager.ZNGJLIST,NEWBASEURL+"DYPServer/robot/findRobotList");
+            urlManager.put(InterfaceManager.BINDROBOT,NEWBASEURL+"DYPServer/robot/bindRob");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");

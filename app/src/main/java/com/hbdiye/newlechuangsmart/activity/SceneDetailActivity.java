@@ -72,6 +72,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
     private WebSocketConnection mConnection;
     private HomeReceiver homeReceiver;
     private String dactid="";
+    private SceneDetailBean sceneDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +220,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.iv_scene_edit:
                 //修改名称
-                sceneDialog=new SceneDialog(this,R.style.MyDialogStyle,mClicker,"修改场景名称");
+                sceneDialog=new SceneDialog(this,R.style.MyDialogStyle,mClicker,"修改场景名称",sceneDetailBean.scene.name);
                 sceneDialog.show();
                 break;
         }
@@ -290,7 +291,7 @@ public class SceneDetailActivity extends AppCompatActivity implements View.OnCli
                             JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
                             if (errcode.equals("0")) {
-                                SceneDetailBean sceneDetailBean = new Gson().fromJson(response, SceneDetailBean.class);
+                                sceneDetailBean = new Gson().fromJson(response, SceneDetailBean.class);
                                 List<SceneDetailBean.SceneTaskList> deviceList = sceneDetailBean.sceneTaskList;
                                 tv_scene_name.setText(sceneDetailBean.scene.name);
                                 Glide.with(SceneDetailActivity.this).load(IconByName.drawableByName(sceneDetailBean.scene.icon)).into(iv_scene_ic);

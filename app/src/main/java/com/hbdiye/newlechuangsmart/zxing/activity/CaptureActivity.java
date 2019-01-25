@@ -346,8 +346,14 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                 Bundle bundle = new Bundle();
                 bundle.putString(INTENT_EXTRA_KEY_QR_SCAN, resultString);
                 if (flag){
-                    //扫码加入家庭
-                    joinFamily(resultString);
+                    boolean flag_gj = getIntent().getBooleanExtra("flag_gj",false);
+                    if (flag_gj){
+                        //添加智能管家
+                        zngj(resultString);
+                    }else {
+                        //扫码加入家庭
+                        joinFamily(resultString);
+                    }
                 }else {
                     //扫码添加网关
                     Intent intent = new Intent(CaptureActivity.this, GateWaySeriesNumActivity.class);
@@ -368,6 +374,25 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
 //            this.setResult(RESULT_CODE_QR_SCAN, resultIntent);
         }
 
+    }
+
+    private void zngj(String resultString) {
+        OkHttpUtils.post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.BINDROBOT))
+                .addParams("token",token)
+                .addParams("serialnumber",resultString)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                    }
+                });
     }
 
     private void joinFamily(String resultString) {

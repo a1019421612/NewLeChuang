@@ -14,7 +14,7 @@ public class SharedpreUtils {
 
 	public static SharedPreferences getSharedPre(Context ctx) {
 		if (sp == null) {
-			sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+			sp = ctx.getSharedPreferences("share_data", Context.MODE_PRIVATE);
 		}
 		return sp;
 	}

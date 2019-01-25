@@ -29,6 +29,9 @@ public class EditInfoActivity extends BaseActivity {
     @Override
     protected void initData() {
         token = (String) SPUtils.get(this,"token","");
+        String name = getIntent().getStringExtra("name");
+        etNickname.setText(name);
+        etNickname.setSelection(etNickname.getText().length());
         tvBaseEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

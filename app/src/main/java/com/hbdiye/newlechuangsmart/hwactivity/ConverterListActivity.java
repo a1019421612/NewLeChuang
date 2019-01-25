@@ -58,7 +58,7 @@ public class ConverterListActivity extends HwBaseActivity {
         token = (String) SPUtils.get(this, "token", "");
         hwbDeviceId = getIntent().getStringExtra("hwbDeviceId");
         name = getIntent().getStringExtra("name");
-//        WNZKConfigure.init(token,getApplicationContext());
+        WNZKConfigure.init(token,getApplicationContext());
         initView();
         initData();
     }

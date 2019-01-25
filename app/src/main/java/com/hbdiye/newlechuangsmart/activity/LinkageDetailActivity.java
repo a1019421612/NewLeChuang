@@ -507,7 +507,7 @@ public class LinkageDetailActivity extends AppCompatActivity {
                 break;
             case R.id.iv_linkage_edit:
                 //修改联动名称
-                sceneDialog = new SceneDialog(this, R.style.MyDialogStyle, edit_name_clicker, "联动名称");
+                sceneDialog = new SceneDialog(this, R.style.MyDialogStyle, edit_name_clicker, "联动名称",linkageDetailBean.linkage.name);
                 sceneDialog.show();
                 break;
             case R.id.tv_linkage_detail_add_attr:

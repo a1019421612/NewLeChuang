@@ -141,6 +141,7 @@ public class SelectStudyActivity extends HwBaseActivity {
                 if (selectStudyBean.errcode.equals("0")) {
                     Intent intent = new Intent(getApplicationContext(), StudyControlActivity.class);
                     intent.putExtra("selectStudyBean", selectStudyBean);
+                    intent.putExtra("deviceId",hwbId);
                     startActivity(intent);
                 }
             }
@@ -219,6 +220,7 @@ public class SelectStudyActivity extends HwBaseActivity {
                         if (getResultCode(selectStudyBean.errcode)) {
                             Intent intent = new Intent(getApplicationContext(), StudyControlActivity.class);
                             intent.putExtra("selectStudyBean", selectStudyBean);
+                            intent.putExtra("deviceId",hwbId);
                             startActivity(intent);
                         }
                     }
