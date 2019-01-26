@@ -50,7 +50,7 @@ public class BoxActivity extends HwBaseActivity {
         setTitle("盒子");
         RemoteConTrolAdapter remoteConTrolAdapter = new RemoteConTrolAdapter(icon, name);
         gridview.setAdapter(remoteConTrolAdapter);
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
         gridview.setOnItemClickListener(gvListener);
     }

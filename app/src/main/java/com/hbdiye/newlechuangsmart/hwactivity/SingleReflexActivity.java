@@ -50,7 +50,7 @@ public class SingleReflexActivity extends HwBaseActivity {
     }
     private void initView() {
         setTitle("单反遥控");
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
     }
 

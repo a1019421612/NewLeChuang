@@ -55,7 +55,7 @@ public class SetTopBoxActivity extends HwBaseActivity {
         setTitle("机顶盒");
         RemoteConTrolAdapter remoteConTrolAdapter = new RemoteConTrolAdapter(icon, name);
         gridview.setAdapter(remoteConTrolAdapter);
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
         gridview.setOnItemClickListener(gvListener);
     }

@@ -48,7 +48,7 @@ public class DVDActivity extends HwBaseActivity {
 
     private void initView() {
         setTitle("DVD遥控");
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
     }
 

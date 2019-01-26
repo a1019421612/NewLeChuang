@@ -13,6 +13,7 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.HwBaseActivity;
 import com.hbdiye.newlechuangsmart.bean.AddRemoteControlBean;
 import com.hbdiye.newlechuangsmart.util.AppUtils;
+import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.util.SharedpreUtils;
 import com.hbdiye.newlechuangsmart.util.ToastUtils;
 import com.xzcysoft.wnzhikonglibrary.WNZKConfigure;
@@ -44,6 +45,7 @@ public class AddRemoteControlActivity extends HwBaseActivity {
     private String deviceName;
     private String hwbDeviceId;
     private int deviceUrl;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class AddRemoteControlActivity extends HwBaseActivity {
         initView();
         String spId = getIntent().getStringExtra("spId");
         brandId = getIntent().getStringExtra("brandId");
-
+        token = (String) SPUtils.get(AddRemoteControlActivity.this,"token","");
         //判断是否机顶盒
         if (!TextUtils.isEmpty(spId)) {
             //判断是否是有线机顶盒
@@ -189,9 +191,10 @@ public class AddRemoteControlActivity extends HwBaseActivity {
 
     private void setKaiGuanHongWai() {
         AppUtils.vibrate(getApplicationContext(), (long) 100);
+//        http://39.104.119.0:8808/SmartHome/infrared/sentInfraredCode
         OkHttpUtils.post().url("http://39.104.119.0:8808/SmartHome/infrared/sentInfraredCode")
-                .addParams("token", SharedpreUtils.getString(getApplicationContext(), "token", ""))
-                .addParams("deviceId", "HW2")
+                .addParams("token", token)
+                .addParams("deviceId", hwbDeviceId)
                 .addParams("pulse", mRidsList.get(count - 1).testKey.pulse)
                 .build().execute(new StringCallback() {
             @Override

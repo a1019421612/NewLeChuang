@@ -63,7 +63,7 @@ public class TVRemoteControlActivity extends HwBaseActivity {
         setTitle("电视遥控");
         RemoteConTrolAdapter remoteConTrolAdapter = new RemoteConTrolAdapter(icon, name);
         gridview.setAdapter(remoteConTrolAdapter);
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
         gridview.setOnItemClickListener(gvListener);
     }

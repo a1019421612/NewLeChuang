@@ -2,6 +2,8 @@ package com.hbdiye.newlechuangsmart.util;
 
 import com.hbdiye.newlechuangsmart.R;
 
+import javax.validation.constraints.Null;
+
 public class IconByName {
     public static int drawableByName(String name){
         if (name.equals("huijia")){
@@ -141,30 +143,36 @@ public class IconByName {
         return R.drawable.liandong_icon1;
     }
     public static int drawableByNameRoom(String name){
-        if (name.equals("keting3")){
-            return R.drawable.keting3;
-        }else if (name.equals("shufang2")){
-            return R.drawable.shufang2;
-        }else if (name.equals("shufang")){
-            return R.drawable.shufang;
-        }else if (name.equals("weisehngjian")){
-            return R.drawable.weisehngjian;
-        }else if (name.equals("weishengjian2")){
-            return R.drawable.weishengjian2;
-        }else if (name.equals("danrenfang")){
-            return R.drawable.danrenfang;
-        }else if (name.equals("ertongfang")){
-            return R.drawable.ertongfang;
-        }else if (name.equals("keting")){
-            return R.drawable.keting;
-        }else if (name.equals("keting2")){
-            return R.drawable.keting2;
-        }else if (name.equals("zhuwo")){
+
+        try {
+            if (name.equals("keting3")){
+                return R.drawable.keting3;
+            }else if (name.equals("shufang2")){
+                return R.drawable.shufang2;
+            }else if (name.equals("shufang")){
+                return R.drawable.shufang;
+            }else if (name.equals("weisehngjian")){
+                return R.drawable.weisehngjian;
+            }else if (name.equals("weishengjian2")){
+                return R.drawable.weishengjian2;
+            }else if (name.equals("danrenfang")){
+                return R.drawable.danrenfang;
+            }else if (name.equals("ertongfang")){
+                return R.drawable.ertongfang;
+            }else if (name.equals("keting")){
+                return R.drawable.keting;
+            }else if (name.equals("keting2")){
+                return R.drawable.keting2;
+            }else if (name.equals("zhuwo")){
+                return R.drawable.zhuwo;
+            }else if (name.equals("chufang")){
+                return R.drawable.chufang;
+            }else if (name.equals("yangtai")){
+                return R.drawable.yangtai;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return R.drawable.zhuwo;
-        }else if (name.equals("chufang")){
-            return R.drawable.chufang;
-        }else if (name.equals("yangtai")){
-            return R.drawable.yangtai;
         }
         return R.drawable.zhuwo;
     }

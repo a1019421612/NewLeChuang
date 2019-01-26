@@ -59,7 +59,7 @@ public class HeaterActivity extends HwBaseActivity {
         setTitle("热水器遥控");
         RemoteConTrolAdapter remoteConTrolAdapter = new RemoteConTrolAdapter(icon,name);
         gridview.setAdapter(remoteConTrolAdapter);
-        getRightView().setVisibility(View.VISIBLE);
+//        getRightView().setVisibility(View.VISIBLE);
         getRightView().setOnClickListener(listener);
         gridview.setOnItemClickListener(gvListener);
     }
