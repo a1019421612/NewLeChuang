@@ -41,6 +41,7 @@ import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.activity.GateWaySeriesNumActivity;
 import com.hbdiye.newlechuangsmart.activity.SeriesNumSearchActivity;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.zxing.camera.CameraManager;
 import com.hbdiye.newlechuangsmart.zxing.decoding.CaptureActivityHandler;
@@ -390,7 +391,19 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
 
                     @Override
                     public void onResponse(String response, int id) {
-
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                SmartToast.show("绑定成功");
+                                finish();
+                            }else {
+                                String s = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

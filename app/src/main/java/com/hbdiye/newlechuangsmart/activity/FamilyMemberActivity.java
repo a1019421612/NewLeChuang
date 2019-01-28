@@ -36,6 +36,7 @@ public class FamilyMemberActivity extends BaseActivity {
     private List<FamilyMemberBean.UserList> mList=new ArrayList<>();
     private FamilyMemberAdapter adapter;
     private String token;
+    private boolean isAdmin;
 
     @Override
     protected void initData() {
@@ -50,10 +51,11 @@ public class FamilyMemberActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        isAdmin = getIntent().getBooleanExtra("isAdmin", false);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvFamilyMember.setLayoutManager(manager);
-        adapter=new FamilyMemberAdapter(mList);
+        adapter=new FamilyMemberAdapter(mList,isAdmin);
         rvFamilyMember.setAdapter(adapter);
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override

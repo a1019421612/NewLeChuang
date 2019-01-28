@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -73,17 +74,17 @@ public class ConverterListActivity extends HwBaseActivity {
         hwbDeviceId = getIntent().getStringExtra("hwbDeviceId");
         name = getIntent().getStringExtra("name");
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        uniqueId = tm.getDeviceId();
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        uniqueId = tm.getDeviceId();
         WNZKConfigure.init("1", getApplicationContext());
 //        hwLoging();
 //        WNZKConfigure.init(token, getApplicationContext());
@@ -121,6 +122,7 @@ public class ConverterListActivity extends HwBaseActivity {
 
 
     private void initView() {
+        Log.e("ssssss","onCreate");
         tvName.setText(name);
         setTitle("万能遥控器");
         getBackView().setVisibility(View.VISIBLE);
@@ -239,6 +241,7 @@ public class ConverterListActivity extends HwBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("ssssss","onResume");
         initData();
     }
 

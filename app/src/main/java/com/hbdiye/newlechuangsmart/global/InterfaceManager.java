@@ -74,6 +74,8 @@ public class InterfaceManager {
     public static final String UPDATEICON="UPDATEICON";//修改头像
     public static final String ZNGJLIST="ZNGJLIST";//机器人列表
     public static final String BINDROBOT="BINDROBOT";//绑定机器人
+    public static final String UNBINDROBOT="UNBINDROBOT";//解绑机器人
+    public static final String UPDATEFAMILYNAME="UPDATEFAMILYNAME";//修改家庭名称
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -141,7 +143,9 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.UPDATEDEVICEATTNAME,NEWBASEURL+"DYPServer/device/updateDeviceAttributeName");
             urlManager.put(InterfaceManager.CANCELWARNING,NEWBASEURL+"DYPServer/device/updateDeviceAttributeValue");
             urlManager.put(InterfaceManager.ZNGJLIST,NEWBASEURL+"DYPServer/robot/findRobotList");
-            urlManager.put(InterfaceManager.BINDROBOT,NEWBASEURL+"DYPServer/robot/bindRob");
+            urlManager.put(InterfaceManager.BINDROBOT,NEWBASEURL+"DYPServer/robot/bindRobot");
+            urlManager.put(InterfaceManager.UNBINDROBOT,NEWBASEURL+"DYPServer/robot/unbindRobot");
+            urlManager.put(InterfaceManager.UPDATEFAMILYNAME,NEWBASEURL+"DYPServer/user/updateFamilyName");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");

@@ -100,11 +100,16 @@ public class VoiceActivity extends BaseActivity {
         intentFilter.addAction("CSPP");
         homeReceiver = new HomeReceiver();
         registerReceiver(homeReceiver, intentFilter);
+        VoiceListBean left=new VoiceListBean();
+        left.isleft=true;
+        left.msg="请语音输入命令，例如：打开客厅灯、关闭客厅灯、启动回家模式等";
+        list.add(left);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvVoice.setLayoutManager(manager);
         adapter=new VoiceAdapter(list);
         rvVoice.setAdapter(adapter);
+
         initImageVoice();
         // 初始化识别无UI识别对象
         // 使用SpeechRecognizer对象，可根据回调消息自定义界面；
@@ -172,8 +177,10 @@ public class VoiceActivity extends BaseActivity {
                         if (up_time - cur_time > 100) {
                             mIat.stopListening();
                             isRecording = false;
-                            iv_voice.setVisibility(View.GONE);
+                        }else {
+                            flag_voice = false;
                         }
+                        iv_voice.setVisibility(View.GONE);
                         break;
                 }
                 return true;
@@ -241,7 +248,12 @@ public class VoiceActivity extends BaseActivity {
                     }
                 }
             } else {
-                iv_voice.setImageDrawable(micImages[msg.what]);
+                try {
+                    iv_voice.setImageDrawable(micImages[msg.what]);
+                }catch (Exception e){
+                    iv_voice.setImageDrawable(micImages[0]);
+                }
+
             }
         }
     };
@@ -327,6 +339,7 @@ public class VoiceActivity extends BaseActivity {
             voiceListBean.msg=text;
             list.add(voiceListBean);
             adapter.notifyDataSetChanged();
+            rvVoice.scrollToPosition(list.size()-1);
 //            SmartToast.show("翻译" + text);
         }
     }

@@ -36,6 +36,7 @@ import com.hbdiye.newlechuangsmart.fragment.LinkageFragment;
 import com.hbdiye.newlechuangsmart.fragment.MineFragment;
 import com.hbdiye.newlechuangsmart.util.JsonParser;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
+import com.hbdiye.newlechuangsmart.util.Utils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -253,7 +254,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             iv_voice.setVisibility(View.GONE);
                         } else {
                             flag_voice = false;
-                           startActivity(new Intent(MainActivity.this, VoiceActivity.class));
+                            if (Utils.isFastClick()){
+                                startActivity(new Intent(MainActivity.this, VoiceActivity.class));
+                            }
                         }
                         break;
                 }

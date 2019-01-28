@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.hbdiye.newlechuangsmart.R;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
+import com.hbdiye.newlechuangsmart.util.EcodeValue;
 import com.hbdiye.newlechuangsmart.util.RegexUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -132,12 +133,12 @@ public class RegisterActivity extends BaseActivity {
                         Log.e("sss", response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            int result = jsonObject.getInt("errcode");
-                            if (result == 0) {
+                            String result = jsonObject.getString("errcode");
+                            if (result.equals("0")) {
                                 SmartToast.show("注册成功");
                                 finish();
                             } else {
-                                String data = jsonObject.getString("errmsg");
+                                String data = EcodeValue.resultEcode(result);
                                 SmartToast.show(data);
                             }
                         } catch (JSONException e) {

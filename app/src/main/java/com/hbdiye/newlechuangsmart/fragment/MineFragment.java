@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
 import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
 import com.hbdiye.newlechuangsmart.activity.MyErCodeActivity;
@@ -71,11 +72,18 @@ public class MineFragment extends Fragment {
     LinearLayout rlMineMusic;
     @BindView(R.id.ll_mine_rooms)
     LinearLayout llMineRooms;
+    @BindView(R.id.rl_head)
+    RelativeLayout rlHead;
+    @BindView(R.id.ll_mine_camera)
+    LinearLayout llMineCamera;
     private Unbinder bind;
 
     private GetPhotoPopwindow getPhotoPopwindow;
     private String token;
     private UserFamilyInfoBean userFamilyInfoBean;
+    private String admin_phone;
+    private String phone;
+    private boolean isAdmin=false;
 
     @Nullable
     @Override
@@ -105,7 +113,8 @@ public class MineFragment extends Fragment {
                         if (errcode.equals("0")) {
                             String user_name = userFamilyInfoBean.user.name;
                             String family_name = userFamilyInfoBean.family.name;
-                            String phone = userFamilyInfoBean.user.phone;
+                            phone = userFamilyInfoBean.user.phone;
+                            admin_phone = userFamilyInfoBean.family.phone;
                             tvMineName.setText(user_name);
                             SPUtils.put(getActivity(), "nickName", user_name);
                             tvMineFamilyPhone.setText(phone);
@@ -121,7 +130,7 @@ public class MineFragment extends Fragment {
     }
 
     @OnClick({R.id.iv_mine_er_code, R.id.profile_image, R.id.ll_mine_sys, R.id.ll_mine_family_member, R.id.ll_mine_about_us,
-            R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info, R.id.ll_mine_rooms, R.id.ll_mine_music})
+            R.id.ll_mine_setting, R.id.ll_mine_devices, R.id.rl_mine_info, R.id.ll_mine_rooms, R.id.ll_mine_music, R.id.ll_mine_camera})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_er_code:
@@ -144,7 +153,14 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.ll_mine_family_member:
                 //家庭成员
-                startActivity(new Intent(getActivity(), FamilyMemberActivity.class));
+                if (admin_phone.equals(phone)){
+                    //管理员
+                    isAdmin = true;
+                }else {
+                    //普通家庭成员
+                    isAdmin = false;
+                }
+                startActivity(new Intent(getActivity(), FamilyMemberActivity.class).putExtra("isAdmin",isAdmin));
                 break;
             case R.id.ll_mine_about_us:
 //                startActivity(new Intent(getActivity(), aboutu.class));
@@ -164,6 +180,9 @@ public class MineFragment extends Fragment {
             case R.id.ll_mine_music:
                 //背景音乐
                 startActivity(new Intent(getActivity(), MainActivity.class));
+                break;
+            case R.id.ll_mine_camera:
+                startActivity(new Intent(getActivity(), CameraListActivity.class));
                 break;
             default:
                 break;

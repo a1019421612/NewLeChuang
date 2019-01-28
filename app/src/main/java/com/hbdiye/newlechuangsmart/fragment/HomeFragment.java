@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 8) {
-                    startActivity(new Intent(getActivity(), CameraListActivity.class));
+//                    startActivity(new Intent(getActivity(), CameraListActivity.class));
                 } else if (i==5){
                     startActivity(new Intent(getActivity(), ZngjActivity.class));
                 }else if (i == 6) {
@@ -309,7 +309,7 @@ public class HomeFragment extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String errcode = jsonObject.getString("errcode");
-                            if (errcode.equals("0")) {
+                            if (errcode.equals("1")) {
                                 startActivity(new Intent(getActivity(), HealthActivity.class));
 //                                startActivity(new Intent(getActivity(),YiLiaoActivity.class));
                             } else {
