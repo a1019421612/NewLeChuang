@@ -1,5 +1,7 @@
 package com.hbdiye.newlechuangsmart.util;
 
+import android.graphics.drawable.Drawable;
+
 import com.hbdiye.newlechuangsmart.R;
 
 import javax.validation.constraints.Null;
@@ -141,6 +143,34 @@ public class IconByName {
             return R.drawable.liandong_icon10;
         }
         return R.drawable.liandong_icon1;
+    }
+    public static String icNameByDrawableRoom(int name){
+        if (name==R.drawable.keting3){
+            return "keting3";
+        }else if (name==R.drawable.shufang2){
+            return "shufang2";
+        }else if (name==R.drawable.shufang){
+            return "shufang";
+        }else if (name==R.drawable.weisehngjian){
+            return "weisehngjian";
+        }else if (name==R.drawable.weishengjian2){
+            return "weishengjian2";
+        }else if (name==R.drawable.danrenfang){
+            return "danrenfang";
+        }else if (name==R.drawable.ertongfang){
+            return "ertongfang";
+        }else if (name==R.drawable.keting){
+            return "keting";
+        }else if (name==R.drawable.keting2){
+            return "keting2";
+        }else if (name==R.drawable.zhuwo){
+            return "zhuwo";
+        }else if (name==R.drawable.chufang){
+            return "chufang";
+        }else if (name==R.drawable.yangtai){
+            return "yangtai";
+        }
+        return "keting";
     }
     public static int drawableByNameRoom(String name){
 

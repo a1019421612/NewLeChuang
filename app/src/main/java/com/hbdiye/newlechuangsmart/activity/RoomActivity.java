@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,8 +25,10 @@ import com.hbdiye.newlechuangsmart.bean.RoomDeviceBean;
 import com.hbdiye.newlechuangsmart.bean.RoomListBean;
 import com.hbdiye.newlechuangsmart.global.InterfaceManager;
 import com.hbdiye.newlechuangsmart.util.EcodeValue;
+import com.hbdiye.newlechuangsmart.util.IconByName;
 import com.hbdiye.newlechuangsmart.util.SPUtils;
 import com.hbdiye.newlechuangsmart.view.LinkageAddIconPopwindow;
+import com.hbdiye.newlechuangsmart.view.SceneDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -70,7 +73,8 @@ public class RoomActivity extends AppCompatActivity {
     private String roomId;
     private RoomListBean roomListBean;
     private String token;
-
+    private String name;
+    private SceneDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +96,7 @@ public class RoomActivity extends AppCompatActivity {
         roomInfo = (RoomListBean.RoomList) getIntent().getSerializableExtra("roomInfo");
         roomListBean= (RoomListBean) getIntent().getSerializableExtra("roomListBean");
         roomId=roomInfo.id;
-        String name = roomInfo.name;
+        name = roomInfo.name;
         tvRoomName.setText(name);
         mList_icon.add(R.drawable.keting3);
         mList_icon.add(R.drawable.shufang2);
@@ -218,20 +222,112 @@ public class RoomActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.iv_linkage_ic:
-//                popwindow = new LinkageAddIconPopwindow(this, mList_icon, clickListener);
-//                popwindow.showPopupWindowBottom(llRoot);
+                popwindow = new LinkageAddIconPopwindow(this, mList_icon, clickListener);
+                popwindow.showPopupWindowBottom(llRoot);
                 break;
             case R.id.iv_linkage_edit:
-
+                dialog=new SceneDialog(this,R.style.MyDialogStyle,clicker,"修改房间名称",name);
+                dialog.show();
                 break;
         }
     }
+    private View.OnClickListener clicker=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.app_cancle_tv:
+                    dialog.dismiss();
+                    break;
+                case R.id.app_sure_tv:
+                    String sceneName = dialog.getSceneName();
+                    if (!TextUtils.isEmpty(sceneName)){
+                        updateName(sceneName);
+                    }
+                    break;
+            }
+        }
+    };
+
+    private void updateName(final String sceneName) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.UPDATEROOMNAMEICON))
+                .addParams("token",token)
+                .addParams("roomId",roomId)
+                .addParams("name",sceneName)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                if (dialog!=null){
+                                    dialog.dismiss();
+                                }
+                                SmartToast.show("修改成功");
+                                tvRoomName.setText(sceneName);
+                            }else {
+                                String s1 = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s1);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     private BaseQuickAdapter.OnItemClickListener clickListener = new BaseQuickAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
             List<Integer> data = adapter.getData();
-            Glide.with(RoomActivity.this).load(data.get(position)).into(ivLinkageIc);
+            Integer integer = data.get(position);
+            updateIcon(IconByName.icNameByDrawableRoom(data.get(position)),integer);
             popwindow.dismiss();
         }
     };
+
+    private void updateIcon(String s, final int i) {
+        OkHttpUtils
+                .post()
+                .url(InterfaceManager.getInstance().getURL(InterfaceManager.UPDATEROOMNAMEICON))
+                .addParams("token",token)
+                .addParams("roomId",roomId)
+                .addParams("name",name)
+                .addParams("icon",s)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            String errcode = jsonObject.getString("errcode");
+                            if (errcode.equals("0")){
+                                if (popwindow!=null){
+                                    popwindow.dismiss();
+                                }
+                                SmartToast.show("修改成功");
+                                Glide.with(RoomActivity.this).load(i).into(ivLinkageIc);
+                            }else {
+                                String s1 = EcodeValue.resultEcode(errcode);
+                                SmartToast.show(s1);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 }

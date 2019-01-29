@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:drawableRight="@drawable/ic_right"
-                        android:text="背景音乐"/>
+                        android:text="监控设备"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_mine_setting"

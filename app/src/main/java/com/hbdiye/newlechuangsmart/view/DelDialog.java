@@ -13,7 +13,7 @@ import com.hbdiye.newlechuangsmart.R;
 
 public class DelDialog extends Dialog {
     private Context context;
-    private TextView tv_del_ok,tv_del_content;
+    private TextView tv_del_ok,tv_del_content,tv_del_cancel;
     private View.OnClickListener clicerm;
     private String title;
     public DelDialog(@NonNull Context context) {
@@ -37,8 +37,10 @@ public class DelDialog extends Dialog {
     public void initViews(){
         tv_del_ok=this.findViewById(R.id.tv_del_ok);
         tv_del_content=(TextView)this.findViewById(R.id.tv_del_content);
+        tv_del_cancel=this.findViewById(R.id.tv_del_cancel);
         tv_del_content.setText(title);
         tv_del_ok.setOnClickListener(clicerm);
+        tv_del_cancel.setOnClickListener(clicerm);
     }
     public String getSceneName(){
         return tv_del_content.getText().toString().trim();

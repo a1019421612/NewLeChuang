@@ -221,7 +221,7 @@ public class RoomListActivity extends BaseActivity {
                 .url(InterfaceManager.getInstance().getURL(InterfaceManager.CREATEROOM))
                 .addParams("token", token)
                 .addParams("name", roomName)
-                .addParams("icon", "danrenfang3")
+                .addParams("icon", "keting")
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -270,5 +270,11 @@ public class RoomListActivity extends BaseActivity {
                         device_adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        roomList();
     }
 }

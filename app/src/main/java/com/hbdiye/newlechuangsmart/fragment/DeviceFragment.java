@@ -418,7 +418,13 @@ public class DeviceFragment extends Fragment {
             }
         }
     }
-//    private void roomList() {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        deviceList();
+    }
+    //    private void roomList() {
 //        OkHttpUtils
 //                .post()
 //                .url(InterfaceManager.getInstance().getURL(ROOMLIST))

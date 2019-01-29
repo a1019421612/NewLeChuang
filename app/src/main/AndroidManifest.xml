@@ -34,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
         <activity
             android:name="com.videogo.main.EzvizWebViewActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -200,14 +200,15 @@
         <!-- 百度地图 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="gediaMKUH5UDihYM2q3A7H77zyVG55ZU"></meta-data>
+            android:value="gediaMKUH5UDihYM2q3A7H77zyVG55ZU" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
 
-        <activity android:name=".activity.ZngjActivity"></activity>
+        <activity android:name=".activity.ZngjActivity" />
+        <activity android:name=".activity.AboutUsActivity"></activity>
     </application>
 
 </manifest>

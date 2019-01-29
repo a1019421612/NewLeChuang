@@ -123,7 +123,7 @@ public class EditDeviceNameActivity extends BaseActivity {
 //                SmartToast.show(mList.get(position).name);
 //                updateAttName();
                 flag=position;
-                attDialog = new SceneDialog(EditDeviceNameActivity.this, R.style.MyDialogStyle, att_clicker, "设备名称");
+                attDialog = new SceneDialog(EditDeviceNameActivity.this, R.style.MyDialogStyle, att_clicker, "设备名称",mList.get(position).name);
                 attDialog.show();
             }
         });

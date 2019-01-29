@@ -47,7 +47,7 @@
                     android:id="@+id/iv_linkage_ic"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/huijia"
+                    android:src="@drawable/keting"
                     />
 
             </RelativeLayout>
@@ -69,7 +69,6 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
                 android:src="@drawable/edit"
-                android:visibility="gone"
                 android:layout_marginBottom="@dimen/dp_20"
                 />
         </RelativeLayout>

@@ -105,10 +105,18 @@ public class MyDeviceActivity extends BaseActivity {
                         delDialog = new DelDialog(MyDeviceActivity.this, R.style.MyDialogStyle, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String id = mList.get(position).id;
+                                switch (v.getId()) {
+                                    case R.id.tv_del_ok:
+                                        String id = mList.get(position).id;
 //                        "{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\"%@\",\"token\":\"%@\",\"oper\":\"102\",\"sdid\":\"%@\"}"
-                                mConnection.sendTextMessage("{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"102\",\"sdid\":\"" + id + "\"}");
-                                delDialog.dismiss();
+                                        mConnection.sendTextMessage("{\"pn\":\"DOPP\",\"pt\":\"T\",\"pid\":\"" + token + "\",\"token\":\"" + token + "\",\"oper\":\"102\",\"sdid\":\"" + id + "\"}");
+                                        delDialog.dismiss();
+                                        break;
+                                    case R.id.tv_del_cancel:
+                                        delDialog.dismiss();
+                                        break;
+                                }
+
                             }
                         }, "是否删除设备？");
                         delDialog.show();

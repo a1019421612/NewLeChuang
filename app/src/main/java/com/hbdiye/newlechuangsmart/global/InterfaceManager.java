@@ -76,6 +76,7 @@ public class InterfaceManager {
     public static final String BINDROBOT="BINDROBOT";//绑定机器人
     public static final String UNBINDROBOT="UNBINDROBOT";//解绑机器人
     public static final String UPDATEFAMILYNAME="UPDATEFAMILYNAME";//修改家庭名称
+    public static final String UPDATEROOMNAMEICON="UPDATEROOMNAMEICON";//修改房间名称图标
 
     public static final String BINDGATEWAY="BINDGATEWAY";//添加网关
     public static final String USERANDFAMILYINFO="USERANDFAMILYINFO";//个人和家庭信息
@@ -146,6 +147,7 @@ public class InterfaceManager {
             urlManager.put(InterfaceManager.BINDROBOT,NEWBASEURL+"DYPServer/robot/bindRobot");
             urlManager.put(InterfaceManager.UNBINDROBOT,NEWBASEURL+"DYPServer/robot/unbindRobot");
             urlManager.put(InterfaceManager.UPDATEFAMILYNAME,NEWBASEURL+"DYPServer/user/updateFamilyName");
+            urlManager.put(InterfaceManager.UPDATEROOMNAMEICON,NEWBASEURL+"DYPServer/room/updateRoomNameAndIcon");
 
             urlManager.put(InterfaceManager.YILIAOREGISTER,"http://39.104.119.0:9999/belter/main/register");
             urlManager.put(InterfaceManager.YILIAOISREGISTER,"http://39.104.119.0:9999/belter/main/isRegister");

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.coder.zzq.smartshow.toast.SmartToast;
 import com.google.gson.Gson;
 import com.hbdiye.newlechuangsmart.R;
+import com.hbdiye.newlechuangsmart.activity.AboutUsActivity;
 import com.hbdiye.newlechuangsmart.activity.CameraListActivity;
 import com.hbdiye.newlechuangsmart.activity.FamilyMemberActivity;
 import com.hbdiye.newlechuangsmart.activity.MyDeviceActivity;
@@ -163,7 +164,7 @@ public class MineFragment extends Fragment {
                 startActivity(new Intent(getActivity(), FamilyMemberActivity.class).putExtra("isAdmin",isAdmin));
                 break;
             case R.id.ll_mine_about_us:
-//                startActivity(new Intent(getActivity(), aboutu.class));
+                startActivity(new Intent(getActivity(), AboutUsActivity.class));
                 break;
             case R.id.ll_mine_devices:
                 //我的设备
