@@ -218,6 +218,10 @@ public class ConverterListActivity extends HwBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1002) {
             initData();
+            if (data!=null){
+                String hwName = data.getStringExtra("hwName");
+                tvName.setText(hwName);
+            }
         }
     }
 
